@@ -1,0 +1,74 @@
+<html>
+
+    <head>
+
+        <title>Bootstrap Example</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+      <!DOCTYPE html>
+      </head>
+
+<body>
+
+    
+    
+    <div class="jumbotron text-center">
+        <h1>Cornerstone's Administration</h1>
+        
+        <p><a href="https://localhost/php proj/lookatorders.html/">Goto Administrator's Product Editor</a></center></p>
+      </div>
+
+
+      <center><button onclick = "displayQuery()">Query Orders</button></center><br>
+      <center><button onclick = "displayQueryPayedFor()">Query Payed For Orders</button></center>
+
+      <div id = "codehere"> test div here </div>
+      
+      <script>
+      function displayQuery()
+      {
+        
+    
+        
+        var url = "lookatorders.php";
+        
+        var xmlhttp = new XMLHttpRequest();
+        
+        
+       
+        
+        
+    
+    
+        xmlhttp.onreadystatechange = function() {
+            
+        if (this.readyState == 4 && this.status == 200) {
+            
+            
+            var jsonData = JSON.parse(this.responseText);
+            var answerHtml = jsonData.htmlstuff;
+            document.getElementById("codehere").innerHTML = answerHtml;
+    
+            //createAndModifyDivs();
+    
+    
+            }
+        };
+        
+        xmlhttp.open("GET", url , true);
+        
+        xmlhttp.send();
+        
+        
+    }
+    
+      
+      </script>
+
+
+<body>
+<html>
