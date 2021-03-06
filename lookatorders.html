@@ -40,10 +40,46 @@
 
       <center><button onclick = "displayQuery()">Query Orders</button></center><br>
       <center><button onclick = "displayQueryPayedFor()">Query Payed For Orders</button></center>
+      
 
       <div id = "codehere"> test div here </div>
       
       <script>
+
+function displayQueryPayedFor()
+{
+  var url = "lookatorders2.php";
+        
+        var xmlhttp = new XMLHttpRequest();
+        
+        
+       
+        
+        
+    
+    
+        xmlhttp.onreadystatechange = function() {
+            
+        if (this.readyState == 4 && this.status == 200) {
+            
+            
+            var jsonData = JSON.parse(this.responseText);
+            var answerHtml = jsonData.htmlstuff;
+            document.getElementById("codehere2").innerHTML = answerHtml;
+    
+    
+            }
+        };
+        
+        xmlhttp.open("GET", url , true);
+        
+        xmlhttp.send();
+        
+        
+    }
+
+
+    
       function displayQuery()
       {
         
@@ -80,6 +116,8 @@
         
         
     }
+    
+
     
       
       </script>

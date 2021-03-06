@@ -17,22 +17,25 @@ $statusB = "";
 $statusC = ""; 
 $pID = "";
 $color = 1;
-$sql = "SELECT products.ProductStatus, orders.OrderDate, products.OrderID, products.ProductName, products.ProductCost, products.ProductQuantity FROM orders INNER JOIN  products ON orders.OrderID = products.OrderID ORDER BY Orders.OrderID, Orders.OrderDate DESC"; 
+$sql = "SELECT  orders.OrderDate, products.ProductStatus, products.OrderID, products.ProductName, products.ProductCost, products.ProductQuantity 
+FROM orders INNER JOIN  products ON orders.OrderID = products.OrderID
+WHERE products.ProductStatus = \"purchased\" ORDER BY Orders.OrderID, Orders.OrderDate DESC";
+
 
 $dbo0 = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
 
-//$string0 = "
-//<br>
-//  <center><button onclick = \"submitChanges()\">Submit Changes</button></center>
-//";
+$string0 = "
+<br>
+  <center><button onclick = \"submitChanges()\">Submit Changes</button></center>
+";
 
 
-$string0 =  "
+$string0 .=  "
 <br>
 <div class=\"container\">
 
 ";
-//$string0 .= "<table style=\"background-color:gold\" width:100% border = \"1\" >";
+$string0 .= "<table style=\"background-color:gold\" width:100% border = \"1\" >";
 //<table style=\"width:100%\" border=\"1\" > 
 
 
@@ -45,7 +48,6 @@ foreach($dbo0->query($sql) as $row1)
   $statusA = "statusA" . $counter; 
   $statusB = "statusB" . $counter;
   $statusC = "statusC" . $counter; 
-  $statusD = "statusD" . $counter; 
 
 
 $counter++;
@@ -57,7 +59,10 @@ $pID = $row1['OrderID'];
 
 
 
-
+//if($pID != $lastOrderID && $lastOrderID != "start")
+//{
+//  $printRadio = "yes";
+//}
 
 $pName = $row1['ProductName']; 
 $pCost = $row1['ProductCost']; 
@@ -67,16 +72,16 @@ $pID = strval ($pID);
 $pCost = strval ($pCost); 
 $pQuant = strval ($pQuant); 
 
-$pStatus = $row1['ProductStatus'];
 
 
 
 
+//in for loop
+//if pID just changed  OR JUST STARTED
 
-//first product of a new order
 if($pID != $lastOrderID )
 {
- 
+  $string0 .=  "</table>";
 
 
   if($lastOrderID == "")
@@ -89,7 +94,7 @@ if($pID != $lastOrderID )
 
   }
 
-  $string0 .= " <br><br>
+  $string0 .= "
 <tr>
 <th>Status</th>
 <th>Date</th> 
@@ -100,34 +105,15 @@ if($pID != $lastOrderID )
 </tr>
 
 
-
 <tr>
-<td>" . $pStatus . "</td>
+<td>STATUS HERE</td>
 <td>" . $orderDate . " </td>
 <td>" . $pID . "</td>
 <td>" . $pName . "</td>
 <td>" . $pQuant  . "</td>
 <td>" . $pCost . "</td>
-
 </tr>
-</table> 
-
-
-
-<input type=\"radio\" id=\"$statusA\" name=\"age\" value=\"30\">
- <label>Purchased</label>
-  <input type=\"radio\" id=\"$statusB\" name=\"age\" value=\"60\">
-  <label>Shipped</label>  
-  <input type=\"radio\" id=\"$statusC\" name=\"age\" value=\"100\">
-  <label>Refunded</label><center><button onclick = \"submitChanges()\">Submit Changes</button></center>
-  
-  <input type=\"radio\" id=\"$statusD\" name=\"age\" value=\"100\">
-  <label>No Stock</label>";
-  
-
-
-
-
+";
 //if($lastOrderID != "")
 //{
 //  $string0 .= "TOTAL COST: $50.00";
@@ -136,17 +122,22 @@ if($pID != $lastOrderID )
 
 }
 //same pid as last pid
-
-//a product of an order that is not the first product
 else
 {
-
- 
+  
  $string0 .= "
+
+</table  > 
+ <input type=\"radio\" id=\"$statusA\" name=\"age\" value=\"30\">
+ <label>      Purchased      </label>
+  <input type=\"radio\" id=\"$statusB\" name=\"age\" value=\"60\">
+  <label> Shipped </label>  
+  <input type=\"radio\" id=\"$statusC\" name=\"age\" value=\"100\">
+  <label>Refunded </label>
  
+   <table width=100%    border = \"1\" >
   
 
- <table width=100%    border = \"1\" >
 <th class = \"one\">Status</th>
 <th class = \"one\">Date</th> 
 <th class = \"one\" >ID</th> 
@@ -164,9 +155,10 @@ else
 {
   $string0 .= "<tr bgcolor = \"blue\">";
 }
+
 $string0 .= "
 
-<td>" .  $pStatus . "</td>
+<td>STATUS HERE</td>
 <td>" . $orderDate . " </td>
 <td>" . $pID . "</td>
 <td>" . $pName . "</td>
@@ -176,31 +168,55 @@ $string0 .= "
 
 </table>
 
-  <input type=\"radio\" id=\"$statusA\" name=\"age\" value=\"30\">
-  <label>Purchased</label>
+
+<input type=\"radio\" id=\"$statusA\" name=\"age\" value=\"30\">
+<label >Purchased </label>
   <input type=\"radio\" id=\"$statusB\" name=\"age\" value=\"60\">
-  <label> Shipped </label>  
+  <label >Shipped </label>  
   <input type=\"radio\" id=\"$statusC\" name=\"age\" value=\"100\">
-  <label>Refunded </label><center><button onclick = \"submitChanges()\">Submit Changes</button></center>
-  <input type=\"radio\" id=\"$statusD\" name=\"age\" value=\"100\">
-  <label>No Stock</label>";
+  <label >Refunded </label>
+
+";
+
+
+if($color == 1)
+{
+  $string0 .=  " <table width=100%    border = \"1\"  style=  \"background-color:gold\" > ";
 
 }
+else
+{
+  $string0 .=  " <table width=100%    border = \"1\"  style=  \"background-color:turquoise\" > ";
+}
+}
+
+
+
+
+
+
+
 
 }//for each
 
 
 
 
+$string0 .= "</table>";
 
 
+$string0 .= "<input type=\"radio\" id=\"$statusA\" name=\"age\" value=\"30\">
+ <label >Purchased </label>
+  <input type=\"radio\" id=\"$statusB\" name=\"age\" value=\"60\">
+  <label >Shipped </label>  
+  <input type=\"radio\" id=\"$statusC\" name=\"age\" value=\"100\">
+  <label >Refunded </label>
 
-//$string0 .= " 
-//  
-//  <br>
-//  <center><button onclick = \"submitChanges()\">Submit Changes</button></center>
-//
-//";
+
+  <br>
+  <center><button onclick = \"submitChanges()\">Submit Changes</button></center>
+
+";
 
 
 
