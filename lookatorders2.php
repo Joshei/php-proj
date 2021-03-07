@@ -35,7 +35,7 @@ $string0 .=  "
 <div class=\"container\">
 
 ";
-$string0 .= "<table style=\"background-color:gold\" width:100% border = \"1\" >";
+//$string0 .= "<table style=\"background-color:gold\" width:100% border = \"1\" >";
 //<table style=\"width:100%\" border=\"1\" > 
 
 
@@ -81,7 +81,7 @@ $pQuant = strval ($pQuant);
 
 if($pID != $lastOrderID )
 {
-  $string0 .=  "</table>";
+  //$string0 .=  "</table>";
 
 
   if($lastOrderID == "")

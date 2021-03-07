@@ -1,4 +1,6 @@
 <?php
+//https://stackoverflow.com/questions/362614/calling-onclick-on-a-radiobutton-list-using-javascript
+
 $host = 'localhost';
 $user = 'root';
 $pass = '';
@@ -17,7 +19,8 @@ $statusB = "";
 $statusC = ""; 
 $pID = "";
 $color = 1;
-$sql = "SELECT products.ProductStatus, orders.OrderDate, products.OrderID, products.ProductName, products.ProductCost, products.ProductQuantity FROM orders INNER JOIN  products ON orders.OrderID = products.OrderID ORDER BY Orders.OrderID, Orders.OrderDate DESC"; 
+$sql = "SELECT products.ProductID ,customers.SAddress1, customers.SAddress2, customers.ZipCode, customers.FirstName, customers.LastName, customers.City, customers.State, products.ProductStatus, orders.OrderDate, products.OrderID, products.ProductName, products.ProductCost, products.ProductQuantity FROM orders INNER JOIN  products ON orders.OrderID = products.OrderID INNER JOIN customers ON orders.CustomerID
+=  customers.CustomerID ORDER BY Orders.OrderID, Orders.OrderDate DESC"; 
 
 $dbo0 = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
 
@@ -47,6 +50,14 @@ foreach($dbo0->query($sql) as $row1)
   $statusC = "statusC" . $counter; 
   $statusD = "statusD" . $counter; 
 
+  $status2A = "status2A" . $counter; 
+  $status2B = "status2B" . $counter;
+  $status2C = "status2C" . $counter; 
+  $status2D = "status2D" . $counter; 
+
+
+  $statusID = "statusID" . $counter;
+  $status2ID = "status2ID" . $counter;
 
 $counter++;
 $orderDate = "abc";
@@ -54,7 +65,7 @@ $orderDate = "abc";
 
 $lastOrderID = 	$pID;
 $pID = $row1['OrderID']; 
-
+$prodID = $row1['ProductID'];
 
 
 
@@ -70,6 +81,13 @@ $pQuant = strval ($pQuant);
 $pStatus = $row1['ProductStatus'];
 
 
+$fName = $row1['FirstName'];
+$lName = $row1['LastName'];
+$city = $row1['State'];
+$state = $row1['City'];
+$saddress1 = $row1['SAddress1'];
+$saddress2 = $row1['SAddress2'];
+$zipcode = $row1['ZipCode'];
 
 
 
@@ -88,7 +106,43 @@ if($pID != $lastOrderID )
     $string0 .=  " <table width=100%    border = \"1\"  style=  \"background-color:turquoise\" > ";
 
   }
+////////////////
 
+$string0 .= " <br><br>
+<tr>
+<th>First Name</th>
+<th>Last Name</th> 
+<th>State</th>
+<th>City</th> 
+<th>Address</th>
+<th>Address</th>
+<th>Zipcode</th>
+</tr>
+
+<tr>
+<td>" . $fName . "</td>
+<td>" . $lName . " </td>
+<td>" . $state . "</td>
+<td>" . $city . "</td>
+<td style =\"word-break:break-all;\">" . $saddress1. "</td>
+<td style =\"word-break:break-all;\">" . $saddress2. "</td>
+<td>" . $zipcode. "</td>
+
+</tr>
+</table> ";
+
+///////////////////
+
+if($lastOrderID == "")
+  {
+    $string0 .=  " <table width=100%    border = \"1\"  style=  \"background-color:gold\" > ";
+  }
+  else
+  {
+    $string0 .=  " <table width=100%    border = \"1\"  style=  \"background-color:turquoise\" > ";
+
+  }
+///////////////////
   $string0 .= " <br><br>
 <tr>
 <th>Status</th>
@@ -102,9 +156,9 @@ if($pID != $lastOrderID )
 
 
 <tr>
-<td>" . $pStatus . "</td>
+<td id = " . $statusID . " >$pStatus</td>
 <td>" . $orderDate . " </td>
-<td>" . $pID . "</td>
+<td>" . $prodID . "</td>
 <td>" . $pName . "</td>
 <td>" . $pQuant  . "</td>
 <td>" . $pCost . "</td>
@@ -114,17 +168,16 @@ if($pID != $lastOrderID )
 
 
 
-<input type=\"radio\" id=\"$statusA\" name=\"age\" value=\"30\">
+<input type=\"radio\" id=\"$statusA\" name=\"status1\" value=\"A\"  onclick=\"submitChange( name,'{$statusID}', '{$prodID}')\">
  <label>Purchased</label>
-  <input type=\"radio\" id=\"$statusB\" name=\"age\" value=\"60\">
+  <input type=\"radio\" id=\"$statusB\" name=\"status2\" value=\"B\"  onclick=\"submitChange(name, '{$statusID}', '{$prodID}')\">
   <label>Shipped</label>  
-  <input type=\"radio\" id=\"$statusC\" name=\"age\" value=\"100\">
-  <label>Refunded</label><center><button onclick = \"submitChanges()\">Submit Changes</button></center>
+  <input type=\"radio\" id=\"$statusC\" name=\"status3\" value=\"C\"  onclick=\"submitChange(name, '{$statusID}', '{$prodID}')\">
+  <label>No Stock</label>
+  <input type=\"radio\" id=\"$statusD\" name=\"status3\" value=\"D\"  onclick=\"submitChange(name, '{$statusID}', '{$prodID}')\">
+  <label>Refunded</label>
   
-  <input type=\"radio\" id=\"$statusD\" name=\"age\" value=\"100\">
-  <label>No Stock</label>";
-  
-
+";
 
 
 
@@ -166,43 +219,28 @@ else
 }
 $string0 .= "
 
-<td>" .  $pStatus . "</td>
+<td id = " . $status2ID . " >$pStatus</td>
 <td>" . $orderDate . " </td>
-<td>" . $pID . "</td>
+<td>" . $prodID . "</td>
 <td>" . $pName . "</td>
 <td>" . $pQuant  . "</td>
 <td>" . $pCost . "</td>
 </tr>
 
 </table>
-
-  <input type=\"radio\" id=\"$statusA\" name=\"age\" value=\"30\">
+  
+  <input type=\"radio\" id=\"$status2A\" name=\"status5\" value=\"A\" onclick=\"submitChange(name, '{$status2ID}', '{$prodID}')\">
   <label>Purchased</label>
-  <input type=\"radio\" id=\"$statusB\" name=\"age\" value=\"60\">
+  <input type=\"radio\" id=\"$status2B\" name=\"status6\" value=\"B\" onclick=\"submitChange(name, '{$status2ID}', '{$prodID}')\">
   <label> Shipped </label>  
-  <input type=\"radio\" id=\"$statusC\" name=\"age\" value=\"100\">
-  <label>Refunded </label><center><button onclick = \"submitChanges()\">Submit Changes</button></center>
-  <input type=\"radio\" id=\"$statusD\" name=\"age\" value=\"100\">
-  <label>No Stock</label>";
-
+  <input type=\"radio\" id=\"$status2C\" name=\"status7\" value=\"C\" onclick=\"submitChange(name, '{$status2ID}','{$prodID}')\">
+  <label>No Stock</label>
+  <input type=\"radio\" id=\"$status2D\" name=\"status8\" value=\"D\" onclick=\"submitChange(name, '{$status2ID}', '{$prodID}')\">
+  <label>Refunded</label>
+  ";
 }
 
 }//for each
-
-
-
-
-
-
-
-//$string0 .= " 
-//  
-//  <br>
-//  <center><button onclick = \"submitChanges()\">Submit Changes</button></center>
-//
-//";
-
-
 
 if (!isset($myObj) && isset($string0))
 {

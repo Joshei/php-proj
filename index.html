@@ -164,15 +164,6 @@ xmlhttp.onreadystatechange = function() {
 	
 	if (this.readyState == 4 && this.status == 200) {
 	
-	
-
-		//var var2 = "createdDiv" + j;
-		//document.getElementById(var2).style.display = "none";
-
-
-	
-		//myDivs[0].style.display = "none";
-		//myDivs[9].style.display = "none";
 		var jsonData = JSON.parse(this.responseText);
 		var answerHtml1 = jsonData.htmlstuff;
 		var var1 = "createdDiv" + (gCounter2);
@@ -180,12 +171,7 @@ xmlhttp.onreadystatechange = function() {
 
 		document.getElementById(var1).style.display = "block";
 
-		//var x = document.getElementById(var1 );
 		var x = document.getElementById(var1 ).innerHTML = answerHtml1;
-		//x.style.visibility = 'hidden';
-		//myDivs[5].style.display = "block";
-		
-		
 		
 		document.getElementById(btitleID).value = "";
 		document.getElementById(bdescID).value = "";

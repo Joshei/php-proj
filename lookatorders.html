@@ -29,6 +29,8 @@
 
 <body>
 
+
+  
     
     
     <div class="jumbotron text-center">
@@ -43,8 +45,71 @@
       
 
       <div id = "codehere"> test div here </div>
-      
+      <div id = "ID"></div> here2 </div>
       <script>
+
+function submitChange(name, statusID, id)
+{
+
+  //statusA1 =  document.getElementById(statusA);
+	//statusB1 = document.getElementByName(statusB).ch;
+  //statusC1 =  document.getElementById (statusC);
+	//statusD1 = document.getElementById(statusD);
+  
+
+  var status = ""; 
+  if (name == "status1" || name == "status5")
+  {
+    document.getElementById(statusID).innerHTML = "purchased";
+    status = "purchased";
+
+  }
+
+  if (name == "status2" || name == "status6")
+  {
+    document.getElementById(statusID).innerHTML = "shipped";
+    status = "shipped";
+  }
+
+  if (name == "status3" || name == "status7")
+  {
+    document.getElementById(statusID).innerHTML = "no stock";
+    status = "no stock";
+  }
+
+  if (name == "status4" || name == "status8")
+  {
+    document.getElementById(statusID).innerHTML = "refunded";
+    status = "refunded";
+  }
+  
+var ele = document.getElementsByName(name);
+   for(var i=0;i<ele.length;i++)
+      ele[i].checked = false;
+    
+/////////////
+
+	
+
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+	
+	if (this.readyState == 4 && this.status == 200) {
+	
+	}
+	
+};
+
+	
+  var url = "savenewstatus.php?" + "status=" + status + "&prodid=" + id;
+	xmlhttp.open("GET", url, true);
+	xmlhttp.send();
+
+
+/////////////
+
+
+}
 
 function displayQueryPayedFor()
 {
