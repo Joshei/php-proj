@@ -113,7 +113,7 @@ var ele = document.getElementsByName(name);
 
 function displayQueryPayedFor()
 {
-  var url = "lookatorders2.php";
+  var url = "lookatorders.php?whichsql=purchased";
         
         var xmlhttp = new XMLHttpRequest();
         
@@ -126,12 +126,10 @@ function displayQueryPayedFor()
         xmlhttp.onreadystatechange = function() {
             
         if (this.readyState == 4 && this.status == 200) {
-            
-            
-            var jsonData = JSON.parse(this.responseText);
+             
+          var jsonData = JSON.parse(this.responseText);
             var answerHtml = jsonData.htmlstuff;
-            document.getElementById("codehere2").innerHTML = answerHtml;
-    
+            document.getElementById("codehere").innerHTML = answerHtml;
     
             }
         };
@@ -150,7 +148,7 @@ function displayQueryPayedFor()
         
     
         
-        var url = "lookatorders.php";
+        var url = "lookatorders.php?whichsql=regular";
         
         var xmlhttp = new XMLHttpRequest();
         

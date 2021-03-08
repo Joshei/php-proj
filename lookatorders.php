@@ -1,6 +1,8 @@
 <?php
 //https://stackoverflow.com/questions/362614/calling-onclick-on-a-radiobutton-list-using-javascript
 
+$whichSql = $_GET['whichsql'];
+
 $host = 'localhost';
 $user = 'root';
 $pass = '';
@@ -19,28 +21,25 @@ $statusB = "";
 $statusC = ""; 
 $pID = "";
 $color = 1;
+
+
+if ($whichSql == "regular")
+{
 $sql = "SELECT products.ProductID ,customers.SAddress1, customers.SAddress2, customers.ZipCode, customers.FirstName, customers.LastName, customers.City, customers.State, products.ProductStatus, orders.OrderDate, products.OrderID, products.ProductName, products.ProductCost, products.ProductQuantity FROM orders INNER JOIN  products ON orders.OrderID = products.OrderID INNER JOIN customers ON orders.CustomerID
 =  customers.CustomerID ORDER BY Orders.OrderID, Orders.OrderDate DESC"; 
+}
+else if ($whichSql == "purchased")
+{
+  $sql = "SELECT products.ProductID ,customers.SAddress1, customers.SAddress2, customers.ZipCode, customers.FirstName, customers.LastName, customers.City, customers.State, products.ProductStatus, orders.OrderDate, products.OrderID, products.ProductName, products.ProductCost, products.ProductQuantity FROM orders INNER JOIN products ON orders.OrderID = products.OrderID INNER JOIN customers ON
+   orders.CustomerID = customers.CustomerID WHERE products.ProductStatus = 'purchased' ORDER BY Orders.OrderID, Orders.OrderDate DESC"; 
+}
 
 $dbo0 = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
-
-//$string0 = "
-//<br>
-//  <center><button onclick = \"submitChanges()\">Submit Changes</button></center>
-//";
-
 
 $string0 =  "
 <br>
 <div class=\"container\">
-
 ";
-//$string0 .= "<table style=\"background-color:gold\" width:100% border = \"1\" >";
-//<table style=\"width:100%\" border=\"1\" > 
-
-
-
-
 
 foreach($dbo0->query($sql) as $row1)
 {
@@ -67,9 +66,6 @@ $lastOrderID = 	$pID;
 $pID = $row1['OrderID']; 
 $prodID = $row1['ProductID'];
 
-
-
-
 $pName = $row1['ProductName']; 
 $pCost = $row1['ProductCost']; 
 $pQuant = $row1['ProductQuantity']; 
@@ -79,7 +75,6 @@ $pCost = strval ($pCost);
 $pQuant = strval ($pQuant); 
 
 $pStatus = $row1['ProductStatus'];
-
 
 $fName = $row1['FirstName'];
 $lName = $row1['LastName'];
