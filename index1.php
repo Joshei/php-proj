@@ -2,6 +2,70 @@
 <HTML>
 <head>
 
+<?php
+    
+    //    $fileToUpload = $_POST['fileToUpload'];
+    //    upload( $fileToUpload);
+     
+?>
+
+<?php
+
+//https://www.w3schools.com/php/php_file_upload.asp
+if(isset($_POST['submit'])){
+
+$target_dir = "uploads/";
+$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+$uploadOk = 1;
+$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+// Check if image file is a actual image or fake image
+if(isset($_POST["submit"])) {
+  $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+  if($check !== false) {
+    echo "File is an image - " . $check["mime"] . ".";
+    $uploadOk = 1;
+  } else {
+    echo "File is not an image.";
+    $uploadOk = 0;
+  }
+}
+
+// Check if file already exists
+if (file_exists($target_file)) {
+  echo "Sorry, file already exists.";
+  $uploadOk = 0;
+}
+
+// Check file size
+if ($_FILES["fileToUpload"]["size"] > 500000) {
+  echo "Sorry, your file is too large.";
+  $uploadOk = 0;
+}
+
+// Allow certain file formats
+if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+&& $imageFileType != "gif" ) {
+  echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+  $uploadOk = 0;
+}
+
+// Check if $uploadOk is set to 0 by an error
+if ($uploadOk == 0) {
+  echo "Sorry, your file was not uploaded.";
+// if everything is ok, try to upload file
+} else {
+  if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+    echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
+  } else {
+    echo "Sorry, there was an error uploading your file.";
+  }
+}
+
+
+}
+?>
+
   <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,6 +76,8 @@
 <!DOCTYPE html>
 
 <style>
+
+	
 	a:link {
 		font-weight: bold;
 	  color: green;
@@ -49,6 +115,12 @@
  var gDisplayCounter = 0;
 
  myDivs = [];
+
+
+function start()
+{
+    document.getElementById('upload').disabled = true;
+}
 
 function createDiv() {
     var boardDiv = document.createElement("div");
@@ -154,7 +226,7 @@ var url = "a.php";
 xmlhttp.open("GET", url , true);
 	xmlhttp.send();
 }
-function displayAddProductChanges(productID,  btitleID, bdescID, bcostID,bquantityID,bkey1ID , bkey2ID , bkey3ID, categoryTitle)
+function displayAddProductChanges(productID, filename, btitleID, bdescID, bcostID,bquantityID,bkey1ID , bkey2ID , bkey3ID, categoryTitle)
 {
 
 var xmlhttp = new XMLHttpRequest();
@@ -201,7 +273,7 @@ xmlhttp.onreadystatechange = function() {
 	url = url + "title1=" + title1 + "&" + "productID=" + productID + "&" +  "btitleID=" + btitleID + "&" +  "bdescID=" + bdescID + "&" + "bcostID=" + bcostID + "&" + "bquantityID=" + bquantityID + "&"+ "bkey1ID=" + bkey1ID + "&" 
 	+ "bkey2ID=" + bkey2ID + "&" + "bkey3ID=" + bkey3ID + "&" +  "gKeyword1=" + gKeyword1 + "&"  + "gKeyword2=" + gKeyword2 +
 	"&" + "gKeyword3=" + gKeyword3 + "&" + "image=" + image+  "&" + "description="  + description + "&" + "cost=" +
-	 cost  + "&" + "quantity=" + quantity + "&" + "category=" + categoryTitle;
+	 cost  + "&" + "quantity=" + quantity + "&" + "category=" + categoryTitle + "&" + "filename=" + filename;
 	
 	xmlhttp.open("GET", url , true);
 	xmlhttp.send();
@@ -258,7 +330,7 @@ function deleteRecord( reduceCountFlag, mainDiv, productID)
 
 
 
-function SaveProductItems(deleteFlag, mainDiv, ProductID, title, desc,cost,quantity, keyword1, keyword2, keyword3){
+function SaveProductItems(filename, deleteFlag, mainDiv, ProductID, title, desc,cost,quantity, keyword1, keyword2, keyword3){
 
 
 	
@@ -300,7 +372,7 @@ function SaveProductItems(deleteFlag, mainDiv, ProductID, title, desc,cost,quant
     
    
  	var UrlToSend = PageToSendTo  +   "val1=" + val1 + "&" + "val2=" + val2 + "&" + "val3=" + val3 + "&"  + "val4=" + val4 + "&"
-        + "val8=" + val8 + "&" + "val9=" + val9 + "&" + "val10=" + val10 + "&" + "val5=" + val5 + "&" + "val13=" + val13;
+        + "val8=" + val8 + "&" + "val9=" + val9 + "&" + "val10=" + val10 + "&" + "val5=" + val5 + "&" + "val13=" + val13 + "&" + "filename=" + filename;
 
 	
 	
@@ -367,32 +439,109 @@ function fillDropDown()
 	
 }
 
+function uploadFile() {
+/////// 
 
+
+
+var fd = new FormData(ProdID);
+	var files = $('#file2')[0].files;
+	
+	var url1= "upload2.php?prodid=" + prodID;
+	// Check file selected or not
+	if(files.length > 0 ){
+	   fd.append('file',files[0]);
+
+	   $.ajax({
+		  url: url1,
+		  type: 'post',
+		  data: fd,
+		  contentType: false,
+		  processData: false,
+		  success: function(response){
+			 if(response != 0){
+
+				var1 = response;
+				document.getElementById("putimageloghere").innerHTML = var1;
+
+
+
+
+				
+			 }else{
+				alert('file not uploaded');
+			 }
+		  },
+	   });
+	}else{
+	   alert("Please select a file.");
+	}
+
+
+///////
+}
+
+
+
+/////////
+
+$(document).ready(function(){
+
+$("#testit").click(function(){
+
+	var fd = new FormData();
+	var files = $('#file')[0].files;
+	
+	// Check file selected or not
+	if(files.length > 0 ){
+	   fd.append('file',files[0]);
+
+	   $.ajax({
+		  url: 'upload2.php',
+		  type: 'post',
+		  data: fd,
+		  contentType: false,
+		  processData: false,
+		  success: function(response){
+			 if(response != 0){
+
+				var1 = response;
+				document.getElementById("putimageloghere").innerHTML = var1;
+				//var x = document.getElementById("putimageloghere" ) = response;
+				//$("#img").attr("src",response); 
+				//$(".preview img").show(); // Display image element
+				alert ("here");
+			 }else{
+				alert('file not uploaded');
+			 }
+		  },
+	   });
+	}else{
+	   alert("Please select a file.");
+	}
+});
+});
+
+
+
+
+//////////
 </script>
 
 
 <body>
 
-	
+<input id="file" type="file" name="fileupload" >
+<button id  = "testit"> U </button>
+<img src="" id="img" width="100" height="100">
+
 <center><input id = "keyword" value = "apple1" type="text" name="keyword2"  placeholder="" ></center>
 
 <br>
 
  <center><button onclick = "printHTML1(document.getElementById('keyword'))">Submit Keyword</button></center>
   
- <script>
- var myFormData = new FormData();
- myFormData.append('pictureFile', pictureInput.files[0]);
  
- $.ajax({
-   url: 'upload.php',
-   type: 'POST',
-   processData: false, // important
-   contentType: false, // important
-   dataType : 'json',
-   data: myFormData
- });
- </script>
  
 
 

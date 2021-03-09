@@ -39,7 +39,7 @@ if ((!isset($_SESSION['lastDivCounter'])))
 	//$city = $_Get['city'];
 	//$state = $_Get['state'];
 	//$customerid = $_GET['customerid']; 
-	
+	$filename = $_Get['filename'];
 
 $deleteFlag = 1;
 
@@ -163,7 +163,7 @@ $string0 =  "
 
     <!-- these are the ids of keywords to save next in a function called from this one for savekeywords.  (id has the product id)   key1D, etc. is the id for the call in here -->
 	<!--product id is the number value for the key of the product -->
-	<center><button id = \"\" onclick = \"SaveProductItems(  $deleteFlag, '{$mainDiv}',     '{$productID}', '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}' )\">Resubmit</button></center>
+	<center><button id = \"\" onclick = \"SaveProductItems( $filename,  $deleteFlag, '{$mainDiv}',     '{$productID}', '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}' )\">Resubmit</button></center>
     
 	
     <center><button id = \"\" onclick = \"deleteRecord(1, '{$mainDiv}', $productID)\">Delete</button></center>
@@ -188,7 +188,7 @@ $string0 =  "
 
 
 
-insertNewRecord(  $title1, $descID ,$productID, $titleID  ,$costID ,$quantityID,$key1ID  ,$key2ID  ,$key3ID  ,$gKeyword1 , $gKeyword2  ,$gKeyword3  ,$image     ,$description,  $cost    ,$quantity ,  $category  );
+insertNewRecord( $filename, $title1, $descID ,$productID, $titleID  ,$costID ,$quantityID,$key1ID  ,$key2ID  ,$key3ID  ,$gKeyword1 , $gKeyword2  ,$gKeyword3  ,$image     ,$description,  $cost    ,$quantity ,  $category  );
 
 //////////
 //move this

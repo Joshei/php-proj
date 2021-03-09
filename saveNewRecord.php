@@ -13,6 +13,7 @@ $var10 = $_GET['val10'];//key3
 $var5 = $_GET['val5'];//ProductID
 //dropdown selected text
 $var13 = $_GET['val13'];
+$filename = $_GET['filename'];
 //categoryID
 //$var14 = $_GET['val14'];
 
@@ -58,13 +59,23 @@ $sql2 = "SET FOREIGN_KEY_CHECKS=1;";
 //$stmt->execute([ 'FirstName' => , 'LastName => ' $name_ , 'Password' => $password_ ,'City' =>, 'State' => WHERE 'CustomerID' => $var15]);
 //$user = $stmt->fetch();
 
-$stmt = $dbo->prepare('UPDATE products SET    ProductName = :ProductName,  ProductDescription = :ProductDescription , ProductCost = :ProductCost , 
+$sql = "SELECT ProductFilename FROM products WHERE ProductID = \"$val5\" ";
+$result = mysql_query($sql);
+$row = mysql_fetch_row($result);
+$var = $row[0];
+//deletes old image file - if there was a new upload than that file is now in the directory too.
+unlink($var);
+
+//replace imagefilename in the database
+$stmt = $dbo->prepare('UPDATE products SET    ProductFilename = :ProductFilename , ProductName = :ProductName,  ProductDescription = :ProductDescription , ProductCost = :ProductCost , 
 ProductQuantity =  :ProductQuantity, ProductCatTitle = :ProductCatTitle , ProductKeyword1 = :ProductKeyword1, ProductKeyword2 = :ProductKeyword2, ProductKeyword3 = :ProductKeyword3,
 CustomerID =:CustomerID 
 WHERE ProductID = :ProductID' ); 
-$stmt->execute(['ProductName' => $var1, 'ProductDescription' => $var2, 'ProductCost' => $var3,   'ProductQuantity' => $var4, 'ProductCatTitle' =>  $var13 ,
+$stmt->execute(['ProductFilename'=> $filename,  'ProductName' => $var1, 'ProductDescription' => $var2, 'ProductCost' => $var3,   'ProductQuantity' => $var4, 'ProductCatTitle' =>  $var13 ,
 'ProductKeyword1' => $var8, 'ProductKeyword2' => $var9 , 'ProductKeyword3' => $var10, 'ProductID' => $var5 , 'CustomerID' => $customerID_SESSION]);
 $user = $stmt->fetch();
+
+
 ?>
 
 

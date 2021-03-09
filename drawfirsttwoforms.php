@@ -36,7 +36,7 @@ $string1 = "<center><h1><u>Search Results</u><h1></center></p>";
 
 //dont forget unique value for title 
 //this finds all products that have the keyword apple1
-$q1 = "SELECT products.ProductName, products.ProductID, products.ProductDescription, products.ProductCost, products.ProductQuantity, products.ProductCatTitle 
+$q1 = "SELECT products.ProductFilename, products.ProductName, products.ProductID, products.ProductDescription, products.ProductCost, products.ProductQuantity, products.ProductCatTitle 
 
 FROM products 
 INNER JOIN customers ON customers.CustomerID = products.CustomerID
@@ -78,6 +78,7 @@ $quantityID = "quantityID" . $counter;
 $key1ID = "key1ID" . $counter;
 $key2ID = "key2ID" . $counter;
 $key3ID = "key3ID" . $counter;
+$logDivID = "Log" . $counter;
 
 $productID = $row['ProductID'];
 $image = "temp";
@@ -89,7 +90,7 @@ $quantity = $row['ProductQuantity'];
 
 //$customerid = $row['CustomerID'];
 $category = $row['ProductCatTitle'];
-
+$filename = $row['ProductFilename'];
 
 $var = "A"; 
 $mainDiv = $var . (string)$counter;
@@ -136,13 +137,28 @@ $string1 .=  "
 
 
 <div class=\"container\">
+
+<input id=\"file2\" type=\"file\" name=\"file\" >
+<button type = \"submit\" onclick = \"uploadFile($productID)\" id  = \"testit\"> Upload Image </button>
+
+<div id = \"$logDivID\" >  </div>
+
   <div class=\"row\" >
 
 	
 	
 	<div class=\"col\">
-    <h4><center><p id = \"\">Image</p></center></h4>    
-	<center><p id = \"\"> $image </p></center>
+    
+
+	
+
+
+
+	<center><img src=\"http://localhost/php proj/uploads/$filename\" alt=\"product image\" width=\"128\" height=\"128\"></img></center>
+
+
+
+
 	</div>
 
 
@@ -227,7 +243,7 @@ $string1 .=  "
 
 	<!-- these are the ids of keywords to save next in a function called from this one for savekeywords.  (id has the product id)   key1D, etc. is the id for the call in here -->
 	<!--product id is the number value for the key of the product -->
-	<center><button id = \"\" onclick = \"SaveProductItems( $deleteFlag ,'{$mainDiv}',  $productID, $titleID, $descID, $costID,$quantityID, $key1ID , $key2ID , $key3ID )\">Submit</button></center>
+	<center><button id = \"\" onclick = \"SaveProductItems( $filename, $deleteFlag ,'{$mainDiv}',  $productID, $titleID, $descID, $costID,$quantityID, $key1ID , $key2ID , $key3ID )\">Submit</button></center>
 	<!--flag for determining if record delete will effect sessioncount, 0 is no.-->
 	<center><button id = \"\" onclick = \"deleteRecord( 1, '{$mainDiv}', $productID)\">Delete</button></center>
 	<p><a href=\"#add\">To Add</a></p>
@@ -307,71 +323,57 @@ $string1 .= "
 
 
 
-<p id = \"add\" >product id   :$productID</p>
-<p>category id  :$category</p>
-<center><p><h2>TO ADD:<h2></p></center>
-";
-
-$string1 .= "<select id = \"dropDown2\" >";
-
-
-foreach ($dbo1->query($q4) as $row2) {
-
-//$string0 .= "<br>" ;
-
-
-$string1 .=  "<option value = \"";
-//value
-$string1 .=  $row2['Title']  ;
-$string1 .= "\"";
-
-if($row2['Title'] == $row2['CategorySelected'])
-{
-	$string1 .=  " selected = \"selected\"  ";
-}
-
-$string1 .= "\">";
-//label
-$string1 .=  $row2['Title'];
-$string1 .= "</option>";
-
-}
-
-
-
-$string1 .= "<br>";
-$string1 .= '</select>';
-
-//echo $string0; */
+ */
 
 
 
 $string1 .=  "  
 
 <div style = \"background-color:yellow;\" class = \"A\" id = \"$mainDiv\">
+
+
 <center><h1>Add Product Form<h1></center></p>
 <div class=\"container\">
-  <div class=\"row\" >
+  
+
+	<input id=\"file2\" type=\"file\" name=\"file\" >
+<button type = \"submit\" onclick = \"uploadFile()\" id  = \"testit\"> Upload Image </button>
+
+<div id = \"putimageloghere\" >  </div>
+
+
+
+
+
+
+
+
+  
+	<div class=\"row\" >
+	
+
 	<div class=\"col\">
-    <h4><center><p id = \"\">Image</p></center></h4>    
-	<center><p id = \"\"> $image </p></center>
+
+	<br><br><br>
+	<center><img src=\"http://localhost/php proj/uploads/Untitled.gif\" alt=\"product image\" width=\"128\" height=\"128\"></img></center>
+
+
 	</div>
-
-
-	<div class=\"col\">
+	
+	<div class=\"col\"><br>
       <h4><center><p id =\"\"  >Title</p></center></h4>        
       
 	<center>      <p  >      <input id = \"$btitleID\" value = \"$title1\" type=\"text\" name=\"title\" placeholder=\"\"></p></center>
     </div>
 	
 	
-	<div class=\"col\">
+	<div class=\"col\"><br>
       <h4><center><p id = \"\">Desc</p></center></h4>
       
 	  <center><textarea wrap id = \"$bdescID\"   value = \"$description\"  name=\"text\" rows=\"5\" cols=\"34\">$description</textarea></center>
 	  </div>
     
-	<div class=\"col\">
+	<div class=\"col\"><br>
       <h4><center><p id = \"\" >Cost</p></center></h4>
 	<center><p>	<input id = \"$bcostID\" value = \"$cost\" type=\"number\" name=\"title\" placeholder=\"\">		</p></center>
 	
@@ -379,13 +381,14 @@ $string1 .=  "
 	
 
 	</div>
-	</div>
+	
 
 
 	<div class=\"container\">
 	  <div class=\"row\" >
 	  
 	<div class=\"col\">
+	<br>
     <h4><center><p id = \"\" >Quantity</p></center></h4>    
 	<center><p> <input id = \"$bquantityID\" value = \"$quantity\" type=\"number\" name=\"title\" placeholder=\"\">	</p></center>
 	</div>
@@ -398,21 +401,21 @@ $string1 .=  "
 	
 	<!-- Just holds values for call from saveproductitems because it calls save keywords-->
 
-	<div class=\"col\">
+	<div class=\"col\"><br>
       <h4><center><p id = \"\" >Keyword 1</p></center></h4>
 	<center><p>	<input id = \"$bkey1ID\" value = \"$gKeyword1\" type=\"text\" name=\"title\" placeholder=\"\">		</p></center>
 	
 	</div>
 
 
-	<div class=\"col\">
+	<div class=\"col\"><br>
       <h4><center><p id = \"\" >Keyword 2</p></center></h4>
 	<center><p>	<input id = \"$bkey2ID\" value = \"$gKeyword2\" type=\"text\" name=\"title\" placeholder=\"\">		</p></center>
 	
 	</div>
 
 
-	<div class=\"col\">
+	<div class=\"col\"><br>
       <h4><center><p id = \"\" >Keyword 3</p></center></h4>
 	<center><p>	<input id = \"$bkey3ID\" value = \"$gKeyword3\" type=\"text\" name=\"title\" placeholder=\"\">		</p></center>
 	
@@ -463,7 +466,8 @@ calls this function which updates a new record
 before this is a record that can be changed and submitter
 after submit delete-->
 
-<center><button id = \"\" onclick = \"displayAddProductChanges(  $productID, '{$btitleID}', '{$bdescID}', '{$bcostID}','{$bquantityID}','{$bkey1ID}' , '{$bkey2ID}' ,
+
+<center><button id = \"\" onclick = \"displayAddProductChanges(  $productID, $filename, '{$btitleID}', '{$bdescID}', '{$bcostID}','{$bquantityID}','{$bkey1ID}' , '{$bkey2ID}' ,
  '{$bkey3ID}', '{$category}'  )\">Submit</button></center>
 	
 	
@@ -509,3 +513,5 @@ echo $jsonStr;
 }
 
 ?>
+
+
