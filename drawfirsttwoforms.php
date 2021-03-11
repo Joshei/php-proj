@@ -1,6 +1,6 @@
 <?php
 
-
+$filename = "";
 $keyword1 = $_GET['keyword'];
 $titleOfSelectedDropDown = $_GET['val1'];
 
@@ -78,6 +78,7 @@ $quantityID = "quantityID" . $counter;
 $key1ID = "key1ID" . $counter;
 $key2ID = "key2ID" . $counter;
 $key3ID = "key3ID" . $counter;
+$filesID = "fileID" . $counter;
 $logDivID = "Log" . $counter;
 
 $productID = $row['ProductID'];
@@ -91,6 +92,7 @@ $quantity = $row['ProductQuantity'];
 //$customerid = $row['CustomerID'];
 $category = $row['ProductCatTitle'];
 $filename = $row['ProductFilename'];
+//$filename1 = 'test';
 
 $var = "A"; 
 $mainDiv = $var . (string)$counter;
@@ -137,9 +139,8 @@ $string1 .=  "
 
 
 <div class=\"container\">
+<center><input id=\"getuploadfile\" type=\"file\" name=\"sortpic\" style = \"width: 100px \"/></center>
 
-<input id=\"file2\" type=\"file\" name=\"file\" >
-<button type = \"submit\" onclick = \"uploadFile($productID)\" id  = \"testit\"> Upload Image </button>
 
 <div id = \"$logDivID\" >  </div>
 
@@ -164,9 +165,10 @@ $string1 .=  "
 
 	<div class=\"col\">
       <h4><center><p id =\"\"  >Title</p></center></h4>        
-      
+      <!--
 	<center>      <p  >      <input id = \"$titleID\" value = \"$title1\" type=\"text\" name=\"title\" placeholder=\"\"></p></center>
-    </div>
+    -->
+	</div>
 	
 	
 	<div class=\"col\">
@@ -243,7 +245,10 @@ $string1 .=  "
 
 	<!-- these are the ids of keywords to save next in a function called from this one for savekeywords.  (id has the product id)   key1D, etc. is the id for the call in here -->
 	<!--product id is the number value for the key of the product -->
-	<center><button id = \"\" onclick = \"SaveProductItems( $filename, $deleteFlag ,'{$mainDiv}',  $productID, $titleID, $descID, $costID,$quantityID, $key1ID , $key2ID , $key3ID )\">Submit</button></center>
+	<center><button id = \"\" onclick = \"uploadFile(  $productID,  $deleteFlag ,'{$mainDiv}', '{$filesID}', '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}', '{$filename}')\">Submit</button></center>
+	
+	
+	
 	<!--flag for determining if record delete will effect sessioncount, 0 is no.-->
 	<center><button id = \"\" onclick = \"deleteRecord( 1, '{$mainDiv}', $productID)\">Delete</button></center>
 	<p><a href=\"#add\">To Add</a></p>
@@ -272,7 +277,7 @@ $string1 .=  "
 $string1 .= "</div>";//maindiv
 
 
-
+$fileID = "temp";
 $deleteFlag = 0;
 $gKeyword1 = "";
 $gKeyword2 = "";
@@ -335,10 +340,9 @@ $string1 .=  "
 <center><h1>Add Product Form<h1></center></p>
 <div class=\"container\">
   
-
+<!--
 	<input id=\"file2\" type=\"file\" name=\"file\" >
-<button type = \"submit\" onclick = \"uploadFile()\" id  = \"testit\"> Upload Image </button>
-
+-->
 <div id = \"putimageloghere\" >  </div>
 
 
@@ -464,10 +468,21 @@ $string1 .=  "
 //and delete the data in make form  
 calls this function which updates a new record
 before this is a record that can be changed and submitter
-after submit delete-->
+after submit delete
+displays the new blue record below the yellow 'make record' to show editable record already writter
+//In displayAddProductChanges (php) yellow 'make table' will save the new record with insert 
+//this function needs to do all Product.ProductFileName
+
+// THIS IS A NEWLY CREATED RECORD
+
+//to do:
+// add file name to database
+// upload file - if filename has been set
+//display copy of record
 
 
-<center><button id = \"\" onclick = \"displayAddProductChanges(  $productID, $filename, '{$btitleID}', '{$bdescID}', '{$bcostID}','{$bquantityID}','{$bkey1ID}' , '{$bkey2ID}' ,
+-->
+<center><button id = \"\" onclick = \"displayAddProductChanges(  $productID, $filename, $fileID, '{$btitleID}', '{$bdescID}', '{$bcostID}','{$bquantityID}','{$bkey1ID}' , '{$bkey2ID}' ,
  '{$bkey3ID}', '{$category}'  )\">Submit</button></center>
 	
 	
@@ -495,6 +510,7 @@ after submit delete-->
 
 
 $string1 .= "<div id = \"start1\"> this is start1</div>";
+
 
 ?>
 

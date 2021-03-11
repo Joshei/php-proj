@@ -5,16 +5,13 @@ session_start();
  include ("insertNewProduct.php"); 
 
 
-
-
-
-
 if ((!isset($_SESSION['lastDivCounter'])))  
 {
 	
 		$_SESSION['lastDivCounter']  = 0;
 }
 
+	$fileID = $_GET['fileID'];
 	$descID = $_GET['bdescID'];
 	$title1    = $_GET['title1'];
 	$productID = $_GET['productID'];
@@ -40,6 +37,7 @@ if ((!isset($_SESSION['lastDivCounter'])))
 	//$state = $_Get['state'];
 	//$customerid = $_GET['customerid']; 
 	$filename = $_Get['filename'];
+	
 
 $deleteFlag = 1;
 
@@ -77,13 +75,17 @@ $string0 =  "
 <div style = \"background-color:#40e0d0;\" class = \"A\" id = \"$mainDiv\">
 <center><h1>Added Record<h1></center></p>
 <div class=\"container\">
+
+<!--
+<input id=\"file2\" type=\"file\" name=\"file\" >
+-->
   <div class=\"row\" >
 
 	
 	
 	<div class=\"col\">
     <h4><center><p id = \"\">Image</p></center></h4>    
-	<center><p id = \"\"> $image </p></center>
+	
 	</div>
 
 
@@ -163,7 +165,7 @@ $string0 =  "
 
     <!-- these are the ids of keywords to save next in a function called from this one for savekeywords.  (id has the product id)   key1D, etc. is the id for the call in here -->
 	<!--product id is the number value for the key of the product -->
-	<center><button id = \"\" onclick = \"SaveProductItems( $filename,  $deleteFlag, '{$mainDiv}',     '{$productID}', '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}' )\">Resubmit</button></center>
+	<center><button id = \"\" onclick = \"SaveProductItems(  $productID,  $deleteFlag, '{$mainDiv}',   '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}' '{$filename}', )\">Resubmit</button></center>
     
 	
     <center><button id = \"\" onclick = \"deleteRecord(1, '{$mainDiv}', $productID)\">Delete</button></center>
@@ -186,6 +188,13 @@ $string0 =  "
 
 ";//stringend
 
+
+
+
+//to do:
+// add file name to database
+// upload file - if filename has been set
+//display copy of record
 
 
 insertNewRecord( $filename, $title1, $descID ,$productID, $titleID  ,$costID ,$quantityID,$key1ID  ,$key2ID  ,$key3ID  ,$gKeyword1 , $gKeyword2  ,$gKeyword3  ,$image     ,$description,  $cost    ,$quantity ,  $category  );

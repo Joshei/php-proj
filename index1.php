@@ -4,66 +4,15 @@
 
 <?php
     
-    //    $fileToUpload = $_POST['fileToUpload'];
-    //    upload( $fileToUpload);
+    
      
 ?>
 
 <?php
 
 //https://www.w3schools.com/php/php_file_upload.asp
-if(isset($_POST['submit'])){
-
-$target_dir = "uploads/";
-$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-$uploadOk = 1;
-$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
-// Check if image file is a actual image or fake image
-if(isset($_POST["submit"])) {
-  $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-  if($check !== false) {
-    echo "File is an image - " . $check["mime"] . ".";
-    $uploadOk = 1;
-  } else {
-    echo "File is not an image.";
-    $uploadOk = 0;
-  }
-}
-
-// Check if file already exists
-if (file_exists($target_file)) {
-  echo "Sorry, file already exists.";
-  $uploadOk = 0;
-}
-
-// Check file size
-if ($_FILES["fileToUpload"]["size"] > 500000) {
-  echo "Sorry, your file is too large.";
-  $uploadOk = 0;
-}
-
-// Allow certain file formats
-if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-&& $imageFileType != "gif" ) {
-  echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-  $uploadOk = 0;
-}
-
-// Check if $uploadOk is set to 0 by an error
-if ($uploadOk == 0) {
-  echo "Sorry, your file was not uploaded.";
-// if everything is ok, try to upload file
-} else {
-  if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-    echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
-  } else {
-    echo "Sorry, there was an error uploading your file.";
-  }
-}
 
 
-}
 ?>
 
   <title>Bootstrap Example</title>
@@ -226,7 +175,7 @@ var url = "a.php";
 xmlhttp.open("GET", url , true);
 	xmlhttp.send();
 }
-function displayAddProductChanges(productID, filename, btitleID, bdescID, bcostID,bquantityID,bkey1ID , bkey2ID , bkey3ID, categoryTitle)
+function displayAddProductChanges(productID, filename, bfile, btitleID, bdescID, bcostID,bquantityID,bkey1ID , bkey2ID , bkey3ID, categoryTitle)
 {
 
 var xmlhttp = new XMLHttpRequest();
@@ -244,6 +193,7 @@ xmlhttp.onreadystatechange = function() {
 		document.getElementById(var1).style.display = "block";
 
 		var x = document.getElementById(var1 ).innerHTML = answerHtml1;
+		
 		
 		document.getElementById(btitleID).value = "";
 		document.getElementById(bdescID).value = "";
@@ -266,14 +216,14 @@ xmlhttp.onreadystatechange = function() {
 	gKeyword1 = document.getElementById(bkey1ID).value;
 	gKeyword2 = document.getElementById(bkey2ID).value;
 	gKeyword3 = document.getElementById(bkey3ID).value;
-
+	//file = document.getElementById(bfileID).value;
 	
 	var url = "displayAddProductChanges.php?" ;
 	
 	url = url + "title1=" + title1 + "&" + "productID=" + productID + "&" +  "btitleID=" + btitleID + "&" +  "bdescID=" + bdescID + "&" + "bcostID=" + bcostID + "&" + "bquantityID=" + bquantityID + "&"+ "bkey1ID=" + bkey1ID + "&" 
 	+ "bkey2ID=" + bkey2ID + "&" + "bkey3ID=" + bkey3ID + "&" +  "gKeyword1=" + gKeyword1 + "&"  + "gKeyword2=" + gKeyword2 +
 	"&" + "gKeyword3=" + gKeyword3 + "&" + "image=" + image+  "&" + "description="  + description + "&" + "cost=" +
-	 cost  + "&" + "quantity=" + quantity + "&" + "category=" + categoryTitle + "&" + "filename=" + filename;
+	 cost  + "&" + "quantity=" + quantity + "&" + "category=" + categoryTitle + "&" + "filename=" + filename + "&" + "fileID=" + bfile;
 	
 	xmlhttp.open("GET", url , true);
 	xmlhttp.send();
@@ -330,7 +280,7 @@ function deleteRecord( reduceCountFlag, mainDiv, productID)
 
 
 
-function SaveProductItems(filename, deleteFlag, mainDiv, ProductID, title, desc,cost,quantity, keyword1, keyword2, keyword3){
+function SaveProductItems( ProductID, deleteFlag, mainDiv,fileID,  title, desc,cost,quantity, keyword1, keyword2, keyword3, filename){
 
 
 	
@@ -356,6 +306,11 @@ function SaveProductItems(filename, deleteFlag, mainDiv, ProductID, title, desc,
 	var val8 = document.getElementById(keyword1);
     var val9 = document.getElementById(keyword2);
 	var val10 = document.getElementById(keyword3);
+	//var val11 = document.getElementById(fileID).attributes.value.textContent
+	var val11 = document.getElementById(fileID).value;
+	var val11 = $('input[type=file]').val().replace(/C:\\fakepath\\/i, '')
+	
+
 	//var val14 = category;
 	//var val15 = customerid;
 	
@@ -372,7 +327,7 @@ function SaveProductItems(filename, deleteFlag, mainDiv, ProductID, title, desc,
     
    
  	var UrlToSend = PageToSendTo  +   "val1=" + val1 + "&" + "val2=" + val2 + "&" + "val3=" + val3 + "&"  + "val4=" + val4 + "&"
-        + "val8=" + val8 + "&" + "val9=" + val9 + "&" + "val10=" + val10 + "&" + "val5=" + val5 + "&" + "val13=" + val13 + "&" + "filename=" + filename;
+        + "val8=" + val8 + "&" + "val9=" + val9 + "&" + "val10=" + val10 + "&" + "val5=" + val5 + "&" + "val13=" + val13 + "&" + "filename=" + val11;
 
 	
 	
@@ -439,110 +394,58 @@ function fillDropDown()
 	
 }
 
-function uploadFile() {
+function uploadFile(productID,  deleteFlag ,mainDiv, filesID, titleID, descID, costID,quantityID, key1ID , key2ID , key3ID, filename) {
 /////// 
-
-
-
-var fd = new FormData(ProdID);
-	var files = $('#file2')[0].files;
 	
-	var url1= "upload2.php?prodid=" + prodID;
-	// Check file selected or not
-	if(files.length > 0 ){
-	   fd.append('file',files[0]);
+	var url1 = "upload2.php?pdib="  + productID";
+	if (filename == "" )
+	{
+	//var file_data = $('#sortpicture').prop('files')[0]; 
+    var file_data = $('#getuploadfile').prop('files')[0];   
+    var form_data = new FormData();                  
+    form_data.append('file', file_data);
+    //alert(form_data);                             
+    $.ajax({
+		//this was the name of the page : upload2.php
+        url: url1, // point to server-side PHP script 
+        dataType: 'text',  // what to expect back from the PHP script, if anything
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: form_data,                         
+        type: 'post',
+        success: function(php_script_response){
 
-	   $.ajax({
-		  url: url1,
-		  type: 'post',
-		  data: fd,
-		  contentType: false,
-		  processData: false,
-		  success: function(response){
-			 if(response != 0){
+			//var responsedata = $.parseJSON(php_script_response);
+			//alert(responsedata.flag); // display response from the PHP script, if any
+			if(php_script_response != "")
+			{
+			alert(php_script_response);
+			
+			
+			}
+			
+        }
+     });
+	}//if
+	 
+	
+	 SaveProductItems(productID,  deleteFlag ,mainDiv, filesID, titleID, descID, costID,quantityID, key1ID , key2ID , key3ID, filename);
 
-				var1 = response;
-				document.getElementById("putimageloghere").innerHTML = var1;
-
-
-
-
-				
-			 }else{
-				alert('file not uploaded');
-			 }
-		  },
-	   });
-	}else{
-	   alert("Please select a file.");
-	}
-
-
-///////
 }
-
-
-
-/////////
-
-$(document).ready(function(){
-
-$("#testit").click(function(){
-
-	var fd = new FormData();
-	var files = $('#file')[0].files;
-	
-	// Check file selected or not
-	if(files.length > 0 ){
-	   fd.append('file',files[0]);
-
-	   $.ajax({
-		  url: 'upload2.php',
-		  type: 'post',
-		  data: fd,
-		  contentType: false,
-		  processData: false,
-		  success: function(response){
-			 if(response != 0){
-
-				var1 = response;
-				document.getElementById("putimageloghere").innerHTML = var1;
-				//var x = document.getElementById("putimageloghere" ) = response;
-				//$("#img").attr("src",response); 
-				//$(".preview img").show(); // Display image element
-				alert ("here");
-			 }else{
-				alert('file not uploaded');
-			 }
-		  },
-	   });
-	}else{
-	   alert("Please select a file.");
-	}
-});
-});
-
-
 
 
 //////////
 </script>
-
-
 <body>
-
-<input id="file" type="file" name="fileupload" >
-<button id  = "testit"> U </button>
 <img src="" id="img" width="100" height="100">
-
 <center><input id = "keyword" value = "apple1" type="text" name="keyword2"  placeholder="" ></center>
-
 <br>
+<center><button onclick = "printHTML1(document.getElementById('keyword'))">Submit Keyword</button></center>
 
- <center><button onclick = "printHTML1(document.getElementById('keyword'))">Submit Keyword</button></center>
-  
- 
- 
+
+
+
 
 
 
