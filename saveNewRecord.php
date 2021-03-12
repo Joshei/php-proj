@@ -111,12 +111,12 @@ $sql1 = "SET FOREIGN_KEY_CHECKS=0;";
 $sql2 = "SET FOREIGN_KEY_CHECKS=1;";
 //$dbo->exec($sql1);
 
-//replace imagefilename in the database
-$stmt = $dbo->prepare('UPDATE products SET    ProductFilename = :ProductFilename , ProductName = :ProductName,  ProductDescription = :ProductDescription , ProductCost = :ProductCost , 
+//ProductFilename already in database form upload2.php
+$stmt = $dbo->prepare('UPDATE products SET   ProductName = :ProductName,  ProductDescription = :ProductDescription , ProductCost = :ProductCost , 
 ProductQuantity =  :ProductQuantity, ProductCatTitle = :ProductCatTitle , ProductKeyword1 = :ProductKeyword1, ProductKeyword2 = :ProductKeyword2, ProductKeyword3 = :ProductKeyword3,
 CustomerID =:CustomerID 
 WHERE ProductID = :ProductID' ); 
-$stmt->execute(['ProductFilename'=> $filename,  'ProductName' => $var1, 'ProductDescription' => $var2, 'ProductCost' => $var3,   'ProductQuantity' => $var4, 'ProductCatTitle' =>  $var13 ,
+$stmt->execute(['ProductName' => $var1, 'ProductDescription' => $var2, 'ProductCost' => $var3,   'ProductQuantity' => $var4, 'ProductCatTitle' =>  $var13 ,
 'ProductKeyword1' => $var8, 'ProductKeyword2' => $var9 , 'ProductKeyword3' => $var10, 'ProductID' => $var5 , 'CustomerID' => $customerID_SESSION]);
 $user = $stmt->fetch();
 

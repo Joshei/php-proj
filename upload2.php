@@ -14,11 +14,13 @@ $string = "";
 //if (move_uploaded_file($_FILES["file"]["tmp_name"], "uploads1/screen1.png")) {
 ///////////////////////////////////
 
+$noFileSelected = "true";
+$image = "";
+$filename = ""; 
 
 
-//for new records, probably move
-$record = "A";
-function getAndSetLastID()
+
+function getFilenameAndImage($productID)
 {
 $host = 'localhost';
 $user = 'root';
@@ -29,25 +31,39 @@ $options = array(
     PDO::ATTR_EMULATE_PREPARES => false
 );
 $dbo = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
-$q1 = "SELECT lastImageNumber FROM lastimageid WHERE ProductID";
-$conn->exec($sql);
-$last_id = $conn->lastInsertId();
 
-$last_id = $last_id  ;
-    }
+$sql = "SELECT ProductImage, ProductFilename FROM products WHERE ProductID = $productID";
 
-
-//check if image is in database
-
-//if an image already in database get filename using pid and change the new image in directory to this filename
-//2 changes :  file name and target_file
-
-//if image not in database, get next filename and put into directory and database.
-
-
-if (isset($_FILES['file'])) 
+foreach($dbo->query($sql) as $row1)
 {
-$file_name     = $_FILES["file"]["name"]; 
+
+ $image = $row1['ProductImage'];
+ $filename = $row1['ProductFilename'];
+}
+
+}
+
+getFilenameAndImage($productID);
+
+$host = 'localhost';
+$user = 'root';
+$pass = '';
+$database = 'ecommerce';
+$options = array(
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_EMULATE_PREPARES => false
+);
+$dbo = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
+
+
+//is already an image in database
+if ($image != null)
+{
+  ///////////
+  if (isset($_FILES['file'])) 
+    {
+//$file_name     = $_FILES["file"]["name"]; 
+$file_name = $filename;
 $target_dir = "uploads/";
 
 $target_file = $target_dir . basename($_FILES["file"]["name"]);
@@ -91,7 +107,122 @@ if ($uploadOk == 0) {
     $string .= "Your file was not uploaded.\n";
 // if everything is ok, try to upload file
 } else {
-  if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
+  //if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) 
+  if (move_uploaded_file($_FILES["file"]["tmp_name"], $filename)) {
+    //$string .= "The file ". htmlspecialchars( basename( $_FILES["file"]["name"])). " has been uploaded.<br>";
+    $didItUpload = "true";
+    
+    $noFileSelected = "false";
+    
+    $filename = htmlspecialchars( basename( $_FILES["file"]["name"]));
+  } else {
+    $string .= "There was an error uploading your file.<br>";
+    $didItUpload = "false";
+    $noFileSelected = "true";
+
+
+
+  }
+
+//no file was selected
+//if($diditUpload == "false")
+//{ 
+//  echo ($string);
+//
+//  //return(1);
+//}
+
+
+  
+}
+
+
+}//isset, otherwise no file selected
+else
+{
+  echo "No file selected.";
+  //return(1);
+}
+
+
+}//image is already in database
+
+
+
+
+
+////image is  not in database 
+else 
+{
+  //get next filename
+  //////////////
+  
+$number = 0;
+$q1 = "SELECT Number FROM  numbers";
+foreach ($dbo->query($q1) as $row) {
+
+    $number = $row['number'];
+}
+//number is used to create filename
+$otherNumber = $number + 1;
+$newFilename = "A" . $otherNumber;
+
+
+//put new filename in directory
+
+///////
+//there is a file to upload
+if (isset($_FILES['file'])) 
+{
+//$file_name     = $_FILES["file"]["name"]; 
+$file_name     = $newFilename; 
+
+
+$target_dir = "uploads/";
+
+$target_file = $target_dir . basename($_FILES["file"]["name"]);
+$uploadOk = 1;
+$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+// Check if image file is a actual image or fake image
+
+  $check = getimagesize($_FILES["file"]["tmp_name"]);
+  if($check !== false) {
+    //$string .= "<br>File is an image - " . $check["mime"] . ".  <br>";
+    $uploadOk = 1;
+  } else {
+    
+    $string .= "File is not an image.\n";
+    $uploadOk = 0;
+  }
+
+
+// Check if file already exists
+if (file_exists($target_file)) {
+    //$string .= "Sorry, file already exists.\n";
+  $uploadOk = 1;
+}
+
+// Check file size
+else if ($_FILES["file"]["size"] > 500000) {
+    $string .= "Sorry, your file is too large.\n";
+  $uploadOk = 0;
+}
+
+// Allow certain file formats
+else if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+&& $imageFileType != "gif" ) {
+    $string .="Sorry, only JPG, JPEG, PNG & GIF files are allowed.\n";
+  $uploadOk = 0;
+}
+
+// Check if $uploadOk is set to 0 by an error
+if ($uploadOk == 0) {
+    $string .= "Your file was not uploaded.\n";
+// if everything is ok, try to upload file
+} else {
+  //if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
+  if (move_uploaded_file($_FILES["file"]["tmp_name"], $newFilename)) {
     //$string .= "The file ". htmlspecialchars( basename( $_FILES["file"]["name"])). " has been uploaded.<br>";
     $didItUpload = "true";
     $filename = htmlspecialchars( basename( $_FILES["file"]["name"]));
@@ -105,10 +236,78 @@ if ($uploadOk == 0) {
 
 
 
-//$array['flag'] = '1';
-//$array['string'] = $string;
+  //set new number back in database
+$q2 = "UPDATE numbers SET Number = " . $otherNumber;
 
-echo ($string);
+$dbo->exec($q2);
+
+//put newFilename in database
+
+//////////
+
+//puts new filename into database
+$q3 = "UPDATE products SET  ProductFilename = '$newFilename' WHERE ProductID = $productID";
+$dbo->exec($q3);
+
+
+
+}//end image is in datbase
+
+//no file was selected
+if($didItUpload == "false")
+{ 
+  echo ($string);
+
+}
+
+//all work for image is done, ready for savenewrecord, either way
+
+
+
+
+
+
+/////////////
+
+//check if image is in database
+
+//if an image already in database get filename using pid and change the new image in directory to this filename
+//2 changes :  file name and target_file
+
+//if image not in database, get next filename and put into directory and database.
+
+
+
+/*
+$host = 'localhost';
+$user = 'root';
+$pass = '';
+$database = 'ecommerce';
+$options = array(
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_EMULATE_PREPARES => false
+);
+$dbo1 = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
+
+//for a new record
+$q1 = "SELECT Number FROM  number";
+foreach ($dbo->query($q1) as $row) {
+
+    $number = $row['number'];
+    $otherNumber = $number + 1;
+}
+//number is used to create filename
+$q1 = "UPDATE number SET Number = " . $otherNumber;
+$dbo1->exec($q1);
+*/
+
+
+
+
+
+
+
+
 //return ($didItUpload);
 
 //}

@@ -359,7 +359,7 @@ $string1 .=  "
 	<div class=\"col\">
 
 	<br><br><br>
-	<center><img src=\"http://localhost/php proj/uploads/Untitled.gif\" alt=\"product image\" width=\"128\" height=\"128\"></img></center>
+	<center><img src=\"http://localhost/php proj/uploads/test.png\" alt=\"product image\" width=\"128\" height=\"128\"></img></center>
 
 
 	</div>

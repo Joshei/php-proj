@@ -307,7 +307,7 @@ function SaveProductItems( ProductID, deleteFlag, mainDiv,fileID,  title, desc,c
     var val9 = document.getElementById(keyword2);
 	var val10 = document.getElementById(keyword3);
 	//var val11 = document.getElementById(fileID).attributes.value.textContent
-	var val11 = document.getElementById(fileID).value;
+	//var val11 = document.getElementById(fileID).value;
 	var val11 = $('input[type=file]').val().replace(/C:\\fakepath\\/i, '')
 	
 
@@ -327,7 +327,7 @@ function SaveProductItems( ProductID, deleteFlag, mainDiv,fileID,  title, desc,c
     
    
  	var UrlToSend = PageToSendTo  +   "val1=" + val1 + "&" + "val2=" + val2 + "&" + "val3=" + val3 + "&"  + "val4=" + val4 + "&"
-        + "val8=" + val8 + "&" + "val9=" + val9 + "&" + "val10=" + val10 + "&" + "val5=" + val5 + "&" + "val13=" + val13 + "&" + "filename=" + val11;
+        + "val8=" + val8 + "&" + "val9=" + val9 + "&" + "val10=" + val10 + "&" + "val5=" + val5 + "&" + "val13=" + val13 + "&" + "filename=" + val11 + "&" + "pdib=" + ProductID;
 
 	
 	
@@ -397,7 +397,7 @@ function fillDropDown()
 function uploadFile(productID,  deleteFlag ,mainDiv, filesID, titleID, descID, costID,quantityID, key1ID , key2ID , key3ID, filename) {
 /////// 
 	
-	var url1 = "upload2.php?pdib="  + productID";
+	var url1 = "upload2.php?pdib="  + productID;
 	if (filename == "" )
 	{
 	//var file_data = $('#sortpicture').prop('files')[0]; 
