@@ -397,11 +397,11 @@ function fillDropDown()
 function uploadFile(productID,  deleteFlag ,mainDiv, filesID, titleID, descID, costID,quantityID, key1ID , key2ID , key3ID, filename) {
 /////// 
 	
-	var url1 = "upload2.php?pdib="  + productID;
+	var url1 = "upload2.php?pdib="  + productID + "&" + "filename=" + filename;
 	if (filename == "" )
 	{
 	//var file_data = $('#sortpicture').prop('files')[0]; 
-    var file_data = $('#getuploadfile').prop('files')[0];   
+    var file_data = $('#getuploadfile').prop('file')[0];   
     var form_data = new FormData();                  
     form_data.append('file', file_data);
     //alert(form_data);                             
@@ -432,6 +432,18 @@ function uploadFile(productID,  deleteFlag ,mainDiv, filesID, titleID, descID, c
 	
 	 SaveProductItems(productID,  deleteFlag ,mainDiv, filesID, titleID, descID, costID,quantityID, key1ID , key2ID , key3ID, filename);
 
+}
+
+function updateImage(display)
+{
+
+var img = document.createElement("img");
+ 
+img.src = "localhost/php proj/uploads/A.png";
+var src = document.getElementById(display);
+ 
+src.appendChild(img);
+	
 }
 
 

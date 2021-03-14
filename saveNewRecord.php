@@ -19,8 +19,8 @@ $var13 = $_GET['val13'];
 $var14 = $_GET['val11'];
 
 
-
-//if here image has been taken care of. move these functions to upload2:
+$var3 = intval($var3);
+$var4 = intval($var4);//if here image has been taken care of. move these functions to upload2:
 
 
 

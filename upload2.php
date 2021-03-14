@@ -1,7 +1,11 @@
 <?php
 
+//upload2.php?fileid= $fileID & displayid= $displayID & filename= $filename & pid= ProductID" 
 $productID = $_GET['pdib'];
-
+$filename = $_GET['filename'];
+$fileid = $_GET['fileid'];
+$displayID = $_GET['displayid'];
+    
 
 $didItUpload = "false";
 $string = "";
@@ -20,7 +24,7 @@ $filename = "";
 
 
 
-function getFilenameAndImage($productID)
+function getFilename($productID, $filename)
 {
 $host = 'localhost';
 $user = 'root';
@@ -37,13 +41,16 @@ $sql = "SELECT ProductImage, ProductFilename FROM products WHERE ProductID = $pr
 foreach($dbo->query($sql) as $row1)
 {
 
- $image = $row1['ProductImage'];
+ //$image = $row1['ProductImage'];
  $filename = $row1['ProductFilename'];
 }
-
+ return($filename);
 }
 
-getFilenameAndImage($productID);
+
+
+
+$filename = getFilename($productID, $filename);
 
 $host = 'localhost';
 $user = 'root';
@@ -55,15 +62,18 @@ $options = array(
 );
 $dbo = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
 
+$imageFileType = "";
 
-//is already an image in database
-if ($image != null)
+
+//is already an image in database - save in directory overtop
+if ($filename != null)
 {
   ///////////
   if (isset($_FILES['file'])) 
-    {
+   {
 //$file_name     = $_FILES["file"]["name"]; 
 $file_name = $filename;
+$savename = "uploads/" . $filename; 
 $target_dir = "uploads/";
 
 $target_file = $target_dir . basename($_FILES["file"]["name"]);
@@ -107,9 +117,29 @@ if ($uploadOk == 0) {
     $string .= "Your file was not uploaded.\n";
 // if everything is ok, try to upload file
 } else {
-  //if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) 
-  if (move_uploaded_file($_FILES["file"]["tmp_name"], $filename)) {
-    //$string .= "The file ". htmlspecialchars( basename( $_FILES["file"]["name"])). " has been uploaded.<br>";
+
+
+  if($imageFileType == "jpg" )
+  {
+    $savename .= ".jpg";
+  }
+  else if ($imageFileType == "png" )
+  {
+    $savename .= ".png";
+  }
+  else if ($imageFileType == "jpeg")
+  {
+    $savename.= ".jpeg";
+  }
+  else if ($imageFileType == "gif" )
+  {
+    $savename .= ".gif";
+  } 
+
+
+  if (move_uploaded_file($_FILES["file"]["tmp_name"], $savename)){ 
+  //if (move_uploaded_file($_FILES["file"]["tmp_name"], $file_name)) {
+    $string .= "The file ". htmlspecialchars( basename( $_FILES["file"]["name"])). " has been uploaded.<br>";
     $didItUpload = "true";
     
     $noFileSelected = "false";
@@ -120,38 +150,20 @@ if ($uploadOk == 0) {
     $didItUpload = "false";
     $noFileSelected = "true";
 
-
+    echo $string;
 
   }
-
-//no file was selected
-//if($diditUpload == "false")
-//{ 
-//  echo ($string);
-//
-//  //return(1);
-//}
+  //is already an image in erecord save dnew image as same record name
 
 
   
 }
-
-
 }//isset, otherwise no file selected
-else
-{
-  echo "No file selected.";
-  //return(1);
-}
-
-
-}//image is already in database
-
-
-
-
-
-////image is  not in database 
+ 
+ 
+} //if filename != null
+  
+////image is  not in database  filename is null
 else 
 {
   //get next filename
@@ -161,11 +173,40 @@ $number = 0;
 $q1 = "SELECT Number FROM  numbers";
 foreach ($dbo->query($q1) as $row) {
 
-    $number = $row['number'];
+    $number = $row['Number'];
 }
 //number is used to create filename
 $otherNumber = $number + 1;
 $newFilename = "A" . $otherNumber;
+
+/////////
+$target_dir = "uploads/";
+
+$target_file = $target_dir . basename($_FILES["file"]["name"]);
+$uploadOk = 1;
+$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+
+//////////
+
+if($imageFileType == "jpg" )
+{
+  $newFilename .= ".jpg";
+}
+else if ($imageFileType == "png" )
+{
+  $newFilename .= ".png";
+}
+else if ($imageFileType == "jpeg")
+{
+  $newFilename .= ".jpeg";
+}
+else if ($imageFileType == "gif" )
+{
+  $newFilename .= ".gif";
+} 
+
+
 
 
 //put new filename in directory
@@ -176,7 +217,7 @@ if (isset($_FILES['file']))
 {
 //$file_name     = $_FILES["file"]["name"]; 
 $file_name     = $newFilename; 
-
+$savefilename = "uploads/" . $file_name; 
 
 $target_dir = "uploads/";
 
@@ -222,7 +263,7 @@ if ($uploadOk == 0) {
 // if everything is ok, try to upload file
 } else {
   //if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
-  if (move_uploaded_file($_FILES["file"]["tmp_name"], $newFilename)) {
+  if (move_uploaded_file($_FILES["file"]["tmp_name"], $savefilename)) {
     //$string .= "The file ". htmlspecialchars( basename( $_FILES["file"]["name"])). " has been uploaded.<br>";
     $didItUpload = "true";
     $filename = htmlspecialchars( basename( $_FILES["file"]["name"]));
@@ -233,7 +274,8 @@ if ($uploadOk == 0) {
 }
 }
 
-
+if($didItUpload == "true")
+{
 
 
   //set new number back in database
@@ -245,6 +287,9 @@ $dbo->exec($q2);
 
 //////////
 
+
+
+
 //puts new filename into database
 $q3 = "UPDATE products SET  ProductFilename = '$newFilename' WHERE ProductID = $productID";
 $dbo->exec($q3);
@@ -254,8 +299,7 @@ $dbo->exec($q3);
 }//end image is in datbase
 
 //no file was selected
-if($didItUpload == "false")
-{ 
+ 
   echo ($string);
 
 }

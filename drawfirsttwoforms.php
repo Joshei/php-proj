@@ -3,7 +3,9 @@
 $filename = "";
 $keyword1 = $_GET['keyword'];
 $titleOfSelectedDropDown = $_GET['val1'];
-
+$fileID = "";
+$imageID = "";
+$displayID = "";
 //debugging
 //$titleOfSelectedDropDown = "pick";
 //$keyword1 = "apple1";
@@ -62,6 +64,7 @@ $counter = 0;
 $counter1 = 0;
 $numbervar = 1;
 $mainDiv = "";
+$displayID = "";
 //$password1 = "bb";//$row['Password'];
 //$firstname =  "aa";//;//$row['FirstName'];
 //$lastname = "aa";////$row['LastName'];
@@ -78,8 +81,8 @@ $quantityID = "quantityID" . $counter;
 $key1ID = "key1ID" . $counter;
 $key2ID = "key2ID" . $counter;
 $key3ID = "key3ID" . $counter;
-$filesID = "fileID" . $counter;
-$logDivID = "Log" . $counter;
+$fileID = "fileID" . $counter;
+$displayID = "displayID" . $counter;
 
 $productID = $row['ProductID'];
 $image = "temp";
@@ -139,10 +142,12 @@ $string1 .=  "
 
 
 <div class=\"container\">
-<center><input id=\"getuploadfile\" type=\"file\" name=\"sortpic\" style = \"width: 100px \"/></center>
 
 
-<div id = \"$logDivID\" >  </div>
+
+
+
+<div id = \"$displayID\" >  </div>
 
   <div class=\"row\" >
 
@@ -150,12 +155,15 @@ $string1 .=  "
 	
 	<div class=\"col\">
     
+	<form target=\"upload_target\" method = \"Post\" action = \"upload2.php?fileid=$fileID & displayid=$displayID & filename=$filename & pdib=$productID    \" enctype=\"multipart/form-data\" >
+	<input type=\"file\"  id=\"$fileID\" name=\"file\">	
+	<button type = \"submit\"  >submit it</button>
+	</form>
+	<button onclick = \"updateImage('{$displayID}' )\">Dispaly Image</button>
+	<iframe id=\"upload_target\" name=\"upload_target\" src=\"#\" style=\"width:0;height:0;border:0px solid #fff;\"></iframe>          
 
-	
 
-
-
-	<center><img src=\"http://localhost/php proj/uploads/$filename\" alt=\"product image\" width=\"128\" height=\"128\"></img></center>
+	<center><img id= \"$imageID\"  src=\"http://localhost/php proj/uploads/$filename\" alt=\"product image\" width=\"128\" height=\"128\"></img></center>
 
 
 
@@ -245,9 +253,11 @@ $string1 .=  "
 
 	<!-- these are the ids of keywords to save next in a function called from this one for savekeywords.  (id has the product id)   key1D, etc. is the id for the call in here -->
 	<!--product id is the number value for the key of the product -->
-	<center><button id = \"\" onclick = \"uploadFile(  $productID,  $deleteFlag ,'{$mainDiv}', '{$filesID}', '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}', '{$filename}')\">Submit</button></center>
 	
-	
+	<form  action = \"\" method=\"post\" enctype=\"multipart/form-data\">
+	<center><input id=\"getuploadfile\" type=\"file\" class = \"file\" name=\"file\" style = \"width: 100px \"/></center>
+	<center><button id = \"\" onclick = \"uploadFile(  $productID,  $deleteFlag ,'{$mainDiv}', '{$fileID}', '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}', '{$filename}')\">Submit</button></center>
+	</form>
 	
 	<!--flag for determining if record delete will effect sessioncount, 0 is no.-->
 	<center><button id = \"\" onclick = \"deleteRecord( 1, '{$mainDiv}', $productID)\">Delete</button></center>
@@ -359,7 +369,7 @@ $string1 .=  "
 	<div class=\"col\">
 
 	<br><br><br>
-	<center><img src=\"http://localhost/php proj/uploads/test.png\" alt=\"product image\" width=\"128\" height=\"128\"></img></center>
+	<center><img src=\"http://localhost/php proj/uploads/A1.png\" alt=\"product image\" width=\"128\" height=\"128\"></img></center>
 
 
 	</div>
