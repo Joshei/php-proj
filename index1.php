@@ -434,15 +434,37 @@ function uploadFile(productID,  deleteFlag ,mainDiv, filesID, titleID, descID, c
 
 }
 
+/////
+//<script language='javascript'>
+ function imageRefresh(imageID) {
+
+	var image1 = document.getElementById(imageID).src;
+	document.getElementById("testdiv").innerHTML = image1;
+	alert(image1);
+	alert('here');
+  //  setTimeout(function() {
+  //   var d = new Date;
+  //   var http = img.src;
+  //   if (http.indexOf("&d=") != -1) { http = http.split("&d=")[0]; } 
+//
+//     img.src = http + '&d=' + d.getTime();
+//    }, timeout);
+  }
+
+/////
+
 function updateImage(display)
 {
 
-var img = document.createElement("img");
+
+//	newImage = "http://localhost/image.jpg#" + new Date().getTime();
+
+//var img = document.createElement("img");
  
-img.src = "localhost/php proj/uploads/A.png";
-var src = document.getElementById(display);
+//img.src = "localhost/php proj/uploads/B.gif";
+//var src = document.getElementById(display);
  
-src.appendChild(img);
+//src.appendChild(newImage);
 	
 }
 
@@ -456,7 +478,9 @@ src.appendChild(img);
 <center><button onclick = "printHTML1(document.getElementById('keyword'))">Submit Keyword</button></center>
 
 
+<div id = "testdiv">>
 
+</div>
 
 
 

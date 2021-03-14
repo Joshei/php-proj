@@ -119,7 +119,7 @@ if ($uploadOk == 0) {
 } else {
 
 
-  if($imageFileType == "jpg" )
+  /*if($imageFileType == "jpg" )
   {
     $savename .= ".jpg";
   }
@@ -135,7 +135,7 @@ if ($uploadOk == 0) {
   {
     $savename .= ".gif";
   } 
-
+*/
 
   if (move_uploaded_file($_FILES["file"]["tmp_name"], $savename)){ 
   //if (move_uploaded_file($_FILES["file"]["tmp_name"], $file_name)) {

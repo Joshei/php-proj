@@ -4,7 +4,7 @@ $filename = "";
 $keyword1 = $_GET['keyword'];
 $titleOfSelectedDropDown = $_GET['val1'];
 $fileID = "";
-$imageID = "";
+$imageID = "a";
 $displayID = "";
 //debugging
 //$titleOfSelectedDropDown = "pick";
@@ -59,7 +59,7 @@ WHERE ((products.ProductKeyWord1 = \"$keyword1\") OR
 
 
 $deleteFlag = 1;
-//$string1 ="";
+$string1 ="";
 $counter = 0;
 $counter1 = 0;
 $numbervar = 1;
@@ -83,6 +83,7 @@ $key2ID = "key2ID" . $counter;
 $key3ID = "key3ID" . $counter;
 $fileID = "fileID" . $counter;
 $displayID = "displayID" . $counter;
+$imageID = "imageID" .$counter;
 
 $productID = $row['ProductID'];
 $image = "temp";
@@ -155,16 +156,24 @@ $string1 .=  "
 	
 	<div class=\"col\">
     
-	<form target=\"upload_target\" method = \"Post\" action = \"upload2.php?fileid=$fileID & displayid=$displayID & filename=$filename & pdib=$productID    \" enctype=\"multipart/form-data\" >
+	<form target=\"upload_target\" method = \"Post\" action = \"upload2.php?fileid=$fileID & displayid=$displayID & filename=$filename & pdib=$productID\"   enctype=\"multipart/form-data\" >
 	<input type=\"file\"  id=\"$fileID\" name=\"file\">	
+	
 	<button type = \"submit\"  >submit it</button>
 	</form>
-	<button onclick = \"updateImage('{$displayID}' )\">Dispaly Image</button>
+	
+	
+	
+	
+	<img id = \"$imageID\"  src=\"../php proj/uploads/$filename\");>
+	
 	<iframe id=\"upload_target\" name=\"upload_target\" src=\"#\" style=\"width:0;height:0;border:0px solid #fff;\"></iframe>          
-
-
-	<center><img id= \"$imageID\"  src=\"http://localhost/php proj/uploads/$filename\" alt=\"product image\" width=\"128\" height=\"128\"></img></center>
-
+	
+	<button    onclick = \"imageRefresh( '{$imageID}' )\" >Display</button>
+	
+	
+	
+	
 
 
 
@@ -369,8 +378,9 @@ $string1 .=  "
 	<div class=\"col\">
 
 	<br><br><br>
-	<center><img src=\"http://localhost/php proj/uploads/A1.png\" alt=\"product image\" width=\"128\" height=\"128\"></img></center>
-
+	
+	
+	
 
 	</div>
 	
