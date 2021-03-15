@@ -166,22 +166,13 @@ $string1 .=  "
 	
 	
 	
-	<img id = \"$imageID\"  src=\"../php proj/uploads/$filename?<?php echo filemtime($filename)?>\">
+	<img width=\"120\" height =\"120\"  id = \"$imageID\"  src=\"../php proj/uploads/$filename?<?php echo filemtime($filename)?>\">
 	
 	        
 	
 	<button    onclick = \"imageRefresh( '{$filename}', '{$imageID}' )\" >Display</button>
 	
 	
-	//////////
-	
-
-
-
-	///////////
-
-
-
 	</div>
 
 
