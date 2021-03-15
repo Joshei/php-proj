@@ -156,8 +156,7 @@ $string1 .=  "
 	
 	<div class=\"col\">
     
-
-	<iframe id=\"upload_target\" name=\"upload_target\" src=\"#\" style=\"width:0;height:0;border:0px solid #fff;\"></iframe> 
+	<iframe id=\"upload_target\" name=\"upload_target\"  style=\"width:0;height:0;border:0px solid #fff;\"></iframe>  
 	<form target=\"upload_target\" method = \"Post\" action = \"upload2.php?fileid=$fileID & displayid=$displayID & filename=$filename & pdib=$productID\"   enctype=\"multipart/form-data\" >
 	<input type=\"file\"  id=\"$fileID\" name=\"file\">	
 	
@@ -165,17 +164,21 @@ $string1 .=  "
 	</form>
 	
 	
+	
+	
+	<img id = \"$imageID\"  src=\"../php proj/uploads/$filename?<?php echo filemtime($filename)?>\">
+	
 	        
-	
-	<img alt = \"was here\" id = \"$imageID\"  src=\"../php proj/uploads/$filename?\<?php echo filemtime($filename)?>\">
-	
-	 
 	
 	<button    onclick = \"imageRefresh( '{$filename}', '{$imageID}' )\" >Display</button>
 	
 	
+	//////////
 	
-	
+
+
+
+	///////////
 
 
 
