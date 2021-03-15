@@ -436,25 +436,51 @@ function uploadFile(productID,  deleteFlag ,mainDiv, filesID, titleID, descID, c
 
 /////
 //<script language='javascript'>
- function imageRefresh(imageID) {
+ function imageRefresh(filename, imageID) {
 
-	var image1 = document.getElementById(imageID).src;
-	document.getElementById("testdiv").innerHTML = image1;
-	alert(image1);
-	alert('here');
-  //  setTimeout(function() {
-  //   var d = new Date;
-  //   var http = img.src;
-  //   if (http.indexOf("&d=") != -1) { http = http.split("&d=")[0]; } 
-//
-//     img.src = http + '&d=' + d.getTime();
-//    }, timeout);
+
+	
+	//document.getElementById("imageID1").src = "uploads/A.png";
+
+
+
+//	var img = document.createElement("IMG");
+//img.src = "../php proj/uploads/A5.png";
+//var oldImg = document.getElementById('imageID1');
+//document.getElementById('testing').replaceChild(img, oldImg)
+
+	var image = document.getElementById(imageID);
+	image.src = "../php proj/uploads/" + filename;
+
+	//var img = document.createElement("img");
+	//img.src = "http://localhost/php proj/uploads/A5.png";
+	//document.body.appendChild(img);
+
+
+
+
+
   }
 
 /////
-
-function updateImage(display)
+var1 = 0;
+function test()
 {
+
+	
+	
+	
+	var file = document.getElementById('file').files[0];
+        var reader  = new FileReader();
+        reader.onload = function(e)  {
+            var image = document.createElement("img");
+            image.src = e.target.result;
+            document.body.appendChild(image);
+			
+         }
+         
+     }
+
 
 
 //	newImage = "http://localhost/image.jpg#" + new Date().getTime();
@@ -466,21 +492,20 @@ function updateImage(display)
  
 //src.appendChild(newImage);
 	
-}
+
 
 
 //////////
 </script>
 <body>
-<img src="" id="img" width="100" height="100">
+
+
 <center><input id = "keyword" value = "apple1" type="text" name="keyword2"  placeholder="" ></center>
 <br>
 <center><button onclick = "printHTML1(document.getElementById('keyword'))">Submit Keyword</button></center>
 
 
-<div id = "testdiv">>
-
-</div>
+<div id = "testdiv" >testing image </div>
 
 
 
