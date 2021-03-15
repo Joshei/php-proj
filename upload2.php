@@ -66,11 +66,14 @@ $imageFileType = "";
 
 
 //is already an image in database - save in directory overtop
+
+if (isset($_FILES['file'])) 
+{
+
 if ($filename != null)
 {
   ///////////
-  if (isset($_FILES['file'])) 
-   {
+  
 //$file_name     = $_FILES["file"]["name"]; 
 $file_name = $filename;
 $savename = "uploads/" . $filename; 
@@ -158,13 +161,16 @@ if ($uploadOk == 0) {
 
   
 }
-}//isset, otherwise no file selected
+}//is a filenAME
+
  
- 
-} //if filename != null
+} //if is a file is in there
   
 ////image is  not in database  filename is null
 else 
+{
+
+if (isset($_FILES['file'])) 
 {
   //get next filename
   //////////////
@@ -213,8 +219,8 @@ else if ($imageFileType == "gif" )
 
 ///////
 //there is a file to upload
-if (isset($_FILES['file'])) 
-{
+//if (isset($_FILES['file'])) 
+//{
 //$file_name     = $_FILES["file"]["name"]; 
 $file_name     = $newFilename; 
 $savefilename = "uploads/" . $file_name; 
@@ -272,7 +278,7 @@ if ($uploadOk == 0) {
     $didItUpload = "false";
   }
 }
-}
+}//end is a file
 
 if($didItUpload == "true")
 {
@@ -296,14 +302,16 @@ $dbo->exec($q3);
 
 
 
-}//end image is in datbase
+}//did upload
 
 //no file was selected
  
-  echo ($string);
+  //echo ($string);
 
 }
 
+
+//is a file
 //all work for image is done, ready for savenewrecord, either way
 
 
@@ -398,5 +406,16 @@ unlink($oldfilename);
 }
 */
 
+if (!isset($myObj) && isset($string))
+{
+$myObj = new stdClass();
+$myObj->htmlstuff = $string;
 
+
+//Encode the data as a JSON string
+$jsonStr = json_encode($myObj);
+echo $jsonStr;
+
+
+}
 ?>

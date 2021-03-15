@@ -157,7 +157,10 @@ $string1 .=  "
 	<div class=\"col\">
     
 	<iframe id=\"upload_target\" name=\"upload_target\"  style=\"width:0;height:0;border:0px solid #fff;\"></iframe>  
-	<form target=\"upload_target\" method = \"Post\" action = \"upload2.php?fileid=$fileID & displayid=$displayID & filename=$filename & pdib=$productID\"   enctype=\"multipart/form-data\" >
+	<!--<form target=\"upload_target\" method = \"Post\" action = \"upload2.php?fileid=$fileID & displayid=$displayID & filename=$filename & pdib=$productID\"   enctype=\"multipart/form-data\" >
+	-->
+	<form target=\"upload_target\" method = \"Post\" action = \"upload2($fileID, $displayID, $filename, $productID\" )  enctype=\"multipart/form-data\" >
+	
 	<input type=\"file\"  id=\"$fileID\" name=\"file\">	
 	
 	<button type = \"submit\"  >submit it</button>

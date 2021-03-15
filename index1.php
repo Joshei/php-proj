@@ -434,52 +434,64 @@ function uploadFile(productID,  deleteFlag ,mainDiv, filesID, titleID, descID, c
 
 }
 
+
+function upload2(fileid, displayid, filename, pdib )
+{
+
+
 /////
-//<script language='javascript'>
+//$productID = $_GET['pdib'];
+//$filename = $_GET['filename'];
+//$fileid = $_GET['fileid'];
+//$displayID = $_GET['displayid'];
+
+/////
+
+	var url = "upload2.php?" + "&fileid =" + fileid  "&displayid=" + dispalyid +   "&filename=" + filename +   "&pdib="  + pdib;
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+	
+	if (this.readyState == 4 && this.status == 200) {
+	
+	var jsonData = JSON.parse(this.responseText);
+	var answerHtml = jsonData.htmlstuff;
+	
+	//document.getElementById("insert2").innerHTML = answerHtml;
+	
+	if answerHtml != "")
+	{
+		alert("answerHtml")
+		alert("got here!")
+	}
+	
+	xmlhttp.open("GET", "url", true);
+	xmlhttp.send();
+}
+
+	};
+
+
+}
+
+
+
+
+
  function imageRefresh(filename, imageID) {
 
-
-	
-	//document.getElementById("imageID1").src = "uploads/A.png";
-
-
-
-//	var img = document.createElement("IMG");
-//img.src = "../php proj/uploads/A5.png";
-//var oldImg = document.getElementById('imageID1');
-//document.getElementById('testing').replaceChild(img, oldImg)
-
+	if(imageID != null && filename != "")
+	{
 	var image = document.getElementById(imageID);
 	image.src = "../php proj/uploads/" + filename;
-
-	//var img = document.createElement("img");
-	//img.src = "http://localhost/php proj/uploads/A5.png";
-	//document.body.appendChild(img);
-
-
-
-
-
-  }
+	}
+	
+ }
 
 /////
 var1 = 0;
 function test()
 {
-
-	
-	
-	
-	var file = document.getElementById('file').files[0];
-        var reader  = new FileReader();
-        reader.onload = function(e)  {
-            var image = document.createElement("img");
-            image.src = e.target.result;
-            document.body.appendChild(image);
-			
-         }
-         
-     }
+}
 
 
 
