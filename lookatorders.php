@@ -22,26 +22,42 @@ $statusC = "";
 $pID = "";
 $color = 1;
 
+$dbo = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
 
 if ($whichSql == "regular")
 {
-$sql = "SELECT products.ProductID ,customers.SAddress1, customers.SAddress2, customers.ZipCode, customers.FirstName, customers.LastName, customers.City, customers.State, products.ProductStatus, orders.OrderDate, products.OrderID, products.ProductName, products.ProductCost, products.ProductQuantity FROM orders INNER JOIN  products ON orders.OrderID = products.OrderID INNER JOIN customers ON orders.CustomerID
-=  customers.CustomerID ORDER BY Orders.OrderID, Orders.OrderDate DESC"; 
+//$sql = "SELECT products.ProductID ,customers.SAddress1, customers.SAddress2, customers.ZipCode, customers.FirstName, customers.LastName, customers.City, customers.State, products.ProductStatus, orders.OrderDate, products.OrderID, products.ProductName, products.ProductCost, products.ProductQuantity FROM orders INNER JOIN  products ON orders.OrderID = products.OrderID INNER JOIN customers ON orders.CustomerID
+//=  customers.CustomerID ORDER BY Orders.OrderID, Orders.OrderDate DESC"; 
+
+//???
+$stmt = $dbo->prepare("SELECT products.ProductID ,customers.SAddress1, customers.SAddress2, customers.ZipCode, customers.FirstName, customers.LastName, customers.City, customers.State, products.ProductStatus, orders.OrderDate, products.OrderID, products.ProductName, products.ProductCost, products.ProductQuantity FROM orders INNER JOIN  products ON orders.OrderID = products.OrderID INNER JOIN customers ON orders.CustomerID
+=  customers.CustomerID ORDER BY Orders.OrderID, Orders.OrderDate DESC");
+$stmt->execute();
+
+
 }
 else if ($whichSql == "purchased")
 {
-  $sql = "SELECT products.ProductID ,customers.SAddress1, customers.SAddress2, customers.ZipCode, customers.FirstName, customers.LastName, customers.City, customers.State, products.ProductStatus, orders.OrderDate, products.OrderID, products.ProductName, products.ProductCost, products.ProductQuantity FROM orders INNER JOIN products ON orders.OrderID = products.OrderID INNER JOIN customers ON
-   orders.CustomerID = customers.CustomerID WHERE products.ProductStatus = 'purchased' ORDER BY Orders.OrderID, Orders.OrderDate DESC"; 
+  //$sql = "SELECT products.ProductID ,customers.SAddress1, customers.SAddress2, customers.ZipCode, customers.FirstName, customers.LastName, customers.City, customers.State, products.ProductStatus, orders.OrderDate, products.OrderID, products.ProductName, products.ProductCost, products.ProductQuantity FROM orders INNER JOIN products ON orders.OrderID = products.OrderID INNER JOIN customers ON
+  // orders.CustomerID = customers.CustomerID WHERE products.ProductStatus = 'purchased' ORDER BY Orders.OrderID, Orders.OrderDate DESC"; 
+
+//?????? string quote
+$stmt = $dbo->prepare("SELECT products.ProductID ,customers.SAddress1, customers.SAddress2, customers.ZipCode, customers.FirstName, customers.LastName, customers.City, customers.State, products.ProductStatus, orders.OrderDate, products.OrderID, products.ProductName, products.ProductCost, products.ProductQuantity FROM orders INNER JOIN products ON orders.OrderID = products.OrderID INNER JOIN customers ON
+orders.CustomerID = customers.CustomerID WHERE products.ProductStatus = 'purchased' ORDER BY Orders.OrderID, Orders.OrderDate DESC" );
+$stmt->execute();
+
+
 }
 
-$dbo0 = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
+
 
 $string0 =  "
 <br>
 <div class=\"container\">
 ";
 
-foreach($dbo0->query($sql) as $row1)
+//foreach($dbo0->query($sql) as $row1)
+while ($row1 = $stmt->fetch()) 
 {
 
   $statusA = "statusA" . $counter; 
@@ -233,9 +249,10 @@ $string0 .= "
   <input type=\"radio\" id=\"$status2D\" name=\"status8\" value=\"D\" onclick=\"submitChange(name, '{$status2ID}', '{$prodID}')\">
   <label>Refunded</label>
   ";
-}
 
-}//for each
+
+}//else
+}//while
 
 if (!isset($myObj) && isset($string0))
 {
@@ -246,10 +263,10 @@ $myObj->htmlstuff = $string0;
 //Encode the data as a JSON string
 $jsonStr = json_encode($myObj);
 echo $jsonStr;
-
-
 }
+
 
 ?>
 
 
+ 
