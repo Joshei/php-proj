@@ -447,8 +447,9 @@ function upload2(fileid, displayid, filename, pdib )
 
 /////
 
-	var url = "upload2.php?" + "&fileid =" + fileid  "&displayid=" + dispalyid +   "&filename=" + filename +   "&pdib="  + pdib;
+	var url = "upload2.php?" + "fileid=" + fileid + "&displayid=" + displayid +   "&filename=" + filename +   "&pdib="  + pdib;
 	var xmlhttp = new XMLHttpRequest();
+	
 	xmlhttp.onreadystatechange = function() {
 	
 	if (this.readyState == 4 && this.status == 200) {
@@ -458,17 +459,20 @@ function upload2(fileid, displayid, filename, pdib )
 	
 	//document.getElementById("insert2").innerHTML = answerHtml;
 	
-	if answerHtml != "")
+	if (answerHtml != "")
 	{
 		alert("answerHtml")
 		alert("got here!")
 	}
 	
-	xmlhttp.open("GET", "url", true);
-	xmlhttp.send();
+	
 }
 
 	};
+
+	xmlhttp.open("GET", "url", true);
+	xmlhttp.send();
+
 
 
 }

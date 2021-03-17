@@ -116,9 +116,10 @@ $stmt = $dbo->prepare('UPDATE products SET   ProductName = :ProductName,  Produc
 ProductQuantity =  :ProductQuantity, ProductCatTitle = :ProductCatTitle , ProductKeyword1 = :ProductKeyword1, ProductKeyword2 = :ProductKeyword2, ProductKeyword3 = :ProductKeyword3,
 CustomerID =:CustomerID 
 WHERE ProductID = :ProductID' ); 
+
 $stmt->execute(['ProductName' => $var1, 'ProductDescription' => $var2, 'ProductCost' => $var3,   'ProductQuantity' => $var4, 'ProductCatTitle' =>  $var13 ,
 'ProductKeyword1' => $var8, 'ProductKeyword2' => $var9 , 'ProductKeyword3' => $var10, 'ProductID' => $var5 , 'CustomerID' => $customerID_SESSION]);
-$user = $stmt->fetch();
+//$user = $stmt->fetch();
 
 
 

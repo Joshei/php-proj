@@ -1,5 +1,4 @@
 <?php
-
 $filename = "";
 $keyword1 = $_GET['keyword'];
 $titleOfSelectedDropDown = $_GET['val1'];
@@ -9,7 +8,8 @@ $displayID = "";
 //debugging
 //$titleOfSelectedDropDown = "pick";
 //$keyword1 = "apple1";
-
+$keyword1 = "test";
+$titleOfSelectedDropDown = "cc";
 
 $host = 'localhost';
 $user = 'root';
@@ -30,33 +30,23 @@ $key1ID = "";
 $key2ID = "";
 $key3ID = "";
 
+$string1 = "<center><h1><u>Search Results</u><h1></center></p>";
 
 $dbo = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
 
-$string1 = "<center><h1><u>Search Results</u><h1></center></p>";
+//$stmt = $dbo->prepare("SELECT * FROM products WHERE ProductName = ?");
+//
+//
 
-
-//dont forget unique value for title 
-//this finds all products that have the keyword apple1
-$q1 = "SELECT products.ProductFilename, products.ProductName, products.ProductID, products.ProductDescription, products.ProductCost, products.ProductQuantity, products.ProductCatTitle 
+$stmt = $dbo->prepare  ("SELECT products.ProductFilename, products.ProductName, products.ProductID, products.ProductDescription, products.ProductCost, products.ProductQuantity, products.ProductCatTitle 
 
 FROM products 
 INNER JOIN customers ON customers.CustomerID = products.CustomerID
-WHERE ((products.ProductKeyWord1 = \"$keyword1\") OR 
- (products.ProductKeyWord2 = \"$keyword1\") or (products.ProductKeyWord3 = \"$keyword1\" )) and products.ProductCatTitle = \"$titleOfSelectedDropDown\"  ";
 
+WHERE ((products.ProductKeyWord1 = ? OR 
+ (products.ProductKeyWord2 = ?) OR (products.ProductKeyWord3 = ? )) AND (products.ProductCatTitle = ?)  ");
 
-
-//this finds all products that have the keyword apple1
-//$q1 = "SELECT customers.CustomerID, customers.Password, customers.FirstName, customers.LastName, customers.City, customers.State,
-// products.ProductName, products.ProductID, products.ProductDescription, products.ProductCost, products.ProductQuantity 
-//FROM products 
-//INNER JOIN customers ON customers.CustomerID = products.CustomerID
-//WHERE ((products.KeyWord1 = \"$keyword1\") OR 
-// (productss.KeyWord2 = \"$keyword1\") or (products.KeyWord3 = \"$keyword1\" )) ";
-
-
-
+$stmt->execute([$keyword1, $keyword1, $keyword1, $titleOfSelectedDropDown]);
 
 $deleteFlag = 1;
 $string1 ="";
@@ -65,13 +55,8 @@ $counter1 = 0;
 $numbervar = 1;
 $mainDiv = "";
 $displayID = "";
-//$password1 = "bb";//$row['Password'];
-//$firstname =  "aa";//;//$row['FirstName'];
-//$lastname = "aa";////$row['LastName'];
-//$city  =  "aa";////$row['City'];
-//$state  =  "aa";////$row['State'];
 
-foreach ($dbo->query($q1) as $row) {
+while ($row = $stmt->fetch()) {
 
 $counter = $counter + 1;
 $titleID = "titleID" . $counter;
@@ -103,13 +88,12 @@ $mainDiv = $var . (string)$counter;
 
 $dbo1 = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
 
-
-//$sql2 = "SELECT * from keywords INNER JOIN products  on products.Keyword1ID = keywords.KeywordID  AND products.Keyword1ID =  $keywordID ";
-//should work altered after database changed
-$sql2 = "SELECT ProductKeyword1, ProductKeyword2, ProductKeyword3 FROM products where products.ProductID =  $productID ";
+$stmt = $dbo1->prepare("SELECT ProductKeyword1, ProductKeyword2, ProductKeyword3 FROM products where products.ProductID =  ? ");
+$stmt->execute([$productID]);
 
 
-foreach($dbo1->query($sql2) as $row1)
+//foreach($dbo1->query($sql2) as $row1)
+while ($row1 = $stmt->fetch()) 
 {
 
 	$gKeyword1 = $row1['ProductKeyword1'];

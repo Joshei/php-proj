@@ -61,16 +61,7 @@ $stmt = $dbo->prepare("INSERT INTO products (ProductFilename, ProductName ,  Pro
 VALUES (:ProductFilename, :ProductName, :ProductDescription, :ProductCost ,:ProductQuantity, :ProductCatTitle , :ProductKeyword1, :ProductKeyword2, :ProductKeyword3 ,:CustomerID)"); 
 $stmt->execute(['ProductFilename' => $filename, 'ProductName' => $title, 'ProductDescription' => $description, 'ProductCost' => $cost,   'ProductQuantity' => $quantity, 'ProductCatTitle' => $category,
 'ProductKeyword1' => $gKeyword1, 'ProductKeyword2'=> $gKeyword2, 'ProductKeyword3' =>$gKeyword3 , 'CustomerID' => $customerID_SESSION  ]);
-$user = $stmt->fetch();
-
-
-//customer set  up at login time
-
-//$stmt = $dbo->prepare("INSERT INTO customers (Name, Password, FirstName, LastName, City, State) VALUES 
-//(:Name,:Password, :FirstName, :LastName, :City, :State)");
-//$stmt->execute([ 'Name' => $name , 'Password' => $password]),  'FirstName' => $firstname, 'LastName' => $lastname, 'City' => $city, $state => 'State';
 //$user = $stmt->fetch();
-
 
 
 

@@ -11,18 +11,9 @@ $didItUpload = "false";
 $string = "";
 //https://stackoverflow.com/questions/23980733/jquery-ajax-file-upload-php
 //https://www.w3schools.com/php/php_file_upload.asp
-
-////////////////////////////////////
-//WHEN  READY TO CHANGE: for unique filenams made by me.
-//$target_file = "uploads1/screen1.png";
-//if (move_uploaded_file($_FILES["file"]["tmp_name"], "uploads1/screen1.png")) {
-///////////////////////////////////
-
 $noFileSelected = "true";
 $image = "";
 $filename = ""; 
-
-
 
 function getFilename($productID, $filename)
 {
@@ -36,12 +27,15 @@ $options = array(
 );
 $dbo = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
 
-$sql = "SELECT ProductImage, ProductFilename FROM products WHERE ProductID = $productID";
+//$sql = "SELECT ProductImage, ProductFilename FROM products WHERE ProductID = $productID";
+$stmt = $dbo1->prepare("SELECT ProductImage, ProductFilename FROM products WHERE ProductID = ?");
+$stmt->execute([$productID]);
 
-foreach($dbo->query($sql) as $row1)
+//foreach($dbo->query($sql) as $row1)
+while ($row1 = $stmt->fetch()) 
 {
 
- //$image = $row1['ProductImage'];
+
  $filename = $row1['ProductFilename'];
 }
  return($filename);
@@ -65,16 +59,12 @@ $dbo = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
 $imageFileType = "";
 
 
-//is already an image in database - save in directory overtop
-
 if (isset($_FILES['file'])) 
 {
 
 if ($filename != null)
 {
-  ///////////
   
-//$file_name     = $_FILES["file"]["name"]; 
 $file_name = $filename;
 $savename = "uploads/" . $filename; 
 $target_dir = "uploads/";
@@ -140,8 +130,9 @@ if ($uploadOk == 0) {
   } 
 */
 
-  if (move_uploaded_file($_FILES["file"]["tmp_name"], $savename)){ 
   //if (move_uploaded_file($_FILES["file"]["tmp_name"], $file_name)) {
+  if (move_uploaded_file($_FILES["file"]["tmp_name"], $savename)){ 
+  
     $string .= "The file ". htmlspecialchars( basename( $_FILES["file"]["name"])). " has been uploaded.<br>";
     $didItUpload = "true";
     
@@ -166,14 +157,11 @@ if ($uploadOk == 0) {
  
 } //if is a file is in there
   
-////image is  not in database  filename is null
 else 
 {
 
 if (isset($_FILES['file'])) 
 {
-  //get next filename
-  //////////////
   
 $number = 0;
 $q1 = "SELECT Number FROM  numbers";
@@ -185,15 +173,11 @@ foreach ($dbo->query($q1) as $row) {
 $otherNumber = $number + 1;
 $newFilename = "A" . $otherNumber;
 
-/////////
 $target_dir = "uploads/";
 
 $target_file = $target_dir . basename($_FILES["file"]["name"]);
 $uploadOk = 1;
 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
-
-//////////
 
 if($imageFileType == "jpg" )
 {
@@ -212,16 +196,6 @@ else if ($imageFileType == "gif" )
   $newFilename .= ".gif";
 } 
 
-
-
-
-//put new filename in directory
-
-///////
-//there is a file to upload
-//if (isset($_FILES['file'])) 
-//{
-//$file_name     = $_FILES["file"]["name"]; 
 $file_name     = $newFilename; 
 $savefilename = "uploads/" . $file_name; 
 
@@ -283,11 +257,10 @@ if ($uploadOk == 0) {
 if($didItUpload == "true")
 {
 
-
   //set new number back in database
-$q2 = "UPDATE numbers SET Number = " . $otherNumber;
-
-$dbo->exec($q2);
+//$q2 = "UPDATE numbers SET Number = " . $otherNumber;
+$stmt = $pdo->prepare( "UPDATE numbers SET Number =  ? ");
+$stmt->execute($otherNumber);
 
 //put newFilename in database
 
@@ -297,8 +270,14 @@ $dbo->exec($q2);
 
 
 //puts new filename into database
-$q3 = "UPDATE products SET  ProductFilename = '$newFilename' WHERE ProductID = $productID";
-$dbo->exec($q3);
+
+
+
+
+//$q3 = "UPDATE products SET  ProductFilename = '$newFilename' WHERE ProductID = $productID";
+$stmt = $pdo->prepare("UPDATE products SET  ProductFilename = '$newFilename' WHERE ProductID = ?");
+$stmt->execute([$productID]);
+//$dbo->exec($q3);
 
 
 
