@@ -37,7 +37,7 @@ $options = array(
 );
 $dbo1 = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
 
-//for a new record
+//for a new record????????
 $q1 = "SELECT Number FROM  number";
 foreach ($dbo->query($q1) as $row) {
 
@@ -45,15 +45,30 @@ foreach ($dbo->query($q1) as $row) {
     $otherNumber = $number + 1;
 }
 //number is used to create filename
-$q1 = "UPDATE number SET Number = " . $otherNumber;
-$dbo1->exec($q1);
+
+
+$stmt = $pdo->prepare("UPDATE number SET Number = ? ");
+
+
+
+$stmt->bindParam(1, $otherNumber);
+$stmt->execute();
+
+
+
 
 
 $fileName = "A" . $number;
 
 //for an edit, use this saved filename 
-$q1 = "SELECT ProductFilename from products where productID = " . $var5;
-foreach ($dbo->query($q1) as $row) {
+$q1 = "SELECT ProductFilename from products where productID =  ?";
+
+$stmt->bindParam(1, $var5);
+$stmt->execute();
+
+
+
+while ($row1 = $stmt->fetch())  {
 
     $storedFilename = $row['ProductFilename'];
 

@@ -397,7 +397,40 @@ function fillDropDown()
 function uploadFile(productID,  deleteFlag ,mainDiv, filesID, titleID, descID, costID,quantityID, key1ID , key2ID , key3ID, filename) {
 /////// 
 	
-	var url1 = "upload2.php?pdib="  + productID + "&" + "filename=" + filename;
+alert("ddddddd");
+var xmlhttp = new XMLHttpRequest();
+	
+	
+	
+	var url = "upload2.php?pdib="  + productID + "&" + "filename=" + filename;
+
+
+	xmlhttp.onreadystatechange = function() {
+		
+	if (this.readyState == 4 && this.status == 200) {
+		
+		
+		var jsonData = JSON.parse(this.responseText);
+		var answerHtml = jsonData.htmlstuff;
+		//document.getElementById("codehere").innerHTML = answerHtml;
+
+		alert("sssssssss");
+	
+
+
+		}
+	};
+	
+	alert("dddddddd")
+	xmlhttp.open("GET", url , true);
+	
+	xmlhttp.send();
+	
+}
+
+
+
+	/*var url1 = "upload2.php?pdib="  + productID + "&" + "filename=" + filename;
 	if (filename == "" )
 	{
 	//var file_data = $('#sortpicture').prop('files')[0]; 
@@ -426,14 +459,22 @@ function uploadFile(productID,  deleteFlag ,mainDiv, filesID, titleID, descID, c
 			}
 			
         }
+
+		
+
      });
 	}//if
-	 
+	 */
 	
-	 SaveProductItems(productID,  deleteFlag ,mainDiv, filesID, titleID, descID, costID,quantityID, key1ID , key2ID , key3ID, filename);
+	// SaveProductItems(productID,  deleteFlag ,mainDiv, filesID, titleID, descID, costID,quantityID, key1ID , key2ID , key3ID, filename);
 
+//}
+
+
+function upload2()
+{
+	alert("here");
 }
-
 
 function upload2(fileid, displayid, filename, pdib )
 {
@@ -446,7 +487,7 @@ function upload2(fileid, displayid, filename, pdib )
 //$displayID = $_GET['displayid'];
 
 /////
-
+	alert("wwwwww");
 	var url = "upload2.php?" + "fileid=" + fileid + "&displayid=" + displayid +   "&filename=" + filename +   "&pdib="  + pdib;
 	var xmlhttp = new XMLHttpRequest();
 	
@@ -481,13 +522,57 @@ function upload2(fileid, displayid, filename, pdib )
 
 
 
- function imageRefresh(filename, imageID) {
+ function imageRefresh(filename, imageID ) {
 
+	
 	if(imageID != null && filename != "")
 	{
-	var image = document.getElementById(imageID);
-	image.src = "../php proj/uploads/" + filename;
+	var image = document.getElementById(imageID).src =  "/php proj/uploads/" + filename;
+	//image.src = "../php proj/uploads/" + filename;
+
+//////////
+
+	var url = "getMessage.php";
+	var xmlhttp = new XMLHttpRequest();
+	
+	xmlhttp.onreadystatechange = function() {
+	
+	if (this.readyState == 4 && this.status == 200) {
+	
+	var jsonData = JSON.parse(this.responseText);
+	var message = jsonData.htmlstuff;
+	
+	//document.getElementById("insert2").innerHTML = answerHtml;
+	
+	if (message == "")
+	{
+		
+		alert("got here, positive msg!")
 	}
+	else
+	{
+		alert("negative message")
+	}
+	
+	
+}
+
+	};
+
+	xmlhttp.open("GET", url, true);
+	xmlhttp.send();
+
+
+
+}
+
+
+
+//////////
+
+	
+	
+	
 	
  }
 

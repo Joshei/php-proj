@@ -1,11 +1,13 @@
 <?php
+session_start();
+echo '<pre>' . print_r($_POST, 1) . '</pre>';
+$productID = $_POST['productID'];
+$filename = $_POST['filename'];
+//$fileid = $_GET['fileid'];
+//$displayID = $_GET['displayid'];
 
-//upload2.php?fileid= $fileID & displayid= $displayID & filename= $filename & pid= ProductID" 
-$productID = $_GET['pdib'];
-$filename = $_GET['filename'];
-$fileid = $_GET['fileid'];
-$displayID = $_GET['displayid'];
-    
+
+
 
 $didItUpload = "false";
 $string = "";
@@ -28,8 +30,11 @@ $options = array(
 $dbo = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
 
 //$sql = "SELECT ProductImage, ProductFilename FROM products WHERE ProductID = $productID";
-$stmt = $dbo1->prepare("SELECT ProductImage, ProductFilename FROM products WHERE ProductID = ?");
-$stmt->execute([$productID]);
+$stmt = $dbo->prepare("SELECT ProductImage, ProductFilename FROM products WHERE ProductID = ?");
+$stmt->bindParam(1, $productID);
+$stmt->execute();
+
+
 
 //foreach($dbo->query($sql) as $row1)
 while ($row1 = $stmt->fetch()) 
@@ -133,7 +138,7 @@ if ($uploadOk == 0) {
   //if (move_uploaded_file($_FILES["file"]["tmp_name"], $file_name)) {
   if (move_uploaded_file($_FILES["file"]["tmp_name"], $savename)){ 
   
-    $string .= "The file ". htmlspecialchars( basename( $_FILES["file"]["name"])). " has been uploaded.<br>";
+    //$string .= "The file ". htmlspecialchars( basename( $_FILES["file"]["name"])). " has been uploaded.<br>";
     $didItUpload = "true";
     
     $noFileSelected = "false";
@@ -165,10 +170,14 @@ if (isset($_FILES['file']))
   
 $number = 0;
 $q1 = "SELECT Number FROM  numbers";
+
 foreach ($dbo->query($q1) as $row) {
 
     $number = $row['Number'];
 }
+
+
+
 //number is used to create filename
 $otherNumber = $number + 1;
 $newFilename = "A" . $otherNumber;
@@ -260,7 +269,12 @@ if($didItUpload == "true")
   //set new number back in database
 //$q2 = "UPDATE numbers SET Number = " . $otherNumber;
 $stmt = $pdo->prepare( "UPDATE numbers SET Number =  ? ");
-$stmt->execute($otherNumber);
+
+$stmt->bindParam(1, $otherNumber);
+$stmt->execute();
+
+
+
 
 //put newFilename in database
 
@@ -276,7 +290,12 @@ $stmt->execute($otherNumber);
 
 //$q3 = "UPDATE products SET  ProductFilename = '$newFilename' WHERE ProductID = $productID";
 $stmt = $pdo->prepare("UPDATE products SET  ProductFilename = '$newFilename' WHERE ProductID = ?");
-$stmt->execute([$productID]);
+
+$stmt->bindParam(1, $productID);
+$stmt->execute();
+
+
+
 //$dbo->exec($q3);
 
 
@@ -385,16 +404,21 @@ unlink($oldfilename);
 }
 */
 
-if (!isset($myObj) && isset($string))
-{
-$myObj = new stdClass();
-$myObj->htmlstuff = $string;
+$_SESSION['msg'] = $string;
+
+
+//if (!isset($myObj) && isset($string))
+//{
+//$myObj = new stdClass();
+//$myObj->htmlstuff = $string;
 
 
 //Encode the data as a JSON string
-$jsonStr = json_encode($myObj);
-echo $jsonStr;
+//$jsonStr = json_encode($myObj);
+//echo $jsonStr;
 
-
-}
+ 
 ?>
+
+</body>
+</html>
