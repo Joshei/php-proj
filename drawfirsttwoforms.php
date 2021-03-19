@@ -1,4 +1,10 @@
 <?php
+session_start();
+
+
+$_SESSION['msg'] = "";
+
+
 $filename = "";
 $keyword1 = $_GET['keyword'];
 $titleOfSelectedDropDown = $_GET['val1'];
@@ -8,8 +14,8 @@ $displayID = "";
 //debugging
 //$titleOfSelectedDropDown = "pick";
 //$keyword1 = "apple1";
-$keyword1 = "test";
-$titleOfSelectedDropDown = "cc";
+//$keyword1 = "apple1";
+//$titleOfSelectedDropDown = "computers";
 
 $host = 'localhost';
 $user = 'root';
@@ -38,15 +44,24 @@ $dbo = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
 //
 //
 
-$stmt = $dbo->prepare  ("SELECT products.ProductFilename, products.ProductName, products.ProductID, products.ProductDescription, products.ProductCost, products.ProductQuantity, products.ProductCatTitle 
 
-FROM products 
-INNER JOIN customers ON customers.CustomerID = products.CustomerID
+//$sql = "SELECT ProductFilename, ProductName, ProductID, ProductDescription,ProductCost,ProductQuantity, ProductCatTitle FROM products 
+//INNER JOIN customers ON customers.CustomerID = products.CustomerID 
+//WHERE ((products.ProductKeyWord1 = 'apple1') 
+//OR (products.ProductKeyWord2 = 'apple1') OR (products.ProductKeyWord3 = 'apple1' ))  AND (products.ProductCatTitle = '') ";
 
-WHERE ((products.ProductKeyWord1 = ? OR 
- (products.ProductKeyWord2 = ?) OR (products.ProductKeyWord3 = ? )) AND (products.ProductCatTitle = ?)  ");
+$sql = "SELECT ProductFilename, ProductName, ProductID, ProductDescription,ProductCost,ProductQuantity, ProductCatTitle FROM products 
+INNER JOIN customers ON customers.CustomerID = products.CustomerID 
+WHERE ((products.ProductKeyWord1 = ?) 
+OR (products.ProductKeyWord2 = ?) OR (products.ProductKeyWord3 = ? ))  AND (products.ProductCatTitle = ?) ";
 
-$stmt->execute([$keyword1, $keyword1, $keyword1, $titleOfSelectedDropDown]);
+$stmt = $dbo->prepare($sql);
+$stmt->bindParam(1, $keyword1);
+$stmt->bindParam(2, $keyword1);
+$stmt->bindParam(3, $keyword1);
+$stmt->bindParam(4, $titleOfSelectedDropDown);
+
+$stmt->execute();
 
 $deleteFlag = 1;
 $string1 ="";
@@ -89,7 +104,8 @@ $mainDiv = $var . (string)$counter;
 $dbo1 = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
 
 $stmt = $dbo1->prepare("SELECT ProductKeyword1, ProductKeyword2, ProductKeyword3 FROM products where products.ProductID =  ? ");
-$stmt->execute([$productID]);
+$stmt->bindParam(1, $productID);
+$stmt->execute();
 
 
 //foreach($dbo1->query($sql2) as $row1)
@@ -107,59 +123,31 @@ $dbo3 = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
 
 
 
-
+$string2 = "AA";
 
 
 $string1 .=  "  
-
 <div  class = \"A\" id = \"$mainDiv\">
-
-
 <p id = \"link1\">product id   :$productID</p>
 <p>category id  :$category</p>
-
-
-
-
-
 <div class = \"A\" id = \"endz\"></div>
 <div class = \"A\" id = \"startz\"></div>
-
-
 <div class=\"container\">
-
-
-
 <div id = \"testing\" >testing <div>
-
 <div id = \"$displayID\" >  </div>
-
-  <div class=\"row\" >
-
+<div class=\"row\" >
+<div class=\"col\">
 	
-	
-	<div class=\"col\">
-    
-	<iframe id=\"upload_target\" name=\"upload_target\"  style=\"width:0;height:0;border:0px solid #fff;\"></iframe>  
-	<!--<form target=\"upload_target\" method = \"Post\" action = \"upload2.php?fileid=$fileID & displayid=$displayID & filename=$filename & pdib=$productID\"   enctype=\"multipart/form-data\" >
-	-->
-	<form target=\"upload_target\" method = \"Post\" action = \"upload2($fileID, $displayID, $filename, $productID\" )  enctype=\"multipart/form-data\" >
-	
-	<input type=\"file\"  id=\"$fileID\" name=\"file\">	
-	
-	<button type = \"submit\"  >submit it</button>
+	<iframe id=\"upload_target\" name=\"upload_target\"  style=\"width:0;height:0;border:0px solid #fff;\"></iframe> 	
+	<form   target=\"upload_target\"  method = \"POST\" action = \"upload2.php\" enctype=\"multipart/form-data\"   >
+	<input  type = \"file\" name = \"file\" id = \"$fileID\">
+	<input type=hidden id=\"$productID\" name= \"productID\" value=\"$productID\">
+	<input type=hidden id=\"$filename\" name=\"filename\" value=\"$filename\">
+	<button value = \"Submit\" type = \"submit\"  >submit it</button>
 	</form>
 	
-	
-	
-	
-	<img width=\"120\" height =\"120\"  id = \"$imageID\"  src=\"../php proj/uploads/$filename?<?php echo filemtime($filename)?>\">
-	
-	        
-	
-	<button    onclick = \"imageRefresh( '{$filename}', '{$imageID}' )\" >Display</button>
-	
-	
+	<img width=\"120\" height =\"120\"  id = \"$imageID\"  src=\"../php proj/uploads/$filename?<?php time() ?>\"></img>
+	<button    onclick = \"imageRefresh( '{$filename}', '{$imageID}')\" >Display</button>
 	</div>
 
 
