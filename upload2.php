@@ -1,5 +1,6 @@
 <?php
 session_start();
+$_SESSION['savedfilename'] = "";
 echo '<pre>' . print_r($_POST, 1) . '</pre>';
 $productID = $_POST['productID'];
 $filename = $_POST['filename'];
@@ -139,6 +140,8 @@ if ($uploadOk == 0) {
   if (move_uploaded_file($_FILES["file"]["tmp_name"], $savename)){ 
   
     //$string .= "The file ". htmlspecialchars( basename( $_FILES["file"]["name"])). " has been uploaded.<br>";
+
+    $_SESSION['savedfilename'] =  $savename;
     $didItUpload = "true";
     
     $noFileSelected = "false";
@@ -160,9 +163,9 @@ if ($uploadOk == 0) {
 }//is a filenAME
 
  
-} //if is a file is in there
+//} //if is a file is in there
   
-else 
+else //no image in record
 {
 
 if (isset($_FILES['file'])) 
@@ -206,7 +209,7 @@ else if ($imageFileType == "gif" )
 } 
 
 $file_name     = $newFilename; 
-$savefilename = "uploads/" . $file_name; 
+$savedfilename = "uploads/" . $file_name; 
 
 $target_dir = "uploads/";
 
@@ -252,7 +255,8 @@ if ($uploadOk == 0) {
 // if everything is ok, try to upload file
 } else {
   //if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
-  if (move_uploaded_file($_FILES["file"]["tmp_name"], $savefilename)) {
+  if (move_uploaded_file($_FILES["file"]["tmp_name"], $savedfilename)) {
+    $_SESSION['savedfilename'] = $savedfilename;
     //$string .= "The file ". htmlspecialchars( basename( $_FILES["file"]["name"])). " has been uploaded.<br>";
     $didItUpload = "true";
     $filename = htmlspecialchars( basename( $_FILES["file"]["name"]));
@@ -268,7 +272,7 @@ if($didItUpload == "true")
 
   //set new number back in database
 //$q2 = "UPDATE numbers SET Number = " . $otherNumber;
-$stmt = $pdo->prepare( "UPDATE numbers SET Number =  ? ");
+$stmt = $dbo->prepare( "UPDATE numbers SET Number =  ? ");
 
 $stmt->bindParam(1, $otherNumber);
 $stmt->execute();
@@ -289,7 +293,7 @@ $stmt->execute();
 
 
 //$q3 = "UPDATE products SET  ProductFilename = '$newFilename' WHERE ProductID = $productID";
-$stmt = $pdo->prepare("UPDATE products SET  ProductFilename = '$newFilename' WHERE ProductID = ?");
+$stmt = $dbo->prepare("UPDATE products SET  ProductFilename = '$newFilename' WHERE ProductID = ?");
 
 $stmt->bindParam(1, $productID);
 $stmt->execute();
@@ -307,6 +311,7 @@ $stmt->execute();
   //echo ($string);
 
 }
+}//file
 
 
 //is a file

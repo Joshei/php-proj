@@ -146,7 +146,7 @@ $string1 .=  "
 	<button value = \"Submit\" type = \"submit\"  >submit it</button>
 	</form>
 	
-	<img width=\"120\" height =\"120\"  id = \"$imageID\"  src=\"../php proj/uploads/$filename?<?php time() ?>\"></img>
+	<img class=\"NO-CACHE\" width=\"120\" height =\"120\"  id = \"$imageID\"  src=\"http://localhost/phpproj/uploads/$filename?<?php filemtime('$filename') ?>\"></img>
 	<button    onclick = \"imageRefresh( '{$filename}', '{$imageID}')\" >Display</button>
 	</div>
 
@@ -236,7 +236,7 @@ $string1 .=  "
 	
 	<form  action = \"\" method=\"post\" enctype=\"multipart/form-data\">
 	<center><input id=\"getuploadfile\" type=\"file\" class = \"file\" name=\"file\" style = \"width: 100px \"/></center>
-	<center><button id = \"\" onclick = \"uploadFile(  $productID,  $deleteFlag ,'{$mainDiv}', '{$fileID}', '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}', '{$filename}')\">Submit</button></center>
+	<center><button id = \"test\" onclick = \"uploadFile(  $productID,  $deleteFlag ,'{$mainDiv}', '{$fileID}', '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}', '{$filename}')\">Submit</button></center>
 	</form>
 	
 	<!--flag for determining if record delete will effect sessioncount, 0 is no.-->
