@@ -7,7 +7,7 @@ $filename = $_POST['filename'];
 //$fileid = $_GET['fileid'];
 //$displayID = $_GET['displayid'];
 
-
+//$_SESSION['try'] = 0;
 
 
 $didItUpload = "false";
@@ -28,6 +28,8 @@ $options = array(
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_EMULATE_PREPARES => false
 );
+
+
 $dbo = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
 
 //$sql = "SELECT ProductImage, ProductFilename FROM products WHERE ProductID = $productID";
@@ -68,11 +70,69 @@ $imageFileType = "";
 if (isset($_FILES['file'])) 
 {
 
+
+
 if ($filename != null)
 {
-  
-$file_name = $filename;
-$savename = "uploads/" . $filename; 
+
+//////////////
+
+$number = 0;
+$q1 = "SELECT Number FROM  numbers";
+
+foreach ($dbo->query($q1) as $row) {
+
+    $number = $row['Number'];
+}
+
+
+
+//number is used to create filename
+
+$otherNumber1 = $number;
+$otherNumber = $number + 1;
+$newFilename = "A" . $otherNumber;
+$deleteOldFilename = "A" . $otherNumber1;
+
+
+$target_dir = "uploads/";
+
+$target_file = $target_dir . basename($_FILES["file"]["name"]);
+$uploadOk = 1;
+$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+if($imageFileType == "jpg" )
+{
+  $ext = ".jpg";
+  $newFilename .= ".jpg";
+}
+else if ($imageFileType == "png" )
+{
+  $ext = ".png";
+  $newFilename .= ".png";
+}
+else if ($imageFileType == "jpeg")
+{
+  $ext = ".jpeg";
+  $newFilename .= ".jpeg";
+}
+else if ($imageFileType == "gif" )
+{
+  $ext = ".gif";
+  $newFilename .= ".gif";
+} 
+
+//////////////
+$filename1 = $deleteOldFilename . $ext;
+
+
+unlink("uploads/$filename1");
+
+
+
+$file_name     = $newFilename; 
+$savedfilename = "uploads/" . $file_name; 
+
 $target_dir = "uploads/";
 
 $target_file = $target_dir . basename($_FILES["file"]["name"]);
@@ -118,30 +178,26 @@ if ($uploadOk == 0) {
 } else {
 
 
-  /*if($imageFileType == "jpg" )
-  {
-    $savename .= ".jpg";
-  }
-  else if ($imageFileType == "png" )
-  {
-    $savename .= ".png";
-  }
-  else if ($imageFileType == "jpeg")
-  {
-    $savename.= ".jpeg";
-  }
-  else if ($imageFileType == "gif" )
-  {
-    $savename .= ".gif";
-  } 
-*/
-
   //if (move_uploaded_file($_FILES["file"]["tmp_name"], $file_name)) {
-  if (move_uploaded_file($_FILES["file"]["tmp_name"], $savename)){ 
+  if (move_uploaded_file($_FILES["file"]["tmp_name"], $savedfilename)){ 
   
+    $_SESSION['savedfilename'] = $savedfilename;
+
     //$string .= "The file ". htmlspecialchars( basename( $_FILES["file"]["name"])). " has been uploaded.<br>";
 
-    $_SESSION['savedfilename'] =  $savename;
+    //if(($_SESSION['try']) == 1)
+    //{
+    //  $_SESSION['savedfilename'] =  "uploads/B.png";//$savename;
+    //}
+    
+    //else
+    //{
+    //$_SESSION['savedfilename'] =  $savename;
+    //}
+
+    //$_SESSION['try'] = $_SESSION['try'] +1; 
+
+
     $didItUpload = "true";
     
     $noFileSelected = "false";
@@ -157,9 +213,32 @@ if ($uploadOk == 0) {
   }
   //is already an image in erecord save dnew image as same record name
 
+//////////
+if($didItUpload == "true")
+{
 
-  
+  //set new number back in database
+//$q2 = "UPDATE numbers SET Number = " . $otherNumber;
+$stmt = $dbo->prepare( "UPDATE numbers SET Number =  ? ");
+
+$stmt->bindParam(1, $otherNumber);
+$stmt->execute();
+
+
+//$q3 = "UPDATE products SET  ProductFilename = '$newFilename' WHERE ProductID = $productID";
+$stmt = $dbo->prepare("UPDATE products SET  ProductFilename = '$newFilename' WHERE ProductID = ?");
+
+$stmt->bindParam(1, $productID);
+$stmt->execute();
+
+}//
+////////
+
 }
+
+
+
+
 }//is a filenAME
 
  
