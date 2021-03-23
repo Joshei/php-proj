@@ -525,7 +525,7 @@ function upload2(fileid, displayid, filename, pdib )
  function imageRefresh(filename, imageID ) {
 
 	
-	if(imageID != null )
+	//if(imageID != null )
 	{
 
 //////////
@@ -541,21 +541,11 @@ function upload2(fileid, displayid, filename, pdib )
 	if (this.readyState == 4 && this.status == 200) {
 	
 	var jsonData = JSON.parse(this.responseText);
-	//var message = jsonData.htmlstuff;
+	var message1 = jsonData.htmlstuff1;
 	var message2 = jsonData.htmlstuff2;
 
-	var nods = document.getElementsByClassName('NO-CACHE');
-for (var i = 0; i < nods.length; i++)
-{
-    nods[i].attributes['src'].value += "?a=" + Math.random();
-}
 	
-	//document.getElementById("insert2").innerHTML = answerHtml;
-	//document.getElementById("insert").innerHTML="<div id=\"imageHolder\"><img src='/phpproj/uploads/B.png' alt='here'/></img></div>";
 	
-	//var src = "<img src=\"http://localhost/phpproj/\" + message2 + "  \" "  />";
-	//document.getElementById(src);
-	//document.getElementById("insert").innerHTML="<div id=\"imageHolder\"><img src='/phpproj/'\" + message2 +   \"  alt='here'    + \"  /></img></div>";
 	
 	var image = document.getElementById(imageID).src =  "http://localhost/phpproj/" + message2;
 	image.src = "http://localhost/phpproj/" + message2;
@@ -564,7 +554,7 @@ for (var i = 0; i < nods.length; i++)
 	
 
 	
-	if (message == "")
+	if (message1 == "")
 	{
 		
 		alert("got here, positive msg!")

@@ -1,3 +1,6 @@
+
+
+
 <?php
 session_start();
 
@@ -147,7 +150,7 @@ $string1 .=  "
 	</form>
 	
 	<img class=\"NO-CACHE\" width=\"120\" height =\"120\"  id = \"$imageID\"  src=\"http://localhost/phpproj/uploads/$filename?<?php filemtime('$filename') ?>\"></img>
-	<button    onclick = \"imageRefresh( '{$filename}', '{$imageID}')\" >Display</button>
+	<button    onclick = \"imageRefresh( '{$filename}', '{$imageID}')\" >Confirm</button>
 	</div>
 
 

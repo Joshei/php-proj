@@ -10,6 +10,8 @@ if (!isset($myObj) && isset($string1))
 {
 $myObj = new stdClass();
 //$myObj->htmlstuff = $string1;
+
+$myObj->htmlstuff1 = $string1;
 $myObj->htmlstuff2 = $string2;
 
 //Encode the data as a JSON string
