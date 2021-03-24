@@ -27,50 +27,7 @@
 <style>
 
 
-.flex-container {
-  display: flex;
-  justify-content: space-around;
-  background-color: DodgerBlue;
-}
 
-.flex-container > div {
-  background-color: #f1f1f1;
-  width: 100px;
-  margin: 10px;
-  text-align: left;
-  line-height: 75px;
-  font-size: 30px;
-}
-
-.left{
-
-	float: left;
-}
-
-.btn-group button {
-  background-color: #4CAF50; /* Green background */
-  border: 1px solid green; /* Green border */
-  color: white; /* White text */
-  padding: 10px 24px; /* Some padding */
-  cursor: pointer; /* Pointer/hand icon */
-  float: left; /* Float the buttons side by side */
-}
-
-.btn-group button:not(:last-child) {
-  border-right: none; /* Prevent double borders */
-}
-
-/* Clear floats (clearfix hack) */
-.btn-group:after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
-/* Add a background color on hover */
-.btn-group button:hover {
-  background-color: #3e8e41;
-}
 
 	
 	a:link {
@@ -221,6 +178,8 @@ var url = "a.php";
 xmlhttp.open("GET", url , true);
 	xmlhttp.send();
 }
+
+
 function displayAddProductChanges(productID, filename, bfile, btitleID, bdescID, bcostID,bquantityID,bkey1ID , bkey2ID , bkey3ID, categoryTitle)
 {
 
@@ -324,9 +283,10 @@ function deleteRecord( reduceCountFlag, mainDiv, productID)
 }
 
 
+//$productID,  $deleteFlag, '{$mainDiv}',   '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}' '{$filename}', )\">Resubmit</button></center>
+    
 
-
-function SaveProductItems( ProductID, deleteFlag, mainDiv,fileID,  title, desc,cost,quantity, keyword1, keyword2, keyword3, filename){
+function SaveProductItems( ProductID, deleteFlag , maindiv, title, desc, cost, quantity, keyword1, keyword2, keyword3, filename){
 
 
 	
@@ -662,7 +622,7 @@ function test()
 <center><button onclick = "printHTML1(document.getElementById('keyword'))">Submit Keyword</button></center>
 
 
-<div id = "testdiv" >testing image </div>
+<div id = "testdiv" ></div>
 
 
 

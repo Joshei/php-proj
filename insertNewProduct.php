@@ -1,5 +1,5 @@
 <?php
-require("upload2.php"); 
+//require("upload2.php"); 
 
 
 //to do:
@@ -7,23 +7,10 @@ require("upload2.php");
 // upload file - if filename has been set
 //display copy of record
 
+
+
 function insertNewRecord(  $fileID, $filename, $title, $descID ,   $productID, $titleID ,$costID ,$quantityID,$key1ID  ,$key2ID  ,$key3ID  ,$gKeyword1 , $gKeyword2  ,$gKeyword3  ,$image     ,$description,  $cost    ,$quantity ,  $category  )
 {
-//if filename is unset, skip upload file
-
-//filename is set  - aleady put in database
-//upload
-if (!unsset($filename))
-{
-
-    $ret = saveImageToDirectory();
-    if ($ret)
-    {
-        setsFilenameInDir();
-    }
-
-
-}
 
 
 

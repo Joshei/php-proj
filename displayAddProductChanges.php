@@ -1,8 +1,8 @@
 <?php
-session_start();
+//session_start();
 
 	
- include ("insertNewProduct.php"); 
+include ("insertNewProduct.php"); 
 
 
 if ((!isset($_SESSION['lastDivCounter'])))  
@@ -11,6 +11,7 @@ if ((!isset($_SESSION['lastDivCounter'])))
 		$_SESSION['lastDivCounter']  = 0;
 }
 
+	$imageID = "";
 	$fileID = $_GET['fileID'];
 	$descID = $_GET['bdescID'];
 	$title1    = $_GET['title1'];
@@ -36,7 +37,10 @@ if ((!isset($_SESSION['lastDivCounter'])))
 	//$city = $_Get['city'];
 	//$state = $_Get['state'];
 	//$customerid = $_GET['customerid']; 
-	$filename = $_Get['filename'];
+	
+	
+	//$filename = $_Get['filename'];
+	$filename = "";
 	
 
 $deleteFlag = 1;
@@ -76,17 +80,43 @@ $string0 =  "
 <center><h1>Added Record<h1></center></p>
 <div class=\"container\">
 
-<!--
-<input id=\"file2\" type=\"file\" name=\"file\" >
--->
+
   <div class=\"row\" >
 
 	
+	<div class = \"col\">
+
+	<iframe id=\"upload_target\" name=\"upload_target\"  style=\"width:0;height:0;border:0px solid #fff;\"></iframe> 	
 	
-	<div class=\"col\">
-    <h4><center><p id = \"\">Image</p></center></h4>    
+	
+	<div class=\"text-left\">
+
+	<form   target=\"upload_target\"  method = \"POST\" action = \"upload2.php\" enctype=\"multipart/form-data\">
+	
+	<input type=hidden id=\"$productID\" name= \"productID\" value=\"$productID\">
+	<input type=hidden id=\"$filename\" name=\"filename\" value=\"$filename\">
+	
+	
+	<input  type = \"file\" name = \"file\" id = \"$fileID\">
+	<br><br>
+	<button    value = \"Submit\" type = \"submit\"  >submit it</button>
+	
+	
+	</form>
+
+	<div id = \"text-left\">
+	<button    onclick = \"imageRefresh( '{$filename}', '{$imageID}')\" >Confirm</button><br><br>
+	</div>
+
+	</div>
+
+	<img class=\"NO-CACHE\" width=\"120\" height =\"120\"  id = \"$imageID\"  src=\"http://localhost/phpproj/uploads/$filename?<?php filemtime('$filename') ?>\">No Image</img>
+	
 	
 	</div>
+	
+	
+	
 
 
 	<div class=\"col\">
@@ -165,13 +195,13 @@ $string0 =  "
 
     <!-- these are the ids of keywords to save next in a function called from this one for savekeywords.  (id has the product id)   key1D, etc. is the id for the call in here -->
 	<!--product id is the number value for the key of the product -->
-	<center><button id = \"\" onclick = \"SaveProductItems(  $productID,  $deleteFlag, '{$mainDiv}',   '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}' '{$filename}', )\">Resubmit</button></center>
+	<center><button id = \"\" onclick = \"SaveProductItems(  '{$productID}',  '{$deleteFlag}', '{$mainDiv}',   '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}' '{$filename}' )\">Resubmit</button></center>
     
 	
     <center><button id = \"\" onclick = \"deleteRecord(1, '{$mainDiv}', $productID)\">Delete</button></center>
 
 	</div>
-	<br><br>
+	
 
 	
 </div>
@@ -183,7 +213,7 @@ $string0 =  "
 	
 
 	
-  <br><br><br><br>
+  
   
 
 ";//stringend
@@ -197,7 +227,7 @@ $string0 =  "
 //display copy of record
 
 
-insertNewRecord( $filename, $title1, $descID ,$productID, $titleID  ,$costID ,$quantityID,$key1ID  ,$key2ID  ,$key3ID  ,$gKeyword1 , $gKeyword2  ,$gKeyword3  ,$image     ,$description,  $cost    ,$quantity ,  $category  );
+insertNewRecord( $fileID, $filename, $title1, $descID ,$productID, $titleID  ,$costID ,$quantityID,$key1ID  ,$key2ID  ,$key3ID  ,$gKeyword1 , $gKeyword2  ,$gKeyword3  ,$image     ,$description,  $cost    ,$quantity ,  $category  );
 
 //////////
 //move this

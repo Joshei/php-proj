@@ -102,7 +102,7 @@ $filename = $row['ProductFilename'];
 //$filename1 = 'test';
 
 $var = "A"; 
-$mainDiv = $var . (string)$counter;
+
 
 $dbo1 = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
 
@@ -130,7 +130,7 @@ $string2 = "AA";
 
 
 $string1 .=  "  
-<div  class = \"A\" id = \"$mainDiv\">
+
 <p id = \"link1\">product id   :$productID</p>
 <p>category id  :$category</p>
 <div class = \"A\" id = \"endz\"></div>
@@ -156,12 +156,6 @@ $string1 .=  "
 	<input  type = \"file\" name = \"file\" id = \"$fileID\">
 	<br><br>
 	<button    value = \"Submit\" type = \"submit\"  >submit it</button>
-	
-	
-	
-	
-	
-
 	
 	
 	</form>
@@ -261,10 +255,10 @@ $string1 .=  "
 	<!-- these are the ids of keywords to save next in a function called from this one for savekeywords.  (id has the product id)   key1D, etc. is the id for the call in here -->
 	<!--product id is the number value for the key of the product -->
 	
-	<form  action = \"\" method=\"post\" enctype=\"multipart/form-data\">
 	
-	<center><button id = \"test\" onclick = \"uploadFile(  $productID,  $deleteFlag ,'{$mainDiv}', '{$fileID}', '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}', '{$filename}')\">Submit</button></center>
-	</form>
+	
+	<center><button id = \"test\" onclick = \"SaveProductItems(  $productID,  $deleteFlag, '{$mainDiv}',   '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}' '{$filename}' )\">Submit</button></center>
+	
 	
 	<!--flag for determining if record delete will effect sessioncount, 0 is no.-->
 	<center><button id = \"\" onclick = \"deleteRecord( 1, '{$mainDiv}', $productID)\">Delete</button></center>
@@ -279,7 +273,7 @@ $string1 .=  "
 	
 
 
-</div><!--mainDiv-->
+
 	
 
 	
@@ -500,7 +494,7 @@ displays the new blue record below the yellow 'make record' to show editable rec
 
 
 -->
-<center><button id = \"\" onclick = \"displayAddProductChanges(  $productID, $filename, $fileID, '{$btitleID}', '{$bdescID}', '{$bcostID}','{$bquantityID}','{$bkey1ID}' , '{$bkey2ID}' ,
+<center><button id = \"a1\" onclick = \"displayAddProductChanges(  '{$productID}', '{$filename}', '{$fileID}', '{$btitleID}', '{$bdescID}', '{$bcostID}','{$bquantityID}','{$bkey1ID}' , '{$bkey2ID}' ,
  '{$bkey3ID}', '{$category}'  )\">Submit</button></center>
 	
 	
