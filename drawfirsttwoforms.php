@@ -153,7 +153,7 @@ $string1 .=  "
 	<input type=hidden id=\"$filename\" name=\"filename\" value=\"$filename\">
 	
 	
-	<input  type = \"file\" name = \"file\" id = \"$fileID\">
+	<input  type = \"file\" name = \"file\" id = \"$fileID\" >
 	<br><br>
 	<button    value = \"Submit\" type = \"submit\"  >submit it</button>
 	
@@ -171,7 +171,7 @@ $string1 .=  "
 	
 	</div>
 
-	<div class=\"col\">
+	<div class=\"col\"><br><br><br>
       <h4><center><p id =\"\">Title</p></center></h4>        
      <br><br>
 	<center><p><input wrap id = \"$titleID\" value = \"$title1\" type=\"text\" name=\"\" placeholder=\"$title1\"></p></center>
@@ -188,7 +188,7 @@ $string1 .=  "
 	<div class=\"col\">
       <h4><center><p id = \"\" >Cost</p></center></h4>
 	  <br><br>
-	<center><p>	<input id = \"$costID\" value = \"$cost\" type=\"number\" name=\"\" placeholder=\"$cost\">		</p></center>
+	<center><p>	<input   size=\"10\"  id = \"$costID\" value = \"$cost\" type=\"number\" name=\"\" placeholder=\"$cost\">		</p></center>
 	
 	</div>
 	
@@ -349,7 +349,7 @@ $string1 .=  "
 
 
 <center><h1>Add Product Form<h1></center></p>
-<div class=\"container\">
+<div class=\"container\"></div>
   
 <!--
 	<input id=\"file2\" type=\"file\" name=\"file\" >
@@ -367,21 +367,23 @@ $string1 .=  "
 	<div class=\"row\" >
 	
 
-	<div class=\"col\">
+	
 
 	<br><br><br>
 	
 	
 	
 
-	</div>
+	
 	
 	<div class=\"col\"><br>
-      <h4><center><p id =\"\"  >Title</p></center></h4>        
+      <h4><center><p id =\"\"  >Title</p></center></h4>    
       
-	<center>      <p  >      <input id = \"$btitleID\" value = \"$title1\" type=\"text\" name=\"title\" placeholder=\"\"></p></center>
+	<center>      <p  >      <input wrap id = \"$btitleID\" value = \"$title1\" type=\"text\" name=\"title\" placeholder=\"\"></p></center>
     </div>
 	
+
+
 	
 	<div class=\"col\"><br>
       <h4><center><p id = \"\">Desc</p></center></h4>

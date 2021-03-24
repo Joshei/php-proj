@@ -119,7 +119,7 @@ $string0 =  "
 	
 
 
-	<div class=\"col\">
+	<div class=\"col\"><br><br><br><br>
       <h4><center><p id =\"\"  >Title</p></center></h4>        
       
 	<center><p>      <input id = \"$titleID\" value = \"$title1\" type=\"text\" name=\"\" placeholder=\"\"></p></center>
@@ -132,7 +132,7 @@ $string0 =  "
 	  <center><textarea wrap id = \"$descID\"   value = \"$description\"  name=\"text\" rows=\"5\" cols=\"34\">$description</textarea></center>
 	  </div>
     
-	<div class=\"col\">
+	<div class=\"col\"><br><br>
       <h4><center><p id = \"\" >Cost</p></center></h4>
 	<center><p>	<input id = $costID value = $cost type=\"number\" name=\"title\" placeholder=\"$cost\">		</p></center>
 	
