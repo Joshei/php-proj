@@ -206,7 +206,7 @@ $string1 .=  "
 	<div class=\"container\">
 	  <div class=\"row\" >
 	  
-	<div class=\"col\">
+	<div class=\"col\"><br>
     <h4><center><p id = \"\" >Quantity</p></center></h4>    
 	<center><p> <input id = \"$quantityID\" value = \"$quantity\" type=\"number\" name=\"title\" placeholder=\"\">	</p></center>
 	</div>
@@ -219,21 +219,21 @@ $string1 .=  "
 	
 	<!-- Just holds values for call from saveproductitems because it calls save keywords-->
 
-	<div class=\"col\">
+	<div class=\"col\"><br>
       <h4><center><p id = \"\" >Keyword 1</p></center></h4>
 	<center><p>	<input id = \"$key1ID\" value = \"$gKeyword1\" type=\"text\" name=\"title\" placeholder=\"\">		</p></center>
 	
 	</div>
 
 
-	<div class=\"col\">
+	<div class=\"col\"><br>
       <h4><center><p id = \"\" >Keyword 2</p></center></h4>
 	<center><p>	<input id = \"$key2ID\" value = \"$gKeyword2\" type=\"text\" name=\"title\" placeholder=\"\">		</p></center>
 	
 	</div>
 
 
-	<div class=\"col\">
+	<div class=\"col\"><br>
       <h4><center><p id = \"\" >Keyword 3</p></center></h4>
 	<center><p>	<input id = \"$key3ID\" value = \"$gKeyword3\" type=\"text\" name=\"title\" placeholder=\"\">		</p></center>
 	
