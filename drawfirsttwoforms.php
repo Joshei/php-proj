@@ -136,29 +136,52 @@ $string1 .=  "
 <div class = \"A\" id = \"endz\"></div>
 <div class = \"A\" id = \"startz\"></div>
 <div class=\"container\">
-<div id = \"testing\" >testing <div>
+
 <div id = \"$displayID\" >  </div>
 <div class=\"row\" >
-<div class=\"col\">
-	
+
+<div class = \"col\">
+
 	<iframe id=\"upload_target\" name=\"upload_target\"  style=\"width:0;height:0;border:0px solid #fff;\"></iframe> 	
-	<form   target=\"upload_target\"  method = \"POST\" action = \"upload2.php\" enctype=\"multipart/form-data\"   >
-	<input  type = \"file\" name = \"file\" id = \"$fileID\">
+	
+	
+	<div class=\"text-left\">
+
+	<form   target=\"upload_target\"  method = \"POST\" action = \"upload2.php\" enctype=\"multipart/form-data\">
+	
 	<input type=hidden id=\"$productID\" name= \"productID\" value=\"$productID\">
 	<input type=hidden id=\"$filename\" name=\"filename\" value=\"$filename\">
-	<button value = \"Submit\" type = \"submit\"  >submit it</button>
-	</form>
 	
-	<img class=\"NO-CACHE\" width=\"120\" height =\"120\"  id = \"$imageID\"  src=\"http://localhost/phpproj/uploads/$filename?<?php filemtime('$filename') ?>\"></img>
-	<button    onclick = \"imageRefresh( '{$filename}', '{$imageID}')\" >Confirm</button>
+	
+	<input  type = \"file\" name = \"file\" id = \"$fileID\">
+	<br><br>
+	<button    value = \"Submit\" type = \"submit\"  >submit it</button>
+	
+	
+	
+	
+	
+
+	
+	
+	</form>
+
+	<div id = \"text-left\">
+	<button    onclick = \"imageRefresh( '{$filename}', '{$imageID}')\" >Confirm</button><br><br>
 	</div>
 
+	</div>
+
+	<img class=\"NO-CACHE\" width=\"120\" height =\"120\"  id = \"$imageID\"  src=\"http://localhost/phpproj/uploads/$filename?<?php filemtime('$filename') ?>\"></img>
+	
+	
+	</div>
 
 	<div class=\"col\">
-      <h4><center><p id =\"\"  >Title</p></center></h4>        
-      <!--
-	<center>      <p  >      <input id = \"$titleID\" value = \"$title1\" type=\"text\" name=\"title\" placeholder=\"\"></p></center>
-    -->
+      <h4><center><p id =\"\">Title</p></center></h4>        
+     <br><br>
+	<center><p><input wrap id = \"$titleID\" value = \"$title1\" type=\"text\" name=\"\" placeholder=\"$title1\"></p></center>
+   
 	</div>
 	
 	
@@ -170,7 +193,8 @@ $string1 .=  "
     
 	<div class=\"col\">
       <h4><center><p id = \"\" >Cost</p></center></h4>
-	<center><p>	<input id = \"$costID\" value = \"$cost\" type=\"number\" name=\"title\" placeholder=\"$cost\">		</p></center>
+	  <br><br>
+	<center><p>	<input id = \"$costID\" value = \"$cost\" type=\"number\" name=\"\" placeholder=\"$cost\">		</p></center>
 	
 	</div>
 	
@@ -238,7 +262,7 @@ $string1 .=  "
 	<!--product id is the number value for the key of the product -->
 	
 	<form  action = \"\" method=\"post\" enctype=\"multipart/form-data\">
-	<center><input id=\"getuploadfile\" type=\"file\" class = \"file\" name=\"file\" style = \"width: 100px \"/></center>
+	
 	<center><button id = \"test\" onclick = \"uploadFile(  $productID,  $deleteFlag ,'{$mainDiv}', '{$fileID}', '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}', '{$filename}')\">Submit</button></center>
 	</form>
 	
