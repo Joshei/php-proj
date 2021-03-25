@@ -11,6 +11,7 @@ if ((!isset($_SESSION['lastDivCounter'])))
 		$_SESSION['lastDivCounter']  = 0;
 }
 
+	//$imageID = $_GET['imageID'];
 	$imageID = "";
 	$fileID = $_GET['fileID'];
 	$descID = $_GET['bdescID'];
@@ -56,6 +57,9 @@ $mainDiv = $var . (string)$_SESSION['lastDivCounter'];
 $var1 = "E"; 
 $mainDiv1 = $var1 . (string)$_SESSION['lastDivCounter'];
 
+
+
+
 $_SESSION['lastDivCounter'] = $_SESSION['lastDivCounter'] +1;
 
 
@@ -76,6 +80,7 @@ $dbo3 = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
 $string0 =  "  
 
 
+<p id = \"link1\">product id   :$productID</p>
 <div style = \"background-color:#40e0d0;\" class = \"A\" id = \"$mainDiv\">
 <center><h1>Added Record<h1></center></p>
 <div class=\"container\">
@@ -91,7 +96,7 @@ $string0 =  "
 	
 	<div class=\"text-left\">
 
-	<form   target=\"upload_target\"  method = \"POST\" action = \"upload2.php\" enctype=\"multipart/form-data\">
+	<form   target=\"upload_target\"  method = \"POST\" action = \"upload2a.php\" enctype=\"multipart/form-data\">
 	
 	<input type=hidden id=\"$productID\" name= \"productID\" value=\"$productID\">
 	<input type=hidden id=\"$filename\" name=\"filename\" value=\"$filename\">
@@ -231,7 +236,7 @@ insertNewRecord( $fileID, $filename, $title1, $descID ,$productID, $titleID  ,$c
 
 //////////
 //move this
-$div = "E0";
+
 
 
 
@@ -259,6 +264,11 @@ echo $jsonStr;
 
     
     
+
+
+
+
+
 
 
 

@@ -1,14 +1,14 @@
 <?php
 session_start();
 $_SESSION['savedfilename'] = "";
-echo '<pre>' . print_r($_POST, 1) . '</pre>';
+//echo '<pre>' . print_r($_POST, 1) . '</pre>';
 $productID = $_POST['productID'];
 $filename = $_POST['filename'];
 //$fileid = $_GET['fileid'];
 //$displayID = $_GET['displayid'];
 
 //$_SESSION['try'] = 0;
-
+$needsDeleting = "no";
 
 $didItUpload = "false";
 $string = "";
@@ -18,8 +18,8 @@ $noFileSelected = "true";
 $image = "";
 $filename = ""; 
 
-function getFilename($productID, $filename)
-{
+//function getFilename($productID, $filename)
+
 $host = 'localhost';
 $user = 'root';
 $pass = '';
@@ -46,13 +46,12 @@ while ($row1 = $stmt->fetch())
 
  $filename = $row1['ProductFilename'];
 }
- return($filename);
-}
+ 
 
 
 
 
-$filename = getFilename($productID, $filename);
+//$filename = getFilename($productID, $filename);
 
 $imageFileType = "";
 
@@ -60,7 +59,14 @@ $imageFileType = "";
 if (isset($_FILES['file'])) 
 {
 
+//needs deleteing
 if ($filename != null)
+{
+  $needsDeleting = "yes";
+}
+
+
+
 {
 
 //////////////
@@ -113,9 +119,10 @@ else if ($imageFileType == "gif" )
 //////////////
 $filename1 = $deleteOldFilename . $ext;
 
-
-unlink("uploads/$filename1");
-
+if($needsDeleting == "yes")
+{
+  unlink("uploads/$filename1");
+}
 
 
 $file_name     = $newFilename; 
@@ -209,7 +216,12 @@ $stmt->execute();
 
 }
 
+//
+
 }
+
+
+
 }//is a filenAME
 
  

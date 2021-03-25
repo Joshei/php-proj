@@ -306,9 +306,11 @@ $bquantityID = "bquantityID" . $counter;
 $bkey1ID = "bkey1ID" . $counter;
 $bkey2ID = "bkey2ID" . $counter;
 $bkey3ID = "bkey3ID" . $counter;
+$productID = "bproductid" .$counter;
+$imageID = "bimageID" . $counter;
 
 $keywordID = 0;
-$productID = 0;
+
 $image = "temp";
 $title1  = "";
 $description ="";

@@ -126,6 +126,10 @@ $sql1 = "SET FOREIGN_KEY_CHECKS=0;";
 $sql2 = "SET FOREIGN_KEY_CHECKS=1;";
 //$dbo->exec($sql1);
 
+
+
+
+
 //ProductFilename already in database form upload2.php
 $stmt = $dbo->prepare('UPDATE products SET   ProductName = :ProductName,  ProductDescription = :ProductDescription , ProductCost = :ProductCost , 
 ProductQuantity =  :ProductQuantity, ProductCatTitle = :ProductCatTitle , ProductKeyword1 = :ProductKeyword1, ProductKeyword2 = :ProductKeyword2, ProductKeyword3 = :ProductKeyword3,
