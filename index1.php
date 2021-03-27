@@ -180,7 +180,7 @@ xmlhttp.open("GET", url , true);
 }
 
 
-function displayAddProductChanges(productID, filename, bfile, btitleID, bdescID, bcostID,bquantityID,bkey1ID , bkey2ID , bkey3ID, categoryTitle)
+function displayAddProductChanges(imageID, productID, filename, bfile, btitleID, bdescID, bcostID,bquantityID,bkey1ID , bkey2ID , bkey3ID, categoryTitle)
 {
 
 var xmlhttp = new XMLHttpRequest();
@@ -228,7 +228,7 @@ xmlhttp.onreadystatechange = function() {
 	url = url + "title1=" + title1 + "&" + "productID=" + productID + "&" +  "btitleID=" + btitleID + "&" +  "bdescID=" + bdescID + "&" + "bcostID=" + bcostID + "&" + "bquantityID=" + bquantityID + "&"+ "bkey1ID=" + bkey1ID + "&" 
 	+ "bkey2ID=" + bkey2ID + "&" + "bkey3ID=" + bkey3ID + "&" +  "gKeyword1=" + gKeyword1 + "&"  + "gKeyword2=" + gKeyword2 +
 	"&" + "gKeyword3=" + gKeyword3 + "&" + "image=" + image+  "&" + "description="  + description + "&" + "cost=" +
-	 cost  + "&" + "quantity=" + quantity + "&" + "category=" + categoryTitle + "&" + "filename=" + filename + "&" + "fileID=" + bfile;
+	 cost  + "&" + "quantity=" + quantity + "&" + "category=" + categoryTitle + "&" + "filename=" + filename + "&" + "fileID=" + bfile + "&" + "imageID=" + imageID;
 	
 	xmlhttp.open("GET", url , true);
 	xmlhttp.send();

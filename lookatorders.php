@@ -1,7 +1,42 @@
 <?php
 //https://stackoverflow.com/questions/362614/calling-onclick-on-a-radiobutton-list-using-javascript
 
+$string0 = "";
+
+$type = "";
+
+$limit = 1;
+$offset = 0;
+//if (isset($_GET['limit']) )
+//{
+//  
+//  $limit = $_GET['limit'];
+//}
+$whichSql = "regular";
+
+if (isset($_GET['whichsql']) )
+{
 $whichSql = $_GET['whichsql'];
+}
+
+if (isset($_GET['offset']) )
+{
+  $offset = $_GET['offset'];
+}
+
+
+
+//if (isset($_GET['type']) )
+//{
+//  $type = $_GET['type'];
+//}
+$countOfRecords2 = 0;
+$countOfRecords = 0;
+$countOfRecords1 = 0;
+$offset = intval($offset);
+$limit = intval($limit);
+
+
 
 $host = 'localhost';
 $user = 'root';
@@ -13,6 +48,8 @@ $options = array(
     PDO::ATTR_EMULATE_PREPARES => false
 );
 
+
+$reloadNext10 = "no";
 $counter = 0;
 $printRadio = "no";
 $lastOrderID = "start";
@@ -24,24 +61,23 @@ $color = 1;
 
 $dbo = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
 
+
+//$limit = 1;
+//$offset = 1;
+
+
+
 if ($whichSql == "regular")
 {
-//$sql = "SELECT products.ProductID ,customers.SAddress1, customers.SAddress2, customers.ZipCode, customers.FirstName, customers.LastName, customers.City, customers.State, products.ProductStatus, orders.OrderDate, products.OrderID, products.ProductName, products.ProductCost, products.ProductQuantity FROM orders INNER JOIN  products ON orders.OrderID = products.OrderID INNER JOIN customers ON orders.CustomerID
-//=  customers.CustomerID ORDER BY Orders.OrderID, Orders.OrderDate DESC"; 
-
-//???
 $stmt = $dbo->prepare("SELECT products.ProductID ,customers.SAddress1, customers.SAddress2, customers.ZipCode, customers.FirstName, customers.LastName, customers.City, customers.State, products.ProductStatus, orders.OrderDate, products.OrderID, products.ProductName, products.ProductCost, products.ProductQuantity FROM orders INNER JOIN  products ON orders.OrderID = products.OrderID INNER JOIN customers ON orders.CustomerID
-=  customers.CustomerID ORDER BY Orders.OrderID, Orders.OrderDate DESC");
+=  customers.CustomerID ORDER BY Orders.OrderID, Orders.OrderDate DESC LIMIT $limit OFFSET $offset");
 $stmt->execute();
 
 
 }
 else if ($whichSql == "purchased")
 {
-  //$sql = "SELECT products.ProductID ,customers.SAddress1, customers.SAddress2, customers.ZipCode, customers.FirstName, customers.LastName, customers.City, customers.State, products.ProductStatus, orders.OrderDate, products.OrderID, products.ProductName, products.ProductCost, products.ProductQuantity FROM orders INNER JOIN products ON orders.OrderID = products.OrderID INNER JOIN customers ON
-  // orders.CustomerID = customers.CustomerID WHERE products.ProductStatus = 'purchased' ORDER BY Orders.OrderID, Orders.OrderDate DESC"; 
-
-//?????? string quote
+  
 $stmt = $dbo->prepare("SELECT products.ProductID ,customers.SAddress1, customers.SAddress2, customers.ZipCode, customers.FirstName, customers.LastName, customers.City, customers.State, products.ProductStatus, orders.OrderDate, products.OrderID, products.ProductName, products.ProductCost, products.ProductQuantity FROM orders INNER JOIN products ON orders.OrderID = products.OrderID INNER JOIN customers ON
 orders.CustomerID = customers.CustomerID WHERE products.ProductStatus = 'purchased' ORDER BY Orders.OrderID, Orders.OrderDate DESC" );
 $stmt->execute();
@@ -49,12 +85,13 @@ $stmt->execute();
 
 }
 
-
-
 $string0 =  "
 <br>
 <div class=\"container\">
 ";
+
+//$string0 .= "<a href=\"lookatorders.php?whichsql=regular\">   forward two    </a>";
+
 
 //foreach($dbo0->query($sql) as $row1)
 while ($row1 = $stmt->fetch()) 
@@ -99,7 +136,7 @@ $state = $row1['City'];
 $saddress1 = $row1['SAddress1'];
 $saddress2 = $row1['SAddress2'];
 $zipcode = $row1['ZipCode'];
-
+$countOfRecords = 1;
 
 
 //first product of a new order
@@ -252,7 +289,44 @@ $string0 .= "
 
 
 }//else
+
+$countOfRecords = $countOfRecords + 1;
+
+
 }//while
+
+$countOfRecords1 = $countOfRecords + 1;
+//here
+$countOfRecords2 = -1*($countOfRecords + 1);
+
+$limit = 1;
+
+$string0 .= "<br><br><br>";
+
+//- # of records
+$string0 .= "<button type=\"button\" onclick=\"callForDisplayWithoffsetBack('{$countOfRecords2}', '{$whichSql}' )\">Back 1</button>";
+
+
+$string0 .= "<button type=\"button\" onclick=\"callForDisplayWithoffsetForw('{$countOfRecords1}', '{$whichSql}')\">Forward 1</button>"; 
+
+
+
+
+
+//regular
+function functionForward()
+{
+   $reloadNext10 = "yes";
+   $offset = countOfRecords;
+   $limit = 10;
+
+}
+function functionGackward()
+{
+
+}
+
+
 
 if (!isset($myObj) && isset($string0))
 {

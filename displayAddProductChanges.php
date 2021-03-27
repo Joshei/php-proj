@@ -12,7 +12,7 @@ if ((!isset($_SESSION['lastDivCounter'])))
 }
 
 	//$imageID = $_GET['imageID'];
-	$imageID = "";
+	$imageID = $_GET['imageID'];
 	$fileID = $_GET['fileID'];
 	$descID = $_GET['bdescID'];
 	$title1    = $_GET['title1'];
@@ -43,6 +43,37 @@ if ((!isset($_SESSION['lastDivCounter'])))
 	//$filename = $_Get['filename'];
 	$filename = "";
 	
+////////
+
+$host = 'localhost';
+$user = 'root';
+$pass = '';
+$database = 'ecommerce';
+
+$options = array(
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_EMULATE_PREPARES => false
+);
+
+$dbo = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
+
+$var1 = "Ready to insert record!";
+
+$stmt = $dbo->prepare("INSERT INTO products (ProductName) VALUES (?)");
+$stmt->bindParam(1, $var1);
+$stmt->execute();
+
+$stmt = $dbo->prepare("SELECT ProductID FROM products ORDER BY productID DESC LIMIT 1");
+$stmt->execute();
+$productID = 0;
+
+//gets current record being built
+while ($row = $stmt->fetch()) 
+{
+	$productID = $row['ProductID'];
+
+}
+////////
 
 $deleteFlag = 1;
 
@@ -99,8 +130,9 @@ $string0 =  "
 	<form   target=\"upload_target\"  method = \"POST\" action = \"upload2a.php\" enctype=\"multipart/form-data\">
 	
 	<input type=hidden id=\"$productID\" name= \"productID\" value=\"$productID\">
+	<!--
 	<input type=hidden id=\"$filename\" name=\"filename\" value=\"$filename\">
-	
+	-->
 	
 	<input  type = \"file\" name = \"file\" id = \"$fileID\">
 	<br><br>
@@ -203,7 +235,7 @@ $string0 =  "
 	<center><button id = \"\" onclick = \"SaveProductItems(  '{$productID}',  '{$deleteFlag}', '{$mainDiv}',   '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}' '{$filename}' )\">Resubmit</button></center>
     
 	
-    <center><button id = \"\" onclick = \"deleteRecord(1, '{$mainDiv}', $productID)\">Delete</button></center>
+    <center><button id = \"\" onclick = \"deleteRecord(1, '{$mainDiv}', '{$productID}' )\">Delete</button></center>
 
 	</div>
 	

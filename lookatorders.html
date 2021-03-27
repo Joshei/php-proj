@@ -143,6 +143,88 @@ function displayQueryPayedFor()
 
 
     
+      function callForDisplayWithoffsetForw(offset, typeOfQuery)
+      {
+
+        
+          var url = "lookatorders.php?offset=" + offset +   "&whichsql=" + typeOfQuery ;
+        
+        var xmlhttp = new XMLHttpRequest();
+        
+        
+       
+        
+        
+    
+    
+        xmlhttp.onreadystatechange = function() {
+            
+        if (this.readyState == 4 && this.status == 200) {
+            
+            
+            var jsonData = JSON.parse(this.responseText);
+            var answerHtml = jsonData.htmlstuff;
+            
+            document.getElementById("codehere").innerHTML = answerHtml;
+    
+          
+    
+    
+            }
+        };
+        
+        xmlhttp.open("GET", url , true);
+        
+        xmlhttp.send();
+        
+        
+      }
+
+
+      function callForDisplayWithoffsetBack(offset, typeOfQuery)
+      {
+
+         if (offset < 0)
+         {
+           offset = 0;
+         }
+          var url = "lookatorders.php?offset=" + offset +   "&whichsql=" + typeOfQuery ;
+        
+        var xmlhttp = new XMLHttpRequest();
+        
+        
+       
+        
+        
+    
+    
+        xmlhttp.onreadystatechange = function() {
+            
+        if (this.readyState == 4 && this.status == 200) {
+            
+            
+            var jsonData = JSON.parse(this.responseText);
+            var answerHtml = jsonData.htmlstuff;
+            
+            document.getElementById("codehere").innerHTML = answerHtml;
+    
+          
+    
+    
+            }
+        };
+        
+        xmlhttp.open("GET", url , true);
+        
+        xmlhttp.send();
+        
+        
+      }
+
+
+     
+     
+     
       function displayQuery()
       {
         
@@ -165,6 +247,7 @@ function displayQueryPayedFor()
             
             var jsonData = JSON.parse(this.responseText);
             var answerHtml = jsonData.htmlstuff;
+            
             document.getElementById("codehere").innerHTML = answerHtml;
     
             //createAndModifyDivs();

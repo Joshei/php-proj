@@ -1,13 +1,7 @@
-
-
-
 <?php
 session_start();
-
-
+$_SESSION['counter']= 0;
 $_SESSION['msg'] = "";
-
-
 $filename = "";
 $keyword1 = $_GET['keyword'];
 $titleOfSelectedDropDown = $_GET['val1'];
@@ -76,7 +70,8 @@ $displayID = "";
 
 while ($row = $stmt->fetch()) {
 
-$counter = $counter + 1;
+$_SESSION['counter'] = $_SESSION['counter'] + 1; 
+$counter = $_SESSION['counter'];
 $titleID = "titleID" . $counter;
 $descID = "descID" . $counter;
 $costID = "costID" . $counter;
@@ -147,11 +142,12 @@ $string1 .=  "
 	
 	<div class=\"text-left\">
 
-	<form   target=\"upload_target\"  method = \"POST\" action = \"upload2.php\" enctype=\"multipart/form-data\">
+	<form   target=\"upload_target\"  method = \"POST\" action = \"upload2a.php\" enctype=\"multipart/form-data\">
 	
 	<input type=hidden id=\"$productID\" name= \"productID\" value=\"$productID\">
+	<!--
 	<input type=hidden id=\"$filename\" name=\"filename\" value=\"$filename\">
-	
+	-->
 	
 	<input  type = \"file\" name = \"file\" id = \"$fileID\" >
 	<br><br>
@@ -498,7 +494,7 @@ displays the new blue record below the yellow 'make record' to show editable rec
 
 
 -->
-<center><button id = \"a1\" onclick = \"displayAddProductChanges(  '{$productID}', '{$filename}', '{$fileID}', '{$btitleID}', '{$bdescID}', '{$bcostID}','{$bquantityID}','{$bkey1ID}' , '{$bkey2ID}' ,
+<center><button id = \"a1\" onclick = \"displayAddProductChanges(  '{$imageID}', '{$productID}', '{$filename}', '{$fileID}', '{$btitleID}', '{$bdescID}', '{$bcostID}','{$bquantityID}','{$bkey1ID}' , '{$bkey2ID}' ,
  '{$bkey3ID}', '{$category}'  )\">Submit</button></center>
 	
 	

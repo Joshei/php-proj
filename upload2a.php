@@ -3,7 +3,7 @@ session_start();
 $_SESSION['savedfilename'] = "";
 //echo '<pre>' . print_r($_POST, 1) . '</pre>';
 $productID = $_POST['productID'];
-$filename = $_POST['filename'];
+//$filename = $_POST['filename'];
 //$fileid = $_GET['fileid'];
 //$displayID = $_GET['displayid'];
 

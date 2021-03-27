@@ -24,7 +24,7 @@ $var4 = intval($var4);//if here image has been taken care of. move these functio
 
 
 
-    
+/*    
 function setUniqueFileName()
 {
 $host = 'localhost';
@@ -79,7 +79,7 @@ while ($row1 = $stmt->fetch())  {
 
 //if here image has been taken care of
 
-/*
+
 function deleteFIle ()
 {
 
@@ -125,6 +125,7 @@ $dbo = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
 $sql1 = "SET FOREIGN_KEY_CHECKS=0;";
 $sql2 = "SET FOREIGN_KEY_CHECKS=1;";
 //$dbo->exec($sql1);
+
 
 
 
