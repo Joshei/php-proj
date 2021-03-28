@@ -6,6 +6,7 @@ $string0 = "";
 $type = "";
 
 $limit = 1;
+$offset2= 0;
 $offset = 0;
 //if (isset($_GET['limit']) )
 //{
@@ -29,7 +30,9 @@ if (isset($_GET['offset']) )
 //if (isset($_GET['type']) )
 //{
 //  $type = $_GET['type'];
-//}
+//}\
+$lowestID = 0;
+$highestID = 0;
 $countOfRecords2 = 0;
 $countOfRecords = 0;
 $countOfRecords1 = 0;
@@ -78,12 +81,14 @@ $stmt->execute();
 else if ($whichSql == "purchased")
 {
   
+ //no offset is record 1440, offset of 1 is record 1439 
 $stmt = $dbo->prepare("SELECT products.ProductID ,customers.SAddress1, customers.SAddress2, customers.ZipCode, customers.FirstName, customers.LastName, customers.City, customers.State, products.ProductStatus, orders.OrderDate, products.OrderID, products.ProductName, products.ProductCost, products.ProductQuantity FROM orders INNER JOIN products ON orders.OrderID = products.OrderID INNER JOIN customers ON
-orders.CustomerID = customers.CustomerID WHERE products.ProductStatus = 'purchased' ORDER BY Orders.OrderID, Orders.OrderDate DESC" );
+orders.CustomerID = customers.CustomerID WHERE products.ProductStatus = 'purchased' ORDER BY  Orders.OrderDate, Orders.OrderID ASC LIMIT $limit OFFSET $offset" );
 $stmt->execute();
-
-
 }
+
+
+
 
 $string0 =  "
 <br>
@@ -118,6 +123,12 @@ $orderDate = "abc";
 $lastOrderID = 	$pID;
 $pID = $row1['OrderID']; 
 $prodID = $row1['ProductID'];
+
+//$gcounter++;
+//if(gFlag == 1)
+//{
+//  firstProductId = $prodID;
+//}
 
 $pName = $row1['ProductName']; 
 $pCost = $row1['ProductCost']; 
@@ -295,19 +306,65 @@ $countOfRecords = $countOfRecords + 1;
 
 }//while
 
-$countOfRecords1 = $countOfRecords + 1;
-//here
-$countOfRecords2 = -1*($countOfRecords + 1);
+/////////
 
-$limit = 1;
+
+//total amount of queries
+$count = $stmt->rowCount();
+
+
+
+
+//////////////
+//lowest record
+$stmt = $dbo->prepare("SELECT * FROM products ORDER BY productID ASC LIMIT 1");
+$stmt->execute();
+while ($row1 = $stmt->fetch()) 
+{
+
+  $lowestID = $row1['ProductID'];
+}
+
+//highest record
+$stmt = $dbo->prepare("SELECT * FROM products ORDER BY productID DESC LIMIT 1");
+$stmt->execute();
+while ($row1 = $stmt->fetch()) 
+{
+
+  $highestID = $row1['ProductID'];
+}
+
+
+
+
+
+/////////
+
+
+//$countOfRecords1 = $countOfRecords + 1;
+//back
+//$countOfRecords2 = ($countOfRecords - 2);
+
+//$limit = 1;
+
+//$offset =  $countOfRecords;
+
+
+//goes bacwards
+//$offset = $offset + 1;
 
 $string0 .= "<br><br><br>";
 
-//- # of records
-$string0 .= "<button type=\"button\" onclick=\"callForDisplayWithoffsetBack('{$countOfRecords2}', '{$whichSql}' )\">Back 1</button>";
+//forward
+$offset2 = $offset - 1;
+//$offset3 = $offset + 1;
+
+$string0 .= "<button type=\"button\" onclick=\"callForDisplayWithoffsetForw($offset,  $lowestID ,$highestID, '{$whichSql}')  \">   Forward 1</button>";
 
 
-$string0 .= "<button type=\"button\" onclick=\"callForDisplayWithoffsetForw('{$countOfRecords1}', '{$whichSql}')\">Forward 1</button>"; 
+
+// callForDisplayWithoffsetBack(
+$string0 .= "<button type=\"button\" onclick=\"callForDisplayWithoffsetBack($offset, $lowestID ,$highestID, '{$whichSql}')   \">  Backword 1</button>"; 
 
 
 

@@ -143,11 +143,14 @@ function displayQueryPayedFor()
 
 
     
-      function callForDisplayWithoffsetForw(offset, typeOfQuery)
+    function callForDisplayWithoffsetBack(offset, lowest, highest, typeOfQuery)
       {
 
+
+        offset = offset - 1;
+
         
-          var url = "lookatorders.php?offset=" + offset +   "&whichsql=" + typeOfQuery ;
+        var url = "lookatorders.php?offset=" + offset +   "&whichsql=" + typeOfQuery ;
         
         var xmlhttp = new XMLHttpRequest();
         
@@ -181,13 +184,13 @@ function displayQueryPayedFor()
       }
 
 
-      function callForDisplayWithoffsetBack(offset, typeOfQuery)
+      function callForDisplayWithoffsetForw(offset,  lowest, highest,  typeOfQuery)
       {
 
-         if (offset < 0)
-         {
-           offset = 0;
-         }
+        
+
+         offset = offset + 1;
+        
           var url = "lookatorders.php?offset=" + offset +   "&whichsql=" + typeOfQuery ;
         
         var xmlhttp = new XMLHttpRequest();
