@@ -5,7 +5,7 @@ $string0 = "";
 
 $type = "";
 
-$limit = 1;
+$limit = 2;
 $offset2= 0;
 $offset = 0;
 //if (isset($_GET['limit']) )
@@ -75,6 +75,10 @@ if ($whichSql == "regular")
 $stmt = $dbo->prepare("SELECT products.ProductID ,customers.SAddress1, customers.SAddress2, customers.ZipCode, customers.FirstName, customers.LastName, customers.City, customers.State, products.ProductStatus, orders.OrderDate, products.OrderID, products.ProductName, products.ProductCost, products.ProductQuantity FROM orders INNER JOIN  products ON orders.OrderID = products.OrderID INNER JOIN customers ON orders.CustomerID
 =  customers.CustomerID ORDER BY Orders.OrderID, Orders.OrderDate DESC LIMIT $limit OFFSET $offset");
 $stmt->execute();
+
+
+
+
 
 
 }
@@ -320,7 +324,7 @@ $countOfRecords = $countOfRecords + 1;
 }//while
 
 /////////
-
+$offset = $offset + $limit;
 
 //total amount of queries
 $count = $stmt->rowCount();
