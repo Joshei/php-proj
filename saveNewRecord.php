@@ -1,9 +1,9 @@
 <?php
-require("upload2.php"); 
+//require("upload2.php"); 
 
 
 //if this has value than  file buttton has been pressed
-$file = $_GET['filename'];
+//$file = $_GET['filename'];
 //$var7 = $_GET['val7'];//key id
 $var1 = $_GET['val1'];//ProductTitle
 $var2 = $_GET['val2'];//ProductDescription
@@ -16,7 +16,7 @@ $var5 = $_GET['val5'];//ProductID
 //dropdown selected text
 $var13 = $_GET['val13'];
 //$file = $_GET['filename'];
-$var14 = $_GET['val11'];
+//$var14 = $_GET['val11'];
 
 
 $var3 = intval($var3);

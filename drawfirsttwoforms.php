@@ -82,6 +82,9 @@ $key3ID = "key3ID" . $counter;
 $fileID = "fileID" . $counter;
 $displayID = "displayID" . $counter;
 $imageID = "imageID" .$counter;
+$mainDiv = "maindiv" . $counter;
+$filenameID = "filenameID" . $counter;
+
 
 $productID = $row['ProductID'];
 $image = "temp";
@@ -94,6 +97,8 @@ $quantity = $row['ProductQuantity'];
 //$customerid = $row['CustomerID'];
 $category = $row['ProductCatTitle'];
 $filename = $row['ProductFilename'];
+
+
 //$filename1 = 'test';
 
 $var = "A"; 
@@ -126,6 +131,8 @@ $string2 = "AA";
 
 $string1 .=  "  
 
+
+<div id = \"$mainDiv\" >
 <p id = \"link1\">product id   :$productID</p>
 <p>category id  :$category</p>
 <div class = \"A\" id = \"endz\"></div>
@@ -146,7 +153,7 @@ $string1 .=  "
 	
 	<input type=hidden id=\"$productID\" name= \"productID\" value=\"$productID\">
 	<!--
-	<input type=hidden id=\"$filename\" name=\"filename\" value=\"$filename\">
+	<input type=hidden id=\"$filenameID\" name=\"filename\" value=\"$filename\">
 	-->
 	
 	<input  type = \"file\" name = \"file\" id = \"$fileID\" >
@@ -253,7 +260,7 @@ $string1 .=  "
 	
 	
 	
-	<center><button id = \"test\" onclick = \"SaveProductItems(  $productID,  $deleteFlag, '{$mainDiv}',   '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}' '{$filename}' )\">Submit</button></center>
+	<center><button id = \"test\" onclick = \"SaveProductItems(  $productID,  $deleteFlag, '{$mainDiv}',   '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}'  )\">Submit</button></center>
 	
 	
 	<!--flag for determining if record delete will effect sessioncount, 0 is no.-->
@@ -267,7 +274,7 @@ $string1 .=  "
 </div>
 </div>	
 	
-
+</div> <!-- maindiv -->
 
 
 	

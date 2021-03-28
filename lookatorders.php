@@ -73,15 +73,20 @@ $dbo = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
 if ($whichSql == "regular")
 {
 $stmt = $dbo->prepare("SELECT products.ProductID ,customers.SAddress1, customers.SAddress2, customers.ZipCode, customers.FirstName, customers.LastName, customers.City, customers.State, products.ProductStatus, orders.OrderDate, products.OrderID, products.ProductName, products.ProductCost, products.ProductQuantity FROM orders INNER JOIN  products ON orders.OrderID = products.OrderID INNER JOIN customers ON orders.CustomerID
-=  customers.CustomerID ORDER BY Orders.OrderID, Orders.OrderDate DESC LIMIT $limit OFFSET $offset");
+=  customers.CustomerID ORDER BY Orders.OrderDate, Orders.OrderID");
 $stmt->execute();
 
+$gTotalRows = $stmt->rowCount();
 
 
 
-
+$stmt = $dbo->prepare("SELECT products.ProductID ,customers.SAddress1, customers.SAddress2, customers.ZipCode, customers.FirstName, customers.LastName, customers.City, customers.State, products.ProductStatus, orders.OrderDate, products.OrderID, products.ProductName, products.ProductCost, products.ProductQuantity FROM orders INNER JOIN  products ON orders.OrderID = products.OrderID INNER JOIN customers ON orders.CustomerID
+=  customers.CustomerID ORDER BY  Orders.OrderDate, Orders.OrderID DESC LIMIT $limit OFFSET $offset");
+$stmt->execute();
 
 }
+
+
 else if ($whichSql == "purchased")
 {
   
@@ -332,43 +337,7 @@ $count = $stmt->rowCount();
 
 
 
-//////////////
-//lowest record
-$stmt = $dbo->prepare("SELECT * FROM products ORDER BY productID ASC LIMIT 1");
-$stmt->execute();
-while ($row1 = $stmt->fetch()) 
-{
 
-  $lowestID = $row1['ProductID'];
-}
-
-//highest record
-$stmt = $dbo->prepare("SELECT * FROM products ORDER BY productID DESC LIMIT 1");
-$stmt->execute();
-while ($row1 = $stmt->fetch()) 
-{
-
-  $highestID = $row1['ProductID'];
-}
-
-
-
-
-
-/////////
-
-
-//$countOfRecords1 = $countOfRecords + 1;
-//back
-//$countOfRecords2 = ($countOfRecords - 2);
-
-//$limit = 1;
-
-//$offset =  $countOfRecords;
-
-
-//goes bacwards
-//$offset = $offset + 1;
 
 $string0 .= "<br><br><br>";
 
@@ -376,29 +345,12 @@ $string0 .= "<br><br><br>";
 $offset2 = $offset - 1;
 //$offset3 = $offset + 1;
 
-$string0 .= "<button type=\"button\" onclick=\"callForDisplayWithoffsetForw($gTotalRows, $offset,  $lowestID ,$highestID, '{$whichSql}')  \">   Forward 1</button>";
+$string0 .= "<button type=\"button\" onclick=\"callForDisplayWithoffsetForw($gTotalRows, $offset, '{$whichSql}')  \">   Forward </button>";
 
 
 
 // callForDisplayWithoffsetBack(
-$string0 .= "<button type=\"button\" onclick=\"callForDisplayWithoffsetBack($gTotalRows, $offset, $lowestID ,$highestID, '{$whichSql}')   \">  Backword 1</button>"; 
-
-
-
-
-
-//regular
-function functionForward()
-{
-   $reloadNext10 = "yes";
-   $offset = countOfRecords;
-   $limit = 10;
-
-}
-function functionGackward()
-{
-
-}
+$string0 .= "<button type=\"button\" onclick=\"callForDisplayWithoffsetBack($gTotalRows, $offset, '{$whichSql}')   \">  Backword </button>"; 
 
 
 

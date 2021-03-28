@@ -286,7 +286,7 @@ function deleteRecord( reduceCountFlag, mainDiv, productID)
 //$productID,  $deleteFlag, '{$mainDiv}',   '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}' '{$filename}', )\">Resubmit</button></center>
     
 
-function SaveProductItems( ProductID, deleteFlag , maindiv, title, desc, cost, quantity, keyword1, keyword2, keyword3, filename){
+function SaveProductItems( ProductID, deleteFlag , maindiv, title, desc, cost, quantity, keyword1, keyword2, keyword3){
 
 
 	
@@ -300,7 +300,7 @@ function SaveProductItems( ProductID, deleteFlag , maindiv, title, desc, cost, q
 		
 		
 
-
+	//changed these
 	var val1 = document.getElementById(title);
 	var val2 = document.getElementById(desc);
 	var val3 = document.getElementById(cost);
@@ -314,7 +314,7 @@ function SaveProductItems( ProductID, deleteFlag , maindiv, title, desc, cost, q
 	var val10 = document.getElementById(keyword3);
 	//var val11 = document.getElementById(fileID).attributes.value.textContent
 	//var val11 = document.getElementById(fileID).value;
-	var val11 = $('input[type=file]').val().replace(/C:\\fakepath\\/i, '')
+	//var val11 = $('input[type=file]').val().replace(/C:\\fakepath\\/i, '')
 	
 
 	//var val14 = category;
@@ -323,7 +323,7 @@ function SaveProductItems( ProductID, deleteFlag , maindiv, title, desc, cost, q
 	
 		if (deleteFlag == 1)
 		{
-			document.getElementById(mainDiv).innerHTML = "";
+			document.getElementById(maindiv).innerHTML = "";
 		}
 
     var xmlhttp = new XMLHttpRequest();
@@ -333,7 +333,7 @@ function SaveProductItems( ProductID, deleteFlag , maindiv, title, desc, cost, q
     
    
  	var UrlToSend = PageToSendTo  +   "val1=" + val1 + "&" + "val2=" + val2 + "&" + "val3=" + val3 + "&"  + "val4=" + val4 + "&"
-        + "val8=" + val8 + "&" + "val9=" + val9 + "&" + "val10=" + val10 + "&" + "val5=" + val5 + "&" + "val13=" + val13 + "&" + "filename=" + val11 + "&" + "pdib=" + ProductID;
+        + "val8=" + val8 + "&" + "val9=" + val9 + "&" + "val10=" + val10 + "&" + "val5=" + val5 + "&" + "val13=" + val13 + "&" + /*"filename=" + val11  "&" +*/ "pdib=" + ProductID;
 
 	
 	
