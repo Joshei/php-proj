@@ -147,9 +147,9 @@ function displayQueryPayedFor()
       {
 
 
-        offset = offset - 1;
+        offset = offset - 4;
 
-        if (offset == -1)
+        if (offset <= -1)
         {
           offset = 0;
           alert("leaving function A");
@@ -196,8 +196,8 @@ function displayQueryPayedFor()
 
         
         
-         offset = offset + 1;
-         if (offset == totalRows )
+         //offset = offset + 1;
+         if (offset >= totalRows )
          {
            offset = totalRows;
            alert("leaving function B");
