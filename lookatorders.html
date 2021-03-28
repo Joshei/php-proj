@@ -143,12 +143,19 @@ function displayQueryPayedFor()
 
 
     
-    function callForDisplayWithoffsetBack(offset, lowest, highest, typeOfQuery)
+    function callForDisplayWithoffsetBack(totalRows, offset, lowest, highest, typeOfQuery)
       {
 
 
         offset = offset - 1;
 
+        if (offset == -1)
+        {
+          offset = 0;
+          alert("leaving function A");
+          return(1);
+        }
+        
         
         var url = "lookatorders.php?offset=" + offset +   "&whichsql=" + typeOfQuery ;
         
@@ -184,12 +191,18 @@ function displayQueryPayedFor()
       }
 
 
-      function callForDisplayWithoffsetForw(offset,  lowest, highest,  typeOfQuery)
+      function callForDisplayWithoffsetForw(totalRows, offset,  lowest, highest,  typeOfQuery)
       {
 
         
 
          offset = offset + 1;
+         if (offset == totalRows )
+         {
+           offset = totalRows;
+           alert("leaving function B");
+         return(1);
+          }
         
           var url = "lookatorders.php?offset=" + offset +   "&whichsql=" + typeOfQuery ;
         

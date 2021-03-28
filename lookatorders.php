@@ -51,7 +51,7 @@ $options = array(
     PDO::ATTR_EMULATE_PREPARES => false
 );
 
-
+$gTotalRows = 0;
 $reloadNext10 = "no";
 $counter = 0;
 $printRadio = "no";
@@ -81,9 +81,20 @@ $stmt->execute();
 else if ($whichSql == "purchased")
 {
   
- //no offset is record 1440, offset of 1 is record 1439 
+  $stmt = $dbo->prepare("SELECT products.ProductID ,customers.SAddress1, customers.SAddress2, customers.ZipCode, customers.FirstName, customers.LastName, customers.City, customers.State, products.ProductStatus, orders.OrderDate, products.OrderID, products.ProductName, products.ProductCost, products.ProductQuantity FROM orders INNER JOIN products ON orders.OrderID = products.OrderID INNER JOIN customers ON
+  orders.CustomerID = customers.CustomerID WHERE products.ProductStatus = 'purchased' ORDER BY  Orders.OrderDate, Orders.OrderID ");
+
+$stmt->execute();
+
+$gTotalRows = $stmt->rowCount();
+
+
+
+
+
+  //no offset is record 1440, offset of 1 is record 1439 
 $stmt = $dbo->prepare("SELECT products.ProductID ,customers.SAddress1, customers.SAddress2, customers.ZipCode, customers.FirstName, customers.LastName, customers.City, customers.State, products.ProductStatus, orders.OrderDate, products.OrderID, products.ProductName, products.ProductCost, products.ProductQuantity FROM orders INNER JOIN products ON orders.OrderID = products.OrderID INNER JOIN customers ON
-orders.CustomerID = customers.CustomerID WHERE products.ProductStatus = 'purchased' ORDER BY  Orders.OrderDate, Orders.OrderID ASC LIMIT $limit OFFSET $offset" );
+orders.CustomerID = customers.CustomerID WHERE products.ProductStatus = 'purchased' ORDER BY  Orders.OrderDate, Orders.OrderID DESC LIMIT $limit OFFSET $offset" );
 $stmt->execute();
 }
 
@@ -101,6 +112,8 @@ $string0 =  "
 //foreach($dbo0->query($sql) as $row1)
 while ($row1 = $stmt->fetch()) 
 {
+
+  
 
   $statusA = "statusA" . $counter; 
   $statusB = "statusB" . $counter;
@@ -359,12 +372,12 @@ $string0 .= "<br><br><br>";
 $offset2 = $offset - 1;
 //$offset3 = $offset + 1;
 
-$string0 .= "<button type=\"button\" onclick=\"callForDisplayWithoffsetForw($offset,  $lowestID ,$highestID, '{$whichSql}')  \">   Forward 1</button>";
+$string0 .= "<button type=\"button\" onclick=\"callForDisplayWithoffsetForw($gTotalRows, $offset,  $lowestID ,$highestID, '{$whichSql}')  \">   Forward 1</button>";
 
 
 
 // callForDisplayWithoffsetBack(
-$string0 .= "<button type=\"button\" onclick=\"callForDisplayWithoffsetBack($offset, $lowestID ,$highestID, '{$whichSql}')   \">  Backword 1</button>"; 
+$string0 .= "<button type=\"button\" onclick=\"callForDisplayWithoffsetBack($gTotalRows, $offset, $lowestID ,$highestID, '{$whichSql}')   \">  Backword 1</button>"; 
 
 
 
