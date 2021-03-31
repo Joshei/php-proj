@@ -286,73 +286,6 @@ function deleteRecord( reduceCountFlag, mainDiv, productID)
 //$productID,  $deleteFlag, '{$mainDiv}',   '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}' '{$filename}', )\">Resubmit</button></center>
     
 
-function SaveProductItems( ProductID, deleteFlag , maindiv, title, desc, cost, quantity, keyword1, keyword2, keyword3){
-
-
-	
-		const element = document.getElementById("dropDown1");
-		
-		const checkValue = element.options[element.selectedIndex].value;
-		const checkText = element.options[element.selectedIndex].text;
-		
-		var val13 = checkText;
-
-		
-		
-
-	//changed these
-	var val1 = document.getElementById(title);
-	var val2 = document.getElementById(desc);
-	var val3 = document.getElementById(cost);
-	var val4 = document.getElementById(quantity);
-    
-	//ids
-    //var val7 = keywordID_;
-    var val5 = ProductID;
-	var val8 = document.getElementById(keyword1);
-    var val9 = document.getElementById(keyword2);
-	var val10 = document.getElementById(keyword3);
-	//var val11 = document.getElementById(fileID).attributes.value.textContent
-	//var val11 = document.getElementById(fileID).value;
-	//var val11 = $('input[type=file]').val().replace(/C:\\fakepath\\/i, '')
-	
-
-	//var val14 = category;
-	//var val15 = customerid;
-	
-	
-		if (deleteFlag == 1)
-		{
-			document.getElementById(maindiv).innerHTML = "";
-		}
-
-    var xmlhttp = new XMLHttpRequest();
-	var PageToSendTo = "saveNewRecord.php?";
-	
-	
-    
-   
- 	var UrlToSend = PageToSendTo  +   "val1=" + val1 + "&" + "val2=" + val2 + "&" + "val3=" + val3 + "&"  + "val4=" + val4 + "&"
-        + "val8=" + val8 + "&" + "val9=" + val9 + "&" + "val10=" + val10 + "&" + "val5=" + val5 + "&" + "val13=" + val13 + "&" + /*"filename=" + val11  "&" +*/ "pdib=" + ProductID;
-
-	
-	
-	xmlhttp.onreadystatechange = function() {
-		
-
-
-		if (this.readyState == 4 && this.status == 200) {
-		
-					    
- 		}
-	};
-
-	
-	xmlhttp.open("GET", UrlToSend , true);
-	
-	xmlhttp.send();
-	
-}
 
 
 function printHTML1(keyword){ 
@@ -643,6 +576,79 @@ function test()
 
 </div>
 
+
+<script>
+function SaveProductItems( ProductID, deleteFlag , maindiv, title, desc, cost, quantity, keyword1, keyword2, keyword3){
+
+
+		
+const element = document.getElementById("dropDown1");
+
+const checkValue = element.options[element.selectedIndex].value;
+const checkText = element.options[element.selectedIndex].text;
+
+var val13 = checkText;
+
+//changed these
+//var val1 = document.getElementById(title);
+//var a = val1.value;
+
+
+//var val1 = title.value;
+var val2 = document.getElementById(title).value;
+//var val3 = document.getElementById(cost);
+//var val4 = document.getElementById(quantity);
+
+//ids
+//var val7 = keywordID_;
+var val5 = ProductID;
+var val8 = document.getElementById(keyword1).value;
+var val9 = document.getElementById(keyword2).value;
+var val10 = document.getElementById(keyword3).value;
+//var val11 = document.getElementById(fileID).attributes.value.textContent
+//var val11 = document.getElementById(fileID).value;
+//var val11 = $('input[type=file]').val().replace(/C:\\fakepath\\/i, '')
+
+
+//var val14 = category;
+//var val15 = customerid;
+
+if (deleteFlag == 1)
+{
+document.getElementById(maindiv).innerHTML = "";
+}
+
+
+document.getElementById(title).innerHTML = "11";
+
+var xmlhttp = new XMLHttpRequest();
+var PageToSendTo = "saveNewRecord.php?";
+
+
+
+
+var UrlToSend = PageToSendTo  +   "val1=" + val1 + "&" + "val2=" + val2 + "&" + "val3=" + val3 + "&"  + "val4=" + val4 + "&"
++ "val8=" + val8 + "&" + "val9=" + val9 + "&" + "val10=" + val10 + "&" + "val5=" + val5 + "&" + "val13=" + val13 + "&" + /*"filename=" + val11  "&" +*/ "pdib=" + ProductID;
+
+
+
+xmlhttp.onreadystatechange = function() {
+
+
+
+if (this.readyState == 4 && this.status == 200) {
+
+				
+ }
+};
+
+
+xmlhttp.open("GET", UrlToSend , true);
+
+xmlhttp.send();
+
+}
+</script>
 </body>
 </html>
 

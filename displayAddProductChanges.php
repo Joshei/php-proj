@@ -16,8 +16,8 @@ if ((!isset($_SESSION['lastDivCounter'])))
 	$fileID = $_GET['fileID'];
 	$descID = $_GET['bdescID'];
 	$title1    = $_GET['title1'];
-	$productID = $_GET['productID'];
-	 $titleID = $_GET['btitleID'];
+	$productID = 11;// $_GET['productID'];
+	 $titleID = $_GET['btitleID'] . "b";
 	 
 	 $costID = $_GET['bcostID'];
 	 $quantityID = $_GET['bquantityID'];
@@ -75,7 +75,7 @@ while ($row = $stmt->fetch())
 }
 ////////
 
-$deleteFlag = 1;
+$deleteFlag = 0;
 
 $counter = -1;
 $counter = $counter + 1;
@@ -94,21 +94,11 @@ $mainDiv1 = $var1 . (string)$_SESSION['lastDivCounter'];
 $_SESSION['lastDivCounter'] = $_SESSION['lastDivCounter'] +1;
 
 
-$host = 'localhost';
-$user = 'root';
-$pass = '';
-$database = 'ecommerce';
-
-$options = array(
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_EMULATE_PREPARES => false
-);
-
-
-
-$dbo3 = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
 
 $string0 =  "  
+<center><p>      <input id = \"$titleID\" value = \"$title1\" type=\"text\" name=\"title\" placeholder=\"\">$title1</p></center>
+<center><button id = \"test2az\" onclick = \"SaveProductItems(  '{$productID}',  '{$deleteFlag}', '{$mainDiv}',   '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}'  )\">Resubmit</button></center>
+    ";
 
 
 <p id = \"link1\">product id   :$productID</p>
@@ -147,7 +137,7 @@ $string0 =  "
 
 	</div>
 
-	<img class=\"NO-CACHE\" width=\"120\" height =\"120\"  id = \"$imageID\"  src=\"http://localhost/phpproj/uploads/$filename?<?php filemtime('$filename') ?>\">No Image</img>
+	<img  width=\"120\" height =\"120\"  id = \"$imageID\"  src=\"http://localhost/phpproj/uploads/$filename?<?php filemtime('$filename') ?>\">No Image</img>
 	
 	
 	</div>
@@ -159,7 +149,7 @@ $string0 =  "
 	<div class=\"col\"><br><br><br><br>
       <h4><center><p id =\"\"  >Title</p></center></h4>        
       
-	<center><p>      <input id = \"$titleID\" value = \"$title1\" type=\"text\" name=\"\" placeholder=\"\"></p></center>
+	<center><p>      <input id = \"$titleID\" value = \"$title1\" type=\"text\" name=\"title\" placeholder=\"\">$title1</p></center>
     </div>
 	
 	
@@ -232,7 +222,7 @@ $string0 =  "
 
     <!-- these are the ids of keywords to save next in a function called from this one for savekeywords.  (id has the product id)   key1D, etc. is the id for the call in here -->
 	<!--product id is the number value for the key of the product -->
-	<center><button id = \"\" onclick = \"SaveProductItems(  $productID,  $deleteFlag, '{$mainDiv}',   '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}'  )\">Resubmit</button></center>
+	<center><button id = \"\" onclick = \"SaveProductItems(  '{$productID}',  '{$deleteFlag}', '{$mainDiv}',   '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}'  )\">Resubmit</button></center>
     
 	
     <center><button id = \"\" onclick = \"deleteRecord(1, '{$mainDiv}', '{$productID}' )\">Delete</button></center>
@@ -254,15 +244,7 @@ $string0 =  "
   
 
 ";//stringend
-
-
-
-
-//to do:
-// add file name to database
-// upload file - if filename has been set
-//display copy of record
-
+*/
 
 insertNewRecord( $fileID, $filename, $title1, $descID ,$productID, $titleID  ,$costID ,$quantityID,$key1ID  ,$key2ID  ,$key3ID  ,$gKeyword1 , $gKeyword2  ,$gKeyword3  ,$image     ,$description,  $cost    ,$quantity ,  $category  );
 
@@ -274,6 +256,8 @@ insertNewRecord( $fileID, $filename, $title1, $descID ,$productID, $titleID  ,$c
 
 
 if (!isset($myObj) && isset($string0))
+
+
 {
 $myObj = new stdClass();
 $myObj->htmlstuff = $string0;
