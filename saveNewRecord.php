@@ -142,7 +142,7 @@ $stmt->execute(['ProductName' => $var1, 'ProductDescription' => $var2, 'ProductC
 //$user = $stmt->fetch();
 
 
-
+return(1);
 ?>
 
 
