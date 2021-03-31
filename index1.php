@@ -285,8 +285,9 @@ function deleteRecord( reduceCountFlag, mainDiv, productID)
 
 //$productID,  $deleteFlag, '{$mainDiv}',   '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}' '{$filename}', )\">Resubmit</button></center>
     
-
-function SaveProductItems( ProductID, deleteFlag , maindiv, title, desc, cost, quantity, keyword1, keyword2, keyword3){
+//$productID,  $deleteFlag,   '{$title1}', '{$description}', '{$cost}','{$quantity}', '{$gKeyword1 }' , '{$gKeyword2 }' , '{$gKeyword3 }'  )\">Resubmit</button></center>
+    
+function SaveProductItems( deleteFlag ,maindiv, title, desc, cost, quantity, keyword1, keyword2, keyword3){
 
 
 	
@@ -302,16 +303,16 @@ function SaveProductItems( ProductID, deleteFlag , maindiv, title, desc, cost, q
 
 	//changed these
 	var val1 = document.getElementById(title).value;
-	var val2 = document.getElementById(desc);
-	var val3 = document.getElementById(cost);
-	var val4 = document.getElementById(quantity);
+	//var val2 = document.getElementById(desc);
+	//var val3 = document.getElementById(cost);
+	//var val4 = document.getElementById(quantity);
     
 	//ids
     //var val7 = keywordID_;
-    var val5 = ProductID;
-	var val8 = document.getElementById(keyword1);
-    var val9 = document.getElementById(keyword2);
-	var val10 = document.getElementById(keyword3);
+    //var val5 = ProductID;
+	//var val8 = document.getElementById(keyword1);
+    //var val9 = document.getElementById(keyword2);
+	//var val10 = document.getElementById(keyword3);
 	//var val11 = document.getElementById(fileID).attributes.value.textContent
 	//var val11 = document.getElementById(fileID).value;
 	//var val11 = $('input[type=file]').val().replace(/C:\\fakepath\\/i, '')
@@ -320,6 +321,18 @@ function SaveProductItems( ProductID, deleteFlag , maindiv, title, desc, cost, q
 	//var val14 = category;
 	//var val15 = customerid;
 	
+	var val1 = title
+	var val2 = desc
+	var val3 = cost
+	var val4 = quantity
+	//var val5 = productID
+	
+	var val8 = keyword1
+	var val9 = keyword2
+	var val10 = keyword3
+	//var var13 = val13;
+
+
 	
 		if (deleteFlag == 1)
 		{
@@ -330,10 +343,10 @@ function SaveProductItems( ProductID, deleteFlag , maindiv, title, desc, cost, q
 	var PageToSendTo = "saveNewRecord.php?";
 	
 	
-    
+    //ProductID, deleteFlag , title, desc, cost, quantity, keyword1, keyword2, keyword3
    
  	var UrlToSend = PageToSendTo  +   "val1=" + val1 + "&" + "val2=" + val2 + "&" + "val3=" + val3 + "&"  + "val4=" + val4 + "&"
-        + "val8=" + val8 + "&" + "val9=" + val9 + "&" + "val10=" + val10 + "&" + "val5=" + val5 + "&" + "val13=" + val13 + "&" + /*"filename=" + val11  "&" +*/ "pdib=" + ProductID;
+        + "val8=" + val8 + "&" + "val9=" + val9 + "&" + "val10=" + val10  + "&" + "val13=" + val13 /* + "&" + "filename=" + val11  "&"  "pdib=" + ProductID; */
 
 	
 	
@@ -343,6 +356,12 @@ function SaveProductItems( ProductID, deleteFlag , maindiv, title, desc, cost, q
 
 		if (this.readyState == 4 && this.status == 200) {
 		
+		var jsonData = JSON.parse(this.responseText);
+		var answerHtml = jsonData.titleid;
+		var val1 = document.getElementById(answerHtml).value;
+
+		//document.getElementById("codehere").innerHTML = answerHtml;
+
 					    
  		}
 	};

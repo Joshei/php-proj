@@ -136,6 +136,10 @@ $string0 =  "
 	
 	<input  type = \"file\" name = \"file\" id = \"$fileID\">
 	<br><br>
+
+
+
+
 	<button    value = \"Submit\" type = \"submit\"  >submit it</button>
 	
 	
@@ -232,7 +236,7 @@ $string0 =  "
 
     <!-- these are the ids of keywords to save next in a function called from this one for savekeywords.  (id has the product id)   key1D, etc. is the id for the call in here -->
 	<!--product id is the number value for the key of the product -->
-	<center><button id = \"\" onclick = \"SaveProductItems(  $productID,  $deleteFlag, '{$mainDiv}',   '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}'  )\">Resubmit</button></center>
+	<center><button id = \"\" onclick = \"SaveProductItems(    $deleteFlag,   '{$mainDiv}' ,  '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID }' , '{$key2ID }' , '{ $key3ID }'  )\">Resubmit</button></center>
     
 	
     <center><button id = \"\" onclick = \"deleteRecord(1, '{$mainDiv}', '{$productID}' )\">Delete</button></center>
@@ -249,7 +253,6 @@ $string0 =  "
 </div><!--mainDiv-->
 	
 
-	
   
   
 
@@ -277,7 +280,7 @@ if (!isset($myObj) && isset($string0))
 {
 $myObj = new stdClass();
 $myObj->htmlstuff = $string0;
-
+$myObj->titleid = $titleID;
 
 //Encode the data as a JSON string
 $jsonStr = json_encode($myObj);

@@ -2,6 +2,9 @@
 //require("upload2.php"); 
 
 
+//ProductID, deleteFlag , title, desc, cost, quantity, keyword1, keyword2, keyword3
+
+
 //if this has value than  file buttton has been pressed
 //$file = $_GET['filename'];
 //$var7 = $_GET['val7'];//key id
@@ -12,7 +15,7 @@ $var4 = $_GET['val4'];//ProductQuantity
 $var8  = $_GET['val8'];//key1
 $var9 = $_GET['val9'];//key2
 $var10 = $_GET['val10'];//key3
-$var5 = $_GET['val5'];//ProductID
+//$var5 = $_GET['val5'];//ProductID
 //dropdown selected text
 $var13 = $_GET['val13'];
 //$file = $_GET['filename'];
@@ -104,7 +107,7 @@ unlink($oldfilename);
 */
 
 $customerID_SESSION = 1;
-$var5 = intval($var5);
+//$var5 = intval($var5);
  //change to get with login sessions
 $name_ = "Joseph";
 $password_ = "password";
@@ -128,6 +131,8 @@ $sql2 = "SET FOREIGN_KEY_CHECKS=1;";
 
 
 
+
+//FINDNEXT PRODUCTID!!!!!!!!!!!!!
 
 
 

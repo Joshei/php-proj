@@ -260,7 +260,7 @@ $string1 .=  "
 	
 	
 	
-	<center><button id = \"test\" onclick = \"SaveProductItems(  $productID,  $deleteFlag, '{$mainDiv}',   '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}'  )\">Submit</button></center>
+	<center><button id = \"test\" onclick = \"SaveProductItems(   $deleteFlag, '{$mainDiv}',   '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}'  )\">Submit</button></center>
 	
 	
 	<!--flag for determining if record delete will effect sessioncount, 0 is no.-->
