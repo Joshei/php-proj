@@ -112,17 +112,21 @@ $string0 =  "
 
 
 <p id = \"link1\">product id   :$productID</p>
-
-
 <div style = \"background-color:#40e0d0;\" class = \"A\" id = \"$mainDiv\">
-
 <center><h1>Added Record<h1></center></p>
+<div class=\"container\">
+
 
   <div class=\"row\" >
-  <div class = \"col\">
+
+	
+	<div class = \"col\">
 
 	<iframe id=\"upload_target\" name=\"upload_target\"  style=\"width:0;height:0;border:0px solid #fff;\"></iframe> 	
 	
+	
+	<div class=\"text-left\">
+
 	<form   target=\"upload_target\"  method = \"POST\" action = \"upload2a.php\" enctype=\"multipart/form-data\">
 	
 	<input type=hidden id=\"$productID\" name= \"productID\" value=\"$productID\">
@@ -133,42 +137,56 @@ $string0 =  "
 	<input  type = \"file\" name = \"file\" id = \"$fileID\">
 	<br><br>
 	<button    value = \"Submit\" type = \"submit\"  >submit it</button>
+	
+	
 	</form>
+
+	<div id = \"text-left\">
 	<button    onclick = \"imageRefresh( '{$filename}', '{$imageID}')\" >Confirm</button><br><br>
+	</div>
+
+	</div>
+
 	<img class=\"NO-CACHE\" width=\"120\" height =\"120\"  id = \"$imageID\"  src=\"http://localhost/phpproj/uploads/$filename?<?php filemtime('$filename') ?>\">No Image</img>
 	
 	
-  </div>
+	</div>
 	
-  <div class=\"col\"><br><br><br><br>
+	
+	
+
+
+	<div class=\"col\"><br><br><br><br>
       <h4><center><p id =\"\"  >Title</p></center></h4>        
       
 	<center><p>      <input id = \"$titleID\" value = \"$title1\" type=\"text\" name=\"\" placeholder=\"\"></p></center>
-  </div>
+    </div>
 	
 	
-<div class=\"col\">
+	<div class=\"col\">
       <h4><center><p id = \"\">Desc</p></center></h4>
       
 	  <center><textarea wrap id = \"$descID\"   value = \"$description\"  name=\"text\" rows=\"5\" cols=\"34\">$description</textarea></center>
-</div>
+	  </div>
     
-	
-<div class=\"col\"><br><br>
+	<div class=\"col\"><br><br>
       <h4><center><p id = \"\" >Cost</p></center></h4>
 	<center><p>	<input id = $costID value = $cost type=\"number\" name=\"title\" placeholder=\"$cost\">		</p></center>
 	
-</div>
+	</div>
 	
 
-</div>
-	
-	<div class=\"row\" >
+	</div>
+	</div>
+
+
+	<div class=\"container\">
+	  <div class=\"row\" >
 	  
 	<div class=\"col\">
     <h4><center><p id = \"\" >Quantity</p></center></h4>    
 	<center><p> <input id = $quantityID value = $quantity type=\"number\" name=\"title\" placeholder=\"$quantity\">	</p></center>
-</div>
+	</div>
 
 	
 	
@@ -178,38 +196,39 @@ $string0 =  "
 	
 	<!-- Just holds values for call from saveproductitems because it calls save keywords-->
 
-<div class=\"col\">
+	<div class=\"col\">
       <h4><center><p id = \"\" >Keyword 1</p></center></h4>
 	<center><p>	<input id = \"$key1ID\" value = \"$gKeyword1\" type=\"text\" name=\"title\" placeholder=\"$gKeyword1\">		</p></center>
 	
-</div>
+	</div>
 
 
-<div class=\"col\">
+	<div class=\"col\">
       <h4><center><p id = \"\" >Keyword 2</p></center></h4>
 	<center><p>	<input id = \"$key2ID\" value = \"$gKeyword2\" type=\"text\" name=\"title\" placeholder=\"$gKeyword2\">		</p></center>
 	
-</div>
+	</div>
 
 
-<div class=\"col\">
+	<div class=\"col\">
       <h4><center><p id = \"\" >Keyword 3</p></center></h4>
 	<center><p>	<input id = \"$key3ID\" value = \"$gKeyword3\" type=\"text\" name=\"title\" placeholder=\"$gKeyword3\">		</p></center>
 	
-</div>
+	
+	</div>
 	
 
 	<br><br>
-</div>
-	
+	</div>
+	</div>
 	
 
-
-<div class=\"row\" >
+<div class=\"container\">
+  <div class=\"row\" >
 
 
 	<!-- the keys are   -->
-<div class=\"col\">
+	<div class=\"col\">
 
     <!-- these are the ids of keywords to save next in a function called from this one for savekeywords.  (id has the product id)   key1D, etc. is the id for the call in here -->
 	<!--product id is the number value for the key of the product -->
@@ -218,13 +237,12 @@ $string0 =  "
 	
     <center><button id = \"\" onclick = \"deleteRecord(1, '{$mainDiv}', '{$productID}' )\">Delete</button></center>
 
-</div>
+	</div>
 	
 
 	
 </div>
-
-
+</div>	
 	
 
 
