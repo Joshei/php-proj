@@ -166,7 +166,7 @@ xmlhttp.onreadystatechange = function() {
 		var jsonData = JSON.parse(this.responseText);
 		var answerHtml = jsonData.htmlstuff;
 		
-		
+		 
 		
 
 
