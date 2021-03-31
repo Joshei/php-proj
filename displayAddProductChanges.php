@@ -100,7 +100,7 @@ $string0 =  "
 <center><button id = \"test2az\" onclick = \"SaveProductItems(  '{$productID}',  '{$deleteFlag}', '{$mainDiv}',   '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}'  )\">Resubmit</button></center>
     ";
 
-
+/*
 <p id = \"link1\">product id   :$productID</p>
 <div style = \"background-color:#40e0d0;\" class = \"A\" id = \"$mainDiv\">
 <center><h1>Added Record<h1></center></p>
