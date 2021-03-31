@@ -301,7 +301,7 @@ function SaveProductItems( ProductID, deleteFlag , maindiv, title, desc, cost, q
 		
 
 	//changed these
-	var val1 = document.getElementById(title);
+	var val1 = document.getElementById(title).value;
 	var val2 = document.getElementById(desc);
 	var val3 = document.getElementById(cost);
 	var val4 = document.getElementById(quantity);
