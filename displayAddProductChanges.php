@@ -98,10 +98,11 @@ $_SESSION['lastDivCounter'] = $_SESSION['lastDivCounter'] +1;
 $string0 =  "  
 <center><p>      <input id = \"$titleID\" value = \"$title1\" type=\"text\" name=\"title\" placeholder=\"\">$title1</p></center>
 <center><button id = \"test2az\" onclick = \"SaveProductItems(  '{$productID}',  '{$deleteFlag}', '{$mainDiv}',   '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}'  )\">Resubmit</button></center>
-    ";
+    
 
-/*
-<p id = \"link1\">product id   :$productID</p>
+
+//<p id = \"link1\">product id   :$productID</p>
+
 <div style = \"background-color:#40e0d0;\" class = \"A\" id = \"$mainDiv\">
 <center><h1>Added Record<h1></center></p>
 <div class=\"container\">
@@ -139,12 +140,17 @@ $string0 =  "
 
 	<img  width=\"120\" height =\"120\"  id = \"$imageID\"  src=\"http://localhost/phpproj/uploads/$filename?<?php filemtime('$filename') ?>\">No Image</img>
 	
-	
-	</div>
-	
-	
+	<!--test insert-->
+	<center><button id = \"\" onclick = \"SaveProductItems(  '{$productID}',  '{$deleteFlag}', '{$mainDiv}',   '{$titleID}', '{$descID}', '{$costID}','{$quantityID}', '{$key1ID}' , '{$key2ID}' , '{$key3ID}'  )\">Resubmit</button></center>
+   
+
+	</div> <!-- contaiiner  -->
 	
 
+	</div><!--maindiv--> 
+		";
+
+//
 
 	<div class=\"col\"><br><br><br><br>
       <h4><center><p id =\"\"  >Title</p></center></h4>        
@@ -239,12 +245,13 @@ $string0 =  "
 </div><!--mainDiv-->
 	
 
-	
-  
+-->	
   
 
-";//stringend
-*/
+
+//";//stringend
+
+
 
 insertNewRecord( $fileID, $filename, $title1, $descID ,$productID, $titleID  ,$costID ,$quantityID,$key1ID  ,$key2ID  ,$key3ID  ,$gKeyword1 , $gKeyword2  ,$gKeyword3  ,$image     ,$description,  $cost    ,$quantity ,  $category  );
 
