@@ -309,7 +309,7 @@ $bquantityID = "bquantityID" . $counter;
 $bkey1ID = "bkey1ID" . $counter;
 $bkey2ID = "bkey2ID" . $counter;
 $bkey3ID = "bkey3ID" . $counter;
-$productID = "bproductid" .$counter;
+$productID = 1;
 $imageID = "bimageID" . $counter;
 
 $keywordID = 0;

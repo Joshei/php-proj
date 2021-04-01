@@ -19,8 +19,8 @@ $counter = $counter + $_SESSION['counter'];
 	$imageID = $_GET['imageID'] . "A" . $counter;
 	$fileID = $_GET['fileID'] . "A" . $counter;
 	$descID = $_GET['bdescID'] . "A" . $counter;
-	$title1    = $_GET['title1'] . "A" . $counter;
-	$productID = $_GET['productID'] . "A".  $counter;
+	$title1    = $_GET['title1'];
+	$productID = $_GET['productID'];
 	 $titleID = $_GET['btitleID'] . "A"  . $counter; 
 	 
 	 $costID = $_GET['bcostID'] . "A"  . $counter;
@@ -61,7 +61,8 @@ $options = array(
 
 $dbo = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
 
-$var1 = "Ready to insert record!";
+//updates in insert
+$var1 = "Ready to update record!";
 
 $stmt = $dbo->prepare("INSERT INTO products (ProductName) VALUES (?)");
 $stmt->bindParam(1, $var1);

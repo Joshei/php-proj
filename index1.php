@@ -302,16 +302,16 @@ function SaveProductItems( ProductID, deleteFlag , maindiv, title, desc, cost, q
 
 	//changed these
 	var val1 = document.getElementById(title).value;
-	var val2 = document.getElementById(desc);
-	var val3 = document.getElementById(cost);
-	var val4 = document.getElementById(quantity);
+	var val2 = document.getElementById(desc).value;
+	var val3 = document.getElementById(cost).valie;
+	var val4 = document.getElementById(quantity).value;
     
 	//ids
     //var val7 = keywordID_;
     var val5 = ProductID;
-	var val8 = document.getElementById(keyword1);
-    var val9 = document.getElementById(keyword2);
-	var val10 = document.getElementById(keyword3);
+	var val8 = document.getElementById(keyword1.value);
+    var val9 = document.getElementById(keyword2).value;
+	var val10 = document.getElementById(keyword3).value;
 	//var val11 = document.getElementById(fileID).attributes.value.textContent
 	//var val11 = document.getElementById(fileID).value;
 	//var val11 = $('input[type=file]').val().replace(/C:\\fakepath\\/i, '')
