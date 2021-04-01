@@ -4,26 +4,30 @@
 	
 include ("insertNewProduct.php"); 
 
-
+$counter = 0;
 if ((!isset($_SESSION['lastDivCounter'])))  
 {
 	
 		$_SESSION['lastDivCounter']  = 0;
+		$_SESSION['counter'] = 0;
 }
 
+
+$counter = $counter + $_SESSION['counter'];
+
 	//$imageID = $_GET['imageID'];
-	$imageID = $_GET['imageID'];
-	$fileID = $_GET['fileID'];
-	$descID = $_GET['bdescID'];
-	$title1    = $_GET['title1'];
-	$productID = $_GET['productID'];
-	 $titleID = $_GET['btitleID'];
+	$imageID = $_GET['imageID'] . "A" . $counter;
+	$fileID = $_GET['fileID'] . "A" . $counter;
+	$descID = $_GET['bdescID'] . "A" . $counter;
+	$title1    = $_GET['title1'] . "A" . $counter;
+	$productID = $_GET['productID'] . "A".  $counter;
+	 $titleID = $_GET['btitleID'] . "A"  . $counter; 
 	 
-	 $costID = $_GET['bcostID'];
-	 $quantityID = $_GET['bquantityID'];
-	 $key1ID  = $_GET['bkey1ID'];
-	 $key2ID  = $_GET['bkey2ID'];
-	 $key3ID  = $_GET['bkey3ID'];
+	 $costID = $_GET['bcostID'] . "A"  . $counter;
+	 $quantityID = $_GET['bquantityID'] . "A" .  $counter;
+	 $key1ID  = $_GET['bkey1ID'] . "A" . $counter;
+	 $key2ID  = $_GET['bkey2ID']. "A" .  $counter;
+	 $key3ID  = $_GET['bkey3ID'] . "A". $counter;
 	$gKeyword1   = $_GET['gKeyword1'];
 	$gKeyword2   = $_GET['gKeyword2'];
  	$gKeyword3  = $_GET['gKeyword3'];
@@ -88,25 +92,6 @@ $mainDiv = $var . (string)$_SESSION['lastDivCounter'];
 $var1 = "E"; 
 $mainDiv1 = $var1 . (string)$_SESSION['lastDivCounter'];
 
-
-
-
-$_SESSION['lastDivCounter'] = $_SESSION['lastDivCounter'] +1;
-
-
-$host = 'localhost';
-$user = 'root';
-$pass = '';
-$database = 'ecommerce';
-
-$options = array(
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_EMULATE_PREPARES => false
-);
-
-
-
-$dbo3 = new PDO("mysql:host=$host;dbname=$database", $user, $pass, $options);
 
 $string0 =  "  
 
@@ -277,7 +262,7 @@ if (!isset($myObj) && isset($string0))
 {
 $myObj = new stdClass();
 $myObj->htmlstuff = $string0;
-
+$myObj->htmlstuff1 = $titleID;
 
 //Encode the data as a JSON string
 $jsonStr = json_encode($myObj);
