@@ -28,6 +28,15 @@ $string0 = "<center><br><br><select id = \"dropDown1\" >";
 
 foreach ($dbo3->query($q4) as $row2) {
 
+
+$string1 =  $row2['ProductCatTitle'];    
+if(  $string1 == "")
+{
+    continue;
+}
+
+
+    
 $string0 .=  "<option value = \"";
 //value of option
 $string0 .=  $row2['ProductCatTitle']  ;
@@ -49,7 +58,7 @@ $string0 .= "<br>";
 //echo $string0;
 
 
-if (1);//!isset($myObj) && isset($string0))
+if (!isset($myObj) && isset($string0))
 {
 $myObj = new stdClass();
 $myObj->htmlstuff = $string0;
